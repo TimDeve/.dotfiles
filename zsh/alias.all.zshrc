@@ -34,7 +34,7 @@ alias gfixcom="git commit --amend"
 alias gstat="git status"
 
 # Git diff
-alias gdiff="git diff"
+alias gdiff="git diff --color | diff-highlight | diff-so-fancy"
 
 #
 # End Git Stuff
