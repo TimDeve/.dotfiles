@@ -1,0 +1,111 @@
+# Manually set your environment language
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+# Manually set your 'PATH' environment variable
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# Check platform
+uname=$(uname)
+
+# Load zgen
+source "${HOME}/.zgen/zgen/zgen.zsh"
+
+# Check if there's no init script
+if ! zgen saved; then
+    echo "Creating a zgen save"
+
+    # prezto options
+    zgen prezto editor key-bindings 'emacs'
+    zgen prezto prompt theme 'sorin'
+    zgen prezto terminal auto-title 'yes'
+    zgen prezto '*:*' color 'yes'
+
+    # prezto plugins
+    zgen prezto
+    zgen prezto environment
+    zgen prezto terminal
+    zgen prezto editor
+    zgen prezto history
+    zgen prezto directory
+    zgen prezto spectrum
+    zgen prezto utility
+    zgen prezto completion
+    zgen prezto git
+    zgen prezto node
+    zgen prezto python
+    zgen prezto ssh
+    zgen prezto rsync
+    zgen prezto archive
+    zgen prezto fasd
+
+    # Platform Specific prezto plungins
+    case $uname in
+      "Darwin"*)
+        zgen prezto osx
+        zgen prezto homebrew
+        ;;
+      "Linux"*)
+        zgen prezto pacman
+        ;;
+    esac
+
+    zgen prezto syntax-highlighting
+    zgen prezto history-substring-search
+    zgen prezto prompt
+
+    # other plugins
+    zgen load Vifon/deer deer
+    zgen load rimraf/k
+    zgen load Tarrasch/zsh-bd
+
+    # save all to init script
+    zgen save
+fi
+
+# CUSTOM:
+# ===============================================================================================
+
+#
+## Imports ------------------------------------------------------------
+#
+
+# Import General Stuff
+source ~/.dotfiles/zsh/general.all.zshrc
+source ~/.dotfiles/zsh/secrets.zshrc
+
+case $uname in
+  "Darwin"*)
+    source ~/.dotfiles/zsh/general.osx.zshrc
+    ;;
+  "Linux"*)
+    source ~/.dotfiles/zsh/general.linux.zshrc
+    ;;
+esac
+
+# Import Alias
+source ~/.dotfiles/zsh/alias.all.zshrc
+
+case $uname in
+  "Darwin"*)
+    source ~/.dotfiles/zsh/alias.osx.zshrc
+    ;;
+  "Linux"*)
+    source ~/.dotfiles/zsh/alias.linux.zshrc
+    ;;
+esac
+
+# Import Functions
+source ~/.dotfiles/zsh/functions.all.zshrc
+
+case $uname in
+  "Darwin"*)
+    source ~/.dotfiles/zsh/functions.osx.zshrc
+    ;;
+  "Linux"*)
+    source ~/.dotfiles/zsh/functions.linux.zshrc
+    ;;
+esac
+
+# Cleanup uname variable
+unset -v uname

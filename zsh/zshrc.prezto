@@ -1,0 +1,44 @@
+#
+# Executes commands at the start of an interactive session.
+#
+# Authors:
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+# Source Prezto.
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
+
+# Customize to your needs...
+
+#
+## Imports ------------------------------------------------------------
+#
+
+uname=$(uname)
+
+# Import General Stuff
+source ~/.dotfiles/zsh/general.all.zshrc
+
+case $uname in
+  "Darwin"*)
+    source ~/.dotfiles/zsh/general.osx.zshrc
+    ;;
+  "Linux"*)
+    source ~/.dotfiles/zsh/general.linux.zshrc
+    ;;
+esac
+
+# Import Alias
+source ~/.dotfiles/zsh/alias.all.zshrc
+
+case $uname in
+  "Darwin"*)
+    source ~/.dotfiles/zsh/alias.osx.zshrc
+    ;;
+  "Linux"*)
+    source ~/.dotfiles/zsh/alias.linux.zshrc
+    ;;
+esac
+
