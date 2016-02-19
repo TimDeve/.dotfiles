@@ -29,3 +29,6 @@ alias prequest="cat ~/dev/pullRequestFormat.md | pbcopy"
 
 # Shorter subl
 alias s="subl"
+
+# Docker
+alias dkmstop="docker-machine stop"
