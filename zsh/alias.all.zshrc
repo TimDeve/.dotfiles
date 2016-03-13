@@ -82,3 +82,6 @@ alias t="touch"
 # Quick mkdir
 alias md="mkdir"
 alias mdc="mkcd"
+
+# Reload zshrc
+alias zreload="source ~/.zshrc"

@@ -3,6 +3,9 @@
 
 ### Packets to install
 toInstall=('zsh'\
+  'tmux'\
+  'ranger'\
+  'nvim'\
   'coreutils'\
   'moreutils'\
   'findutils'\
@@ -16,25 +19,24 @@ toInstall=('zsh'\
   'duck'\
   'fasd'\
   'ffmpeg'\
-  'htop-osx'\
+  'htop'\
   'imagemagick'\
   'mas'\
   'md5sha1sum'\
-  'ranger'\
   'mobile-shell'\
-  'vim'\
   'nmap'\
   'pastebinit'\
   'node'\
   'python'\
   'python3'\
+  'ruby'\
   'rsync'\
   'speedtest_cli'\
-  'git'\
   'tig'\
-  'tmux'\
   'irssi'\
   'weechat'\
+  'vim'\
+  'git'\
 )
 
 for i in "${toInstall[@]}"
