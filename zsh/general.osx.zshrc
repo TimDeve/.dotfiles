@@ -2,7 +2,7 @@
 fpath=("/usr/local/bin/" $fpath)
 
 # Add Go to Path
-export GOPATH=$HOME/.Go
+export GOPATH=$HOME/dev/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # Colors for Cheat
