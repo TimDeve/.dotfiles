@@ -15,7 +15,7 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 export PATH="/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH"
 
 # Adds Dasht to path
-export PATH=$PATH:/Users/Tim/Create/OtherGit/dasht/bin
+export PATH=$PATH:~/dev/OtherGit/dasht/bin
 
 # Add ~/dev to the cdpath
 cdpath=(~/dev ~)

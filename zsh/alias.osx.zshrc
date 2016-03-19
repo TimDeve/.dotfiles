@@ -35,3 +35,9 @@ alias cdev="cd ~/dev"
 
 # Alias to jo (json making utility)
 alias jo="/Users/Tim/dev/OtherGit/jo/jo"
+
+# ansiweather
+alias we="ansiweather -a false -l"
+alias we5="ansiweather -a false -F -l"
+alias wel="ansiweather -a false -l london"
+alias wel5="ansiweather -a false -F -l london"
