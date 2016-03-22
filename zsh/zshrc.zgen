@@ -34,7 +34,7 @@ if ! zgen saved; then
     zgen prezto git
     zgen prezto node
     zgen prezto python
-    zgen prezto ssh
+#    zgen prezto ssh
     zgen prezto rsync
     zgen prezto archive
     zgen prezto fasd
