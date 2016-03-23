@@ -1,0 +1,23 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'completion' ]
+2 info using npm@3.6.0
+3 info using node@v5.7.0
+4 verbose stack Error: npm completion supported only in MINGW / Git bash on Windows
+4 verbose stack     at EventEmitter.completion (C:\Program Files\nodejs\node_modules\npm\lib\completion.js:49:13)
+4 verbose stack     at Object.commandCache.(anonymous function) (C:\Program Files\nodejs\node_modules\npm\lib\npm.js:216:13)
+4 verbose stack     at EventEmitter.<anonymous> (C:\Program Files\nodejs\node_modules\npm\bin\npm-cli.js:74:30)
+4 verbose stack     at _combinedTickCallback (node.js:370:9)
+4 verbose stack     at process._tickCallback (node.js:401:11)
+5 verbose cwd C:\Users\tym0\.dotfiles\tmux
+6 error Windows_NT 6.1.7601
+7 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "completion"
+8 error node v5.7.0
+9 error npm  v3.6.0
+10 error code ENOTSUP
+11 error errno 129
+12 error nospc npm completion supported only in MINGW / Git bash on Windows
+13 error nospc This is most likely not a problem with npm itself
+13 error nospc and is related to insufficient space on your system.
+14 verbose exit [ 129, true ]
