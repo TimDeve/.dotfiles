@@ -18,7 +18,7 @@ alias th="trash"
 
 # cd to WDI folders
 alias cdhw="cd /Users/Tim/dev/WDI_LDN_17_HOMEWORK/timDeve"
-alias cdcw="cd  /Users/Tim/dev/WDI_LDN_17_CLASSWORK"
+alias cdcw="cd /Users/Tim/dev/WDI_LDN_17_CLASSWORK"
 alias cdln="cd /Users/Tim/dev/WDI_LDN_17_LESSON_NOTES"
 
 # Copy Current Path
@@ -28,7 +28,9 @@ alias copp="pwd | pbcopy"
 alias s="subl"
 
 # Docker
+alias dkm="docker-machine"
 alias dkmstop="docker-machine stop"
+alias dkmenv='eval $(docker-machine env)'
 
 # CD to dev
 alias cdev="cd ~/dev"
