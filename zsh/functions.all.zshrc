@@ -18,3 +18,6 @@ transfer() {
   cat $tmpfile;
   rm -f $tmpfile;
 }
+
+
+function gi() { curl -L -s "https://www.gitignore.io/api/$@";}
