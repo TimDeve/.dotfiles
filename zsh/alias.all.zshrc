@@ -88,3 +88,6 @@ alias zreload="source ~/.zshrc"
 
 # Pokemon color script
 alias poke="bash ~/.dotfiles/scripts/general/c-poke"
+
+# Make a new github repo here
+alias gn="gitnew timdeve"
