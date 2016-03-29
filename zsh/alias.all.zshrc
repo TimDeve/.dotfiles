@@ -91,3 +91,6 @@ alias poke="bash ~/.dotfiles/scripts/general/c-poke"
 
 # Simple Python Server
 alias pyserv="python -m SimpleHTTPServer"
+
+# Make a new github repo here
+alias gn="gitnew timdeve"
