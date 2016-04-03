@@ -30,7 +30,6 @@ alias s="subl"
 # Docker
 alias dkm="docker-machine"
 alias dkmstop="docker-machine stop"
-alias dkmenv='eval $(docker-machine env)'
 
 # CD to dev
 alias cdev="cd ~/dev"
