@@ -34,7 +34,10 @@ alias gfixcom="git commit --amend"
 alias gstat="git status"
 
 # Git diff
-alias gdiff="git diff --color | diff-highlight | diff-so-fancy"
+alias gdiff="git diff --color"
+
+# Git Deletes all local branch merged into master
+alias gdelmerged='git branch --merged | grep -v "\*" | grep -v master | grep -v dev | xargs -n 1 git branch -d'
 
 #
 # End Git Stuff
