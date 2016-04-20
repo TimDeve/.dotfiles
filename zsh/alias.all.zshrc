@@ -58,7 +58,7 @@ alias toixio="curl -F 'f:1=<-' ix.io"
 alias sptest='speedtest-cli --bytes --simple'
 
 # Delete last Command History
-alias delhist="sed -i '' -e '$ d' .zhistory"
+alias delhist="sed -i'' -e '$ d' ~/.zhistory"
 
 # copy with a progress bar
 alias cpv="rsync -poghb --backup-dir=/tmp/rsync -e /dev/null --progress --"
