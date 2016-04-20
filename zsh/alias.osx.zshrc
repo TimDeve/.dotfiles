@@ -30,7 +30,6 @@ alias s="subl"
 # Docker
 alias dkm="docker-machine"
 alias dkmstop="docker-machine stop"
-alias dkmenv='eval $(docker-machine env)'
 
 # CD to dev
 alias cdev="cd ~/dev"
@@ -43,3 +42,6 @@ alias we="ansiweather -a false -l"
 alias we5="ansiweather -a false -F -l"
 alias wel="ansiweather -a false -l london"
 alias wel5="ansiweather -a false -F -l london"
+
+# Pretty Git diff
+alias gdiff="git diff --color | diff-highlight | diff-so-fancy"

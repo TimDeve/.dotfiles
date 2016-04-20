@@ -21,3 +21,5 @@ transfer() {
 
 
 function gi() { curl -L -s "https://www.gitignore.io/api/$@";}
+
+weather(){curl "http://wttr.in/$1"}
