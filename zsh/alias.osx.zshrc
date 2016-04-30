@@ -33,6 +33,7 @@ alias dkmstop="docker-machine stop"
 
 # CD to dev
 alias cdev="cd ~/dev"
+alias cdevgo="cd ~/dev/go/src/github.com/timdeve"
 
 # Alias to jo (json making utility)
 alias jo="/Users/Tim/dev/OtherGit/jo/jo"
