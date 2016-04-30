@@ -97,3 +97,9 @@ alias pyserv="python -m SimpleHTTPServer"
 
 # Make a new github repo here
 alias gn="gitnew timdeve"
+
+# Peerflix
+alias pf="peerflix -v"
+
+# Livestreamer
+alias lst="livestreamer"
