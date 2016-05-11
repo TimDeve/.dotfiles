@@ -103,3 +103,6 @@ alias pf="peerflix -v"
 
 # Livestreamer
 alias lst="livestreamer"
+
+# Docker
+alias dk="docker"
