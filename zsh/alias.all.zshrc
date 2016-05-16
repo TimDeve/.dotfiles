@@ -99,7 +99,7 @@ alias pyserv="python -m SimpleHTTPServer"
 alias gn="gitnew timdeve"
 
 # Peerflix
-alias pf="peerflix -v"
+alias pf="peerflix -k"
 
 # Livestreamer
 alias lst="livestreamer"
