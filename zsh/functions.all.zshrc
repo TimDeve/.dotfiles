@@ -19,7 +19,14 @@ transfer() {
   rm -f $tmpfile;
 }
 
-
 function gi() { curl -L -s "https://www.gitignore.io/api/$@";}
 
 weather(){curl "http://wttr.in/$1"}
+
+up() {
+  local x='';
+  for i in $(seq ${1:-1}); do
+    x="$x../";
+  done;
+  cd $x;
+}
