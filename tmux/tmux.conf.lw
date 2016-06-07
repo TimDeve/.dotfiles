@@ -1,0 +1,149 @@
+# Mouse support
+set-option -g mouse on
+set -g @scroll-speed-num-lines-per-scroll "1"
+#bind-key -T root WheelUpPane if-shell -F -t = "#{alternate_on}" "send-keys -M" "select-pane -t =; copy-mode -e; send-keys -M"
+#bind-key -T root WheelDownPane if-shell -F -t = "#{alternate_on}" "send-keys -M" "select-pane -t =; send-keys -M"
+#bind-key -t vi-copy WheelUpPane halfpage-up
+#bind-key -t vi-copy WheelDownPane halfpage-down
+
+# make tmux display things in 256 colors
+set -g default-terminal "screen-256color"
+
+# set scrollback history to 10000 (10k)
+set -g history-limit 10000
+
+# set Ctrl-<space> as the default prefix key combination
+# and unbind C-b to free it
+unbind C-b
+set -g prefix C-Space
+
+# use send-prefix to pass C-a through to application
+bind Space send-prefix
+
+# shorten command delay
+set -sg escape-time 1
+
+# set window and pane index to 1 (0 by default)
+set-option -g base-index 1
+setw -g pane-base-index 1
+
+# reload ~/.tmux.conf using PREFIX r
+bind r source-file ~/.tmux.conf \; display "Reloaded!"
+
+# Set status bar at the top
+set-option -g status-position top
+
+# use PREFIX ) to split window horizontally and PREFIX - to split vertically
+bind = split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+
+# Make the current window the first window
+bind T swap-window -t 1
+
+# map Vi movement keys as pane movement keys
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# and use C-h and C-l to cycle thru panes
+bind -r C-h select-window -t :-
+bind -r C-l select-window -t :+
+
+# resize panes using PREFIX H, J, K, L
+bind H resize-pane -L 5
+bind J resize-pane -D 5
+bind K resize-pane -U 5
+bind L resize-pane -R 5
+
+left_separator=''
+left_separator_black=''
+right_separator=''
+right_separator_black=''
+session_symbol=''
+
+
+#
+## Theme
+#
+
+# panes
+pane_border_fg=colour8 # gray
+pane_active_border_fg=colour4 # blue
+
+set -g pane-border-style fg=$pane_border_fg
+set -g pane-active-border-style fg=$pane_active_border_fg
+#uncomment for fat borders
+#set -ga pane-border-style bg=$pane_border_fg \; set -ga pane-active-border-style bg=$pane_active_border_fg
+
+display_panes_active_colour=colour4 # blue
+display_panes_colour=colour4 # blue
+set -g display-panes-active-colour $display_panes_active_colour
+set -g display-panes-colour $display_panes_colour
+
+# messages
+message_fg=colour16           # black
+message_bg=colour11 # yellow
+message_attr=bold
+set -g message-style fg=$message_fg,bg=$message_bg,$message_attr
+
+message_command_fg=colour16   # black
+message_command_bg=colour160  # light yellow
+set -g message-command-style fg=$message_command_fg,bg=$message_command_bg,$message_attr
+
+# windows mode
+mode_fg=colour16   # black
+mode_bg=colour11 # yellow
+mode_attr=bold
+setw -g mode-style fg=$mode_fg,bg=$mode_bg,$mode_attr
+
+# status line
+status_fg=colour253 # white
+status_bg=colour0 # dark gray
+set -g status-style fg=$status_fg,bg=$status_bg
+
+session_fg=colour16  # black
+session_bg=colour11 # yellow
+status_left="#[fg=$session_fg,bg=$session_bg,bold] ❐ #S #[fg=$session_bg,bg=$status_bg,nobold]$left_separator_black"
+set -g status-left-length 32
+set -g status-left "$status_left"
+
+window_status_fg=colour8 # gray
+window_status_bg=colour0 # dark gray
+window_status_format="#I #W"
+setw -g window-status-style fg=$window_status_fg,bg=$window_status_bg
+setw -g window-status-format "$window_status_format"
+
+window_status_current_fg=colour16 # black
+window_status_current_bg=colour4 # blue
+window_status_current_format="#[fg=$window_status_bg,bg=$window_status_current_bg]$left_separator_black#[fg=$window_status_current_fg,bg=$window_status_current_bg,bold] #I #W #[fg=$window_status_current_bg,bg=$status_bg,nobold]$left_separator_black"
+setw -g window-status-current-format "$window_status_current_format"
+set -g status-justify left
+
+window_status_activity_fg=default
+window_status_activity_bg=default
+window_status_activity_attr=underscore
+setw -g window-status-activity-style fg=$window_status_activity_fg,bg=$window_status_activity_bg,$window_status_activity_attr
+
+window_status_bell_fg=colour11 # yellow
+window_status_bell_bg=default
+window_status_bell_attr=blink,bold
+setw -g window-status-bell-style fg=$window_status_bell_fg,bg=$window_status_bell_bg,$window_status_bell_attr
+
+window_status_last_fg=colour4 # blue
+window_status_last_attr=default
+setw -g window-status-last-style $window_status_last_attr,fg=$window_status_last_fg
+
+time_date_fg=colour8        # gray
+time_date_bg=colour0        # dark gray
+whoami_fg=colour254         # white
+whoami_bg=colour160         # red
+host_fg=colour16            # black
+host_bg=colour254           # white
+status_right="︎#[fg=$time_date_fg,nobold]$right_separator %R $right_separator %a %d %b #[fg=$host_bg]$right_separator_black#[fg=$host_fg,bg=$host_bg,bold] #h "
+set -g status-right-length 64
+set -g status-right "$status_right"
+
+# clock
+clock_mode_colour=colour4 # blue
+setw -g clock-mode-colour $clock_mode_colour
