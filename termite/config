@@ -1,0 +1,72 @@
+[options]
+scroll_on_output = false
+scroll_on_keystroke = true
+audible_bell = false
+mouse_autohide = false
+allow_bold = true
+dynamic_title = true
+urgent_on_bell = true
+clickable_url = true
+font = Office Code Pro 10
+scrollback_lines = 10000
+search_wrap = true
+#icon_name = terminal
+#geometry = 640x480
+
+# "system", "on" or "off"
+cursor_blink = system
+
+# "block", "underline" or "ibeam"
+cursor_shape = block
+
+# $BROWSER is used by default if set, with xdg-open as a fallback
+#browser = xdg-open
+
+# set size hints for the window
+#size_hints = false
+
+# emit escape sequences for other keys modified by Control
+#modify_other_keys = false
+
+[colors]
+cursor = #C5C5C5
+foreground = #dee2e9
+foreground_bold = #dee1e9
+background = #191918
+
+# 20% background transparency (requires a compositor)
+#background = rgba(63, 63, 63, 0.8)
+
+# if unset, will reverse foreground and background
+#highlight = #2f2f2f
+
+# colors from color0 to color254 can be set
+color0 = #1f1f1f
+color1 = #F81118
+color2 = #2dc55e
+color3 = #ecba0f
+color4 = #2a84d2
+color5 = #4e5ab7
+color6 = #1081d6
+color7 = #d6dbe5
+color8 = #d6dbe5
+color9 = #de352e
+color10 = #1dd361
+color11 = #f3bd09
+color12 = #1081D6
+color13 = #5350b9
+color14 = #0f7ddb
+color15 = #ffffff
+
+[hints]
+#font = Source Code Pro 12
+#foreground = #dee2ea
+#background = #191918
+#active_foreground = #dee2ea 
+#active_background = #191918
+#padding = 2
+#border = #3f3f3f
+#border_width = 0.5
+#roundness = 2.0
+
+# vim: ft=dosini cms=#%s
