@@ -20,7 +20,8 @@ NeoBundle 'rking/ag.vim'
 NeoBundle 'scrooloose/nerdtree'
 " NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'bling/vim-airline'
+NeoBundle 'vim-airline/vim-airline'
+NeoBundle 'vim-airline/vim-airline-themes'
 NeoBundle 'simnalamburt/vim-mundo'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'jeetsukumaran/vim-buffergator'
@@ -30,6 +31,7 @@ NeoBundle 'easymotion/vim-easymotion'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tmux-plugins/vim-tmux'
 NeoBundle 'jonhiggs/vim-readline'
+NeoBundle 'marciomazza/vim-brogrammer-theme'
 
 " You can specify revision/branch/tag.
 " NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
@@ -219,9 +221,11 @@ set t_Co=256
 
 set hidden
 
+colorscheme Brogrammer
+
 """ Map Perso
 
-"Split navigation
+" Split navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -234,14 +238,10 @@ nnoremap <leader>l $
 " Toggle gundo (better undo)
 nnoremap <leader>u :GundoToggle<CR>
 
-
 """ Airline Stuff
 let g:airline_powerline_fonts = 1
 let g:airline_theme='murmur'
 let g:airline#extensions#tabline#enabled = 1
-
-" Color line number
-hi LineNr ctermfg=237
 
 " Set persistent undo
 set undofile                " Save undo's after file closes
