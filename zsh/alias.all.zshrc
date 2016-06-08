@@ -106,3 +106,6 @@ alias lst="livestreamer"
 
 # Docker
 alias dk="docker"
+
+# Shorter subl
+alias s="subl"

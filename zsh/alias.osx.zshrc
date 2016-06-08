@@ -24,9 +24,6 @@ alias cdln="cd /Users/Tim/dev/WDI_LDN_17_LESSON_NOTES"
 # Copy Current Path
 alias copp="pwd | pbcopy"
 
-# Shorter subl
-alias s="subl"
-
 # Docker
 alias dkm="docker-machine"
 alias dkmstop="docker-machine stop"
