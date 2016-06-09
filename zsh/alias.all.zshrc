@@ -48,7 +48,6 @@ alias tmuxn="tmux new-session -s"
 alias tmuxa="tmux attach-session -t"
 alias tmuxl="tmux list-sessions"
 alias tmuxaa="tmux attach"
-
 alias tmuxad="tmux new -As Default -d"
 
 # ix.io (pastebin like)
@@ -102,10 +101,13 @@ alias gn="gitnew timdeve"
 alias pf="peerflix -k"
 
 # Livestreamer
-alias lst="livestreamer"
+alias lst="livestreamer -p mpv"
 
 # Docker
 alias dk="docker"
 
 # Shorter subl
 alias s="subl"
+
+# Allows to run sudo on aliases
+alias sudo="sudo "
