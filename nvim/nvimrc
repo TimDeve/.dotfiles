@@ -81,8 +81,8 @@ set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
 set mouse=a
 
 " keyboard shortcuts
-map     <space> <leader>
-"let mapleader = "\<space>"
+" map     <space> <leader>
+let mapleader = "\<space>"
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
@@ -92,7 +92,6 @@ nnoremap <leader>a :Ag<space>
 nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>d :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
-nnoremap <leader>t :CtrlP<CR>
 nnoremap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
 nnoremap <leader>] :TagbarToggle<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
@@ -182,16 +181,16 @@ let g:buffergator_suppress_keymaps = 1
 "let g:buffergator_mru_cycle_loop = 1
 
 " Go to the previous buffer open
-nmap <leader>jj :BuffergatorMruCyclePrev<cr>
+nmap <leader>j :BuffergatorMruCyclePrev<cr>
 
 " Go to the next buffer open
-nmap <leader>kk :BuffergatorMruCycleNext<cr>
+nmap <leader>k :BuffergatorMruCycleNext<cr>
 
 " View the entire list of buffers open
 nmap <leader>bl :BuffergatorOpen<cr>
 
 " Shared bindings from Solution #1 from earlier
-nmap <leader>T :enew<cr>
+nmap <leader>t :enew<cr>
 nmap <leader>bq :bp <BAR> bd #<cr>
 
 """ Key map BufferGattor End
