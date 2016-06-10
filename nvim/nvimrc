@@ -81,8 +81,8 @@ set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
 set mouse=a
 
 " keyboard shortcuts
-" map     <space> <leader>
-let mapleader = "\<space>"
+map     <space> <leader>
+" let mapleader = "\<space>"
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k

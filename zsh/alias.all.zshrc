@@ -10,9 +10,10 @@ alias ee='exit'
 # Test Connection
 alias pingt='ping 8.8.8.8'
 
-# Easy tar.gz
+# Easy tar
 alias tgz='tar -zcvf'
-alias untgz='tar -zxvf'
+alias txz='tar -Jcvf'
+alias untar='tar -xvf'
 
 #
 # Git Stuff
@@ -111,3 +112,6 @@ alias s="subl"
 
 # Allows to run sudo on aliases
 alias sudo="sudo "
+
+# Trash
+alias th="trash"
