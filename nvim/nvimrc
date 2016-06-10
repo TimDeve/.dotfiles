@@ -83,7 +83,7 @@ set mouse=a
 " keyboard shortcuts
 map     <space> <leader>
 "let mapleader = "\<space>"
-noremap <C-h> <C-w>h
+noremap <c-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
@@ -182,10 +182,10 @@ let g:buffergator_suppress_keymaps = 1
 "let g:buffergator_mru_cycle_loop = 1
 
 " Go to the previous buffer open
-nmap <leader>jj :BuffergatorMruCyclePrev<cr>
+nmap <leader>j :BuffergatorMruCyclePrev<cr>
 
 " Go to the next buffer open
-nmap <leader>kk :BuffergatorMruCycleNext<cr>
+nmap <leader>k :BuffergatorMruCycleNext<cr>
 
 " View the entire list of buffers open
 nmap <leader>bl :BuffergatorOpen<cr>
