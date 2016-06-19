@@ -32,6 +32,7 @@ NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tmux-plugins/vim-tmux'
 NeoBundle 'jonhiggs/vim-readline'
 NeoBundle 'marciomazza/vim-brogrammer-theme'
+NeoBundle 'Shougo/neocomplete.vim'
 
 " You can specify revision/branch/tag.
 " NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
