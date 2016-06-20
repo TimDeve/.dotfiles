@@ -222,7 +222,7 @@ set t_Co=256
 
 set hidden
 
-colorscheme Brogrammer
+colorscheme brogrammer
 
 """ Map Perso
 

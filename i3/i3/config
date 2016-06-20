@@ -182,5 +182,5 @@ bar {
 ####################
 exec --no-startup-id vmware-user-suid-wrapper
 exec --no-startup-id compton
-exec_always --no-startup-id "sh -c 'sleep 0.3; exec sh ~/.fehbg'"
+exec_always --no-startup-id "sh -c 'sleep 0.5; exec sh ~/.fehbg'"
 exec_always --no-startup-id "sudo hwclock --hctosys --localtime"
