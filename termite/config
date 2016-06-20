@@ -29,44 +29,41 @@ cursor_shape = block
 #modify_other_keys = false
 
 [colors]
-cursor = #C5C5C5
-foreground = #dee2e9
-foreground_bold = #dee1e9
-background = #191918
 
-# 20% background transparency (requires a compositor)
-#background = rgba(63, 63, 63, 0.8)
+# special
+foreground      = #e1e1ea
+foreground_bold = #e1e1ea
+cursor          = #e1e1ea
+background      = #101010
 
-# if unset, will reverse foreground and background
-#highlight = #2f2f2f
+# black
+color0  = #181818
+color8  = #e7e7ee
 
-# colors from color0 to color254 can be set
-color0 = #1f1f1f
-color1 = #F81118
-color2 = #2dc55e
-color3 = #ecba0f
-color4 = #2a84d2
-color5 = #4e5ab7
-color6 = #1081d6
-color7 = #d6dbe5
-color8 = #d6dbe5
-color9 = #de352e
-color10 = #1dd361
-color11 = #f3bd09
-color12 = #1081D6
-color13 = #5350b9
-color14 = #0f7ddb
+# red
+color1  = #f30014
+color9  = #f81118
+
+# green
+color2  = #2bbd4c
+color10 = #2dc55e
+
+# yellow
+color3  = #e6ae10
+color11 = #ecba0f
+
+# blue
+color4  = #236ec7
+color12 = #2a84d2
+
+# magenta
+color5  = #3d43a8
+color13 = #4e5ab7
+
+# cyan
+color6  = #199ccc
+color14 = #139ad6
+
+# white
+color7  = #e7e7ee
 color15 = #ffffff
-
-[hints]
-#font = Source Code Pro 12
-#foreground = #dee2ea
-#background = #191918
-#active_foreground = #dee2ea 
-#active_background = #191918
-#padding = 2
-#border = #3f3f3f
-#border_width = 0.5
-#roundness = 2.0
-
-# vim: ft=dosini cms=#%s
