@@ -28,6 +28,9 @@ alias gaddcom="git add --all && git commit"
 # Git Push
 alias gpush="git push"
 
+# Git Pull
+alias gpull="git pull"
+
 # Git change last commit message
 alias gfixcom="git commit --amend"
 
