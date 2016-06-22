@@ -241,8 +241,13 @@ nnoremap <leader>u :GundoToggle<CR>
 
 """ Airline Stuff
 let g:airline_powerline_fonts = 1
-let g:airline_theme='murmur'
+let g:airline_theme='raven'
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
 
 " Set persistent undo
 set undofile                " Save undo's after file closes
