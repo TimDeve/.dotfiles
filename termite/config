@@ -31,39 +31,39 @@ cursor_shape = underline
 [colors]
 
 # special
-foreground      = #e1e1ea
-foreground_bold = #e1e1ea
-cursor          = #e1e1ea
-background      = #101010
+foreground      = #e8e5df
+foreground_bold = #e8e5df
+cursor          = #e8e5df
+background      = #161718
 
 # black
-color0  = #181818
-color8  = #e7e7ee
+color0  = #202324
+color8  = #e8e5df
 
 # red
-color1  = #f30014
-color9  = #f81118
+color1  = #ca241d
+color9  = #fb4934
 
 # green
-color2  = #2bbd4c
-color10 = #2dc55e
+color2  = #98971a
+color10 = #b8bb26
 
 # yellow
-color3  = #e6ae10
-color11 = #ecba0f
+color3  = #d79921
+color11 = #f8bc2f
 
 # blue
-color4  = #236ec7
-color12 = #2a84d2
+color4  = #458588
+color12 = #83a598
 
 # magenta
-color5  = #3d43a8
-color13 = #4e5ab7
+color5  = #ad6083
+color13 = #d3869b
 
 # cyan
-color6  = #199ccc
-color14 = #139ad6
+color6  = #689d6a
+color14 = #8ec07c
 
 # white
-color7  = #e7e7ee
-color15 = #ffffff
+color7  = #e2dfd7
+color15 = #ebdbb2
