@@ -13,8 +13,8 @@ set $hfgcolor                       #404552
 set $bgcolor                        #2F343F
 set $iacolor                        #2F343F
 # Font
-set $winfont                        pango:Office Code Pro 8
-set $barfont                        pango:Office Code Pro 8
+set $winfont                        pango:Lime 10
+set $barfont                        pango:Lime 10
 
 #################
 # CONFIGURATION #
