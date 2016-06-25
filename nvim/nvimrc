@@ -31,7 +31,7 @@ NeoBundle 'easymotion/vim-easymotion'
 NeoBundle 'terryma/vim-multiple-cursors'
 NeoBundle 'tmux-plugins/vim-tmux'
 NeoBundle 'jonhiggs/vim-readline'
-NeoBundle 'marciomazza/vim-brogrammer-theme'
+NeoBundle 'morhetz/gruvbox'
 NeoBundle 'Shougo/neocomplete.vim'
 
 " You can specify revision/branch/tag.
@@ -222,7 +222,9 @@ set t_Co=256
 
 set hidden
 
-colorscheme brogrammer
+let g:gruvbox_contrast_dark='hard'
+silent colorscheme gruvbox
+set background=dark
 
 """ Map Perso
 
@@ -238,6 +240,9 @@ nnoremap <leader>l $
 
 " Toggle gundo (better undo)
 nnoremap <leader>u :GundoToggle<CR>
+
+" Toggle Wrap
+nnoremap <leader>w :set wrap!<CR>
 
 """ Airline Stuff
 let g:airline_powerline_fonts = 1
