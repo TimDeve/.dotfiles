@@ -1,0 +1,45 @@
+{
+	"always_show_minimap_viewport": true,
+	"bold_folder_labels": true,
+	"color_scheme": "Packages/Gruvbox Dark/gruvbox.tmTheme",
+	"fade_fold_buttons": false,
+	"folder_exclude_patterns":
+	[
+		"node_modules",
+		".svn",
+		".git",
+		".hg",
+		"CVS"
+	],
+	"font_face": "ProggySquareTTSZ",
+	"font_options":
+	[
+		"no_antialias"
+	],
+	"font_size": 16,
+	"highlight_line": true,
+	"ignored_packages":
+	[
+		"ApplySyntax",
+		"Markdown",
+		"MarkdownEditing",
+		"Ruby Completions",
+		"SublimeLinter",
+		"Vintage",
+		"Vintageous"
+	],
+	"index_exclude_patterns":
+	[
+		"*.sublime-project",
+		"*.log",
+		"prepros.cfg"
+	],
+	"line_padding_bottom": 1,
+	"line_padding_top": 1,
+	"overlay_scroll_bars": "enabled",
+	"scroll_past_end": true,
+	"tab_size": 2,
+	"tabs_medium": true,
+	"theme": "Asphalt-blue.sublime-theme",
+	"translate_tabs_to_spaces": true
+}
