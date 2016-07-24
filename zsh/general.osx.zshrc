@@ -19,3 +19,7 @@ export PATH=$PATH:~/dev/OtherGit/dasht/bin
 
 # Add ~/dev to the cdpath
 cdpath=(~/dev ~)
+
+# Drupal Env
+export DRUPAL_ENV_NAME="development"
+

@@ -30,3 +30,8 @@ up() {
   done;
   cd $x;
 }
+
+countstr() {
+  local mystring=$@
+  echo "${#mystring}"
+}
