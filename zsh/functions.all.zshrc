@@ -26,12 +26,23 @@ weather(){curl "http://wttr.in/$1"}
 up() {
   local x='';
   for i in $(seq ${1:-1}); do
-    x="$x../";
-  done;
-  cd $x;
+    x="$x../"
+  done
+  cd $x
 }
 
 countstr() {
   local mystring=$@
   echo "${#mystring}"
+}
+
+gdrop() {
+  git stash && git stash drop
+}
+
+gdifs() {
+  git diff --color
+  printf '─%.0s' {1..$COLUMNS}
+  printf '─%.0s' {1..$COLUMNS}
+  git status
 }

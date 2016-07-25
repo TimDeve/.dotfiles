@@ -51,3 +51,10 @@ function timer() {
   sleep $time && say "$beep" -v "bells"
 
 }
+
+gdifs() {
+  git diff --color | diff-highlight | diff-so-fancy
+  printf '─%.0s' {1..$COLUMNS}
+  printf '─%.0s' {1..$COLUMNS}
+  git status
+}

@@ -19,33 +19,25 @@ alias untar='tar -xvf'
 # Git Stuff
 #
 
+alias gcom="git commit"
+alias gadd="git add"
+alias gaddcom="git add --all && git commit"
+alias gpush="git push"
+alias gpull="git pull"
+alias gstat="git status"
+alias gchek="git checkout"
+
+# Git diff
+alias gdiff="git diff --color"
+
 # Git Pretty Tree
 alias gtree="git log --oneline --graph --decorate --all"
-
-# Git add + commit
-alias gaddcom="git add --all && git commit"
-
-# Git Push
-alias gpush="git push"
-
-# Git Pull
-alias gpull="git pull"
 
 # Git change last commit message
 alias gfixcom="git commit --amend"
 
-# Git status
-alias gstat="git status"
-
-# Git diff
-alias gdiff="git diff --color"
-alias gdifs="git diff --color && echo '\n────────────────────────\n────────────────────────\n' && git status"
-
 # Git Deletes all local branch merged into master
 alias gdelmerged='git branch --merged | grep -v "\*" | grep -v master | grep -v dev | xargs -n 1 git branch -d'
-
-alias gcom="git commit"
-alias gadd="git add"
 
 #
 # End Git Stuff

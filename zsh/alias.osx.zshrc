@@ -40,7 +40,6 @@ alias wel5="ansiweather -a false -F -l london"
 
 # Pretty Git diff
 alias gdiff="git diff --color | diff-highlight | diff-so-fancy"
-alias gdifs="git diff --color | diff-highlight | diff-so-fancy && echo '\n────────────────────────\n────────────────────────\n' && git status"
 
 # Redis
 alias redis="redis-server /usr/local/etc/redis.conf"
