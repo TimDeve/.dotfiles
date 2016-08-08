@@ -26,6 +26,7 @@ alias gpush="git push"
 alias gpull="git pull"
 alias gstat="git status"
 alias gchek="git checkout"
+alias gmerg="git merge"
 
 # Git diff
 alias gdiff="git diff --color"
@@ -39,6 +40,8 @@ alias gfixcom="git commit --amend"
 # Git Deletes all local branch merged into master
 alias gdelmerged='git branch --merged | grep -v "\*" | grep -v master | grep -v dev | xargs -n 1 git branch -d'
 
+# cd to root of repo
+alias cg='cd "$(git rev-parse --show-toplevel)"'
 #
 # End Git Stuff
 #
@@ -69,7 +72,6 @@ alias npmlist="npm list -g --depth=0"
 alias whalias="ag '^alias' ~/.dotfiles/zsh --no-numbers"
 
 # Update dot files
-alias updot="cd ~/.dotfiles && git add --all && git commit -m 'up' && git push"
 alias downdot="cd ~/.dotfiles && git pull"
 
 # Pip Upgrade All Outdated
