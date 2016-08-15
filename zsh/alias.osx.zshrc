@@ -43,3 +43,6 @@ alias gdiff="git diff --color | diff-highlight | diff-so-fancy"
 
 # Redis
 alias redis="redis-server /usr/local/etc/redis.conf"
+
+# Find Gateway
+alias findgate="netstat -nr | grep '^default'"
