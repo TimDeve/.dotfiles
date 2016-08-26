@@ -112,7 +112,7 @@ alias dk="docker"
 alias s="subl"
 
 # Allows to run sudo on aliases
-alias sudo="sudo "
+# alias sudo="sudo "
 
 # Trash
 alias th="trash"
