@@ -52,6 +52,7 @@ alias tmuxa="tmux attach-session -t"
 alias tmuxl="tmux list-sessions"
 alias tmuxaa="tmux attach"
 alias tmuxad="tmux attach-session -t Default || tmux new-session -s Default"
+alias tmuxav="tmux attach-session -t Vim || tmux new-session -s Vim"
 
 # ix.io (pastebin like)
 alias toixio="curl -F 'f:1=<-' ix.io"
