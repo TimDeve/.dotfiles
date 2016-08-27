@@ -1,52 +1,25 @@
-"NeoBundle Scripts-----------------------------
-if has('vim_starting')
-  if &compatible
-    set nocompatible               " Be iMproved
-  endif
+""" vim-plug
+call plug#begin()
 
-  " Required:
-  set runtimepath+=~/.config/nvim/bundle/neobundle.vim/
-endif
+Plug 'rking/ag.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'simnalamburt/vim-mundo'
+Plug 'tpope/vim-surround'
+Plug 'jeetsukumaran/vim-buffergator'
+Plug 'airblade/vim-gitgutter'
+Plug 'Raimondi/delimitMate'
+Plug 'easymotion/vim-easymotion'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tmux-plugins/vim-tmux'
+Plug 'jonhiggs/vim-readline'
+Plug 'morhetz/gruvbox'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-" Required:
-call neobundle#begin(expand('~/.config/nvim/bundle'))
-
-" Let NeoBundle manage NeoBundle
-" Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" Add or remove your Bundles here:
-NeoBundle 'rking/ag.vim'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'vim-airline/vim-airline'
-NeoBundle 'vim-airline/vim-airline-themes'
-NeoBundle 'simnalamburt/vim-mundo'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'jeetsukumaran/vim-buffergator'
-NeoBundle 'jisaacks/GitGutter'
-NeoBundle 'Raimondi/delimitMate'
-NeoBundle 'easymotion/vim-easymotion'
-NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'tmux-plugins/vim-tmux'
-NeoBundle 'jonhiggs/vim-readline'
-NeoBundle 'morhetz/gruvbox'
-NeoBundle 'Shougo/neocomplete.vim'
-
-" You can specify revision/branch/tag.
-" NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
-
-" Required:
-call neobundle#end()
-
-" Required:
-filetype plugin indent on
-
-"End NeoBundle Scripts-------------------------
+call plug#end()
+""" End vim-plug
 
 """ Maximum Awesome Start
 
@@ -87,9 +60,8 @@ nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>d :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 nnoremap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
-nnoremap <leader>] :TagbarToggle<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
-noremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+noremap <silent> <leader>V :source ~/.config/nvim/init.vim<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " in case you forgot to sudo
 cnoremap w!! %!sudo tee > /dev/null %
@@ -217,7 +189,7 @@ set t_Co=256
 
 set hidden
 
-let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_contrast_dark=''
 silent colorscheme gruvbox
 set background=dark
 
@@ -245,6 +217,9 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Redo
+nnoremap U <C-R>
+
 " Jump to beginning and end of the line
 nnoremap <leader>h ^
 nnoremap <leader>l $
@@ -254,8 +229,16 @@ nmap <leader>= :vsp<cr>
 nmap <leader>- :sp<cr>
 
 " Toggle gundo (better undo)
-nnoremap <leader>u :GundoToggle<CR>
+nnoremap <leader>u :MundoToggle<CR>
 
 " Toggle Wrap
-nnoremap <leader>w :set wrap!<CR>
+nnoremap <leader>wr :set wrap!<CR>
 
+" Save
+nnoremap <leader>w :w<CR>
+
+" Quit
+nnoremap <leader>q :q<CR>
+
+" Clear search
+nnoremap <leader>cs :let @/ = ""<CR>
