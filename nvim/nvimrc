@@ -263,13 +263,14 @@ nmap <leader>- :sp<cr>
 nnoremap <leader>u :MundoToggle<CR>
 
 " Toggle Wrap
-nnoremap <leader>wr :set wrap!<CR>
+nnoremap <leader>w :set wrap!<CR>
 
 " Save
-nnoremap <leader>w :w<CR>
+nnoremap WW :w<CR>
 
 " Quit
 nnoremap <leader>q :q<CR>
 
 " Clear search
 nnoremap <leader>cs :let @/ = ""<CR>
+
