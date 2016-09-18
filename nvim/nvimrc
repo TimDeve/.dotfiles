@@ -1,25 +1,36 @@
 """ vim-plug
 call plug#begin()
 
+Plug '1995eaton/vim-better-javascript-completion'
+Plug 'Raimondi/delimitMate'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'airblade/vim-gitgutter'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'easymotion/vim-easymotion'
+Plug 'guns/vim-clojure-highlight'
+Plug 'guns/vim-clojure-static'
+Plug 'guns/vim-sexp'
+Plug 'jeetsukumaran/vim-buffergator'
+Plug 'jonhiggs/vim-readline'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'morhetz/gruvbox'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'sheerun/vim-polyglot'
 Plug 'simnalamburt/vim-mundo'
-Plug 'tpope/vim-surround'
-Plug 'jeetsukumaran/vim-buffergator'
-Plug 'airblade/vim-gitgutter'
-Plug 'Raimondi/delimitMate'
-Plug 'easymotion/vim-easymotion'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tmux-plugins/vim-tmux'
-Plug 'jonhiggs/vim-readline'
-Plug 'morhetz/gruvbox'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'sheerun/vim-polyglot'
-Plug '1995eaton/vim-better-javascript-completion'
-Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-salve'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-scripts/VimClojure'
 
 call plug#end()
 """ End vim-plug
@@ -234,6 +245,26 @@ let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 
+" Rainbow Parens
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+
 " Set persistent undo
 set undofile                " Save undo's after file closes
 set undodir=$HOME/.config/nvim/undo " where to save undo histories
@@ -273,4 +304,3 @@ nnoremap <leader>q :q<CR>
 
 " Clear search
 nnoremap <leader>cs :let @/ = ""<CR>
-
