@@ -55,16 +55,13 @@ set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
 " Enable basic mouse behavior such as resizing buffers.
 set mouse=a
 
-" keyboard shortcuts
+" keyboard shortcut
 map     <space> <leader>
-noremap <leader>l :Align
 nnoremap <leader>a :Ag<space>
-nnoremap <leader>b :CtrlPBuffer<CR>
 nnoremap <leader>d :NERDTreeToggle<CR>
 nnoremap <leader>f :NERDTreeFind<CR>
 nnoremap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
-noremap <silent> <leader>V :source ~/.config/nvim/init.vim<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " in case you forgot to sudo
 cnoremap w!! %!sudo tee > /dev/null %
@@ -162,7 +159,7 @@ nmap <leader>bl :BuffergatorOpen<cr>
 nmap <leader>t :enew<cr>
 
 " Close buffer
-nmap <leader>bq :bp <BAR> bd #<cr>
+nmap <leader>bc :bp <BAR> bd #<cr>
 
 """ Key map BufferGattor End
 
@@ -259,14 +256,20 @@ nnoremap <leader>l $
 nmap <leader>= :vsp<cr>
 nmap <leader>- :sp<cr>
 
+" Move up and down even on wrapped line
+noremap j gj
+noremap k gk
+noremap gj j
+noremap gk k
+
 " Toggle gundo (better undo)
 nnoremap <leader>u :MundoToggle<CR>
 
 " Toggle Wrap
-nnoremap <leader>w :set wrap!<CR>
+nnoremap <leader>wr :set wrap!<CR>
 
 " Save
-nnoremap WW :w<CR>
+nnoremap <leader>w :w<CR>
 
 " Quit
 nnoremap <leader>q :q<CR>
@@ -274,3 +277,5 @@ nnoremap <leader>q :q<CR>
 " Clear search
 nnoremap <leader>cs :let @/ = ""<CR>
 
+" Easymotion
+map <leader><space> <Plug>(easymotion-prefix)
