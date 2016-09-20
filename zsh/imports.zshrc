@@ -3,7 +3,6 @@ uname=${uname:0:6}
 
 # Import General Stuff
 source ~/.dotfiles/zsh/general.all.zshrc
-source ~/.dotfiles/zsh/secrets.zshrc
 
 case $uname in
   "Darwin"*)
@@ -46,6 +45,8 @@ case $uname in
     source ~/.dotfiles/zsh/functions.cygwin.zshrc
     ;;
 esac
+
+source ~/.dotfiles/zsh/secrets.zshrc
 
 # Cleanup uname variable
 unset -v uname
