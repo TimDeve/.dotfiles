@@ -23,3 +23,5 @@ cdpath=(~/dev ~)
 # Drupal Env
 export DRUPAL_ENV_NAME="development"
 
+# Add Composer to path
+export PATH=~/.composer/vendor/bin:$PATH
