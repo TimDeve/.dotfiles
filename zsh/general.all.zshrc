@@ -6,3 +6,6 @@ export EDITOR="nvim"
 
 # Add script folder to path
 PATH="$HOME/.dotfiles/scripts/general:${PATH}"
+
+# Add home bin to path
+PATH="$HOME/bin:${PATH}"
