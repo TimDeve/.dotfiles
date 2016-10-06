@@ -39,7 +39,7 @@ alias gtree="git log --oneline --graph --decorate --all"
 alias gfixcom="git commit --amend"
 
 # Git Deletes all local branch merged into master
-alias gdelmerged='git branch --merged | grep -v "\*" | grep -v master | grep -v dev | xargs -n 1 git branch -d'
+alias gdelmerged='git branch --merged | grep -v "\*" | grep -v master | grep -v dev | grep -v production | xargs -n 1 git branch -d'
 
 # cd to root of repo
 alias cg='cd "$(git rev-parse --show-toplevel)"'
