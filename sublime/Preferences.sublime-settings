@@ -21,10 +21,20 @@
 	"ignored_packages":
 	[
 		"ApplySyntax",
+		"GitGutter",
+		"HTML-CSS-JS Prettify",
+		"JavaScript Completions",
 		"Markdown",
+		"Markdown Extended",
 		"MarkdownEditing",
+		"Material Theme",
 		"Ruby Completions",
+		"Seti_UI",
+		"SideBarEnhancements",
 		"SublimeLinter",
+		"Theme - Cobalt2",
+		"Themr",
+		"TrailingSpaces",
 		"Vintage",
 		"Vintageous"
 	],
