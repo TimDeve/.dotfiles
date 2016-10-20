@@ -121,3 +121,6 @@ alias th="trash"
 
 # Whats my IP
 alias whatsmyip="dig +short myip.opendns.com @resolver1.opendns.com"
+
+# Folder size
+alias wh="du -sh"
