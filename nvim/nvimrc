@@ -199,6 +199,8 @@ set t_Co=256
 
 set hidden
 
+set cursorline
+
 let g:gruvbox_contrast_dark=''
 silent colorscheme gruvbox
 set background=dark
