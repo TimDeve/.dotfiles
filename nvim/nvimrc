@@ -19,6 +19,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
 Plug 'simnalamburt/vim-mundo'
 Plug 'snoe/nvim-parinfer.js', { 'do': ':UpdateRemotePlugins' }
+Plug 'stephpy/vim-yaml'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tmux-plugins/vim-tmux'
