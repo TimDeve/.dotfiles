@@ -1,0 +1,60 @@
+# Manually set your environment language
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+# Manually set your 'PATH' environment variable
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH}"
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# Check platform
+uname=$(uname)
+
+source ~/.zplug/init.zsh
+
+
+zplug "modules/environment", from:prezto
+zplug "modules/terminal", from:prezto
+zplug "modules/editor", from:prezto
+zplug "modules/history", from:prezto
+zplug "modules/directory", from:prezto
+zplug "modules/spectrum", from:prezto
+zplug "modules/utility", from:prezto
+zplug "modules/completion", from:prezto
+zplug "modules/git", from:prezto
+zplug "modules/node", from:prezto
+zplug "modules/python", from:prezto
+zplug "modules/rsync", from:prezto
+zplug "modules/archive", from:prezto
+zplug "modules/fasd", from:prezto
+
+zplug "modules/osx", from:prezto, if:"[[ $uname == *Darwin* ]]"
+zplug "modules/homebrew", from:prezto, if:"[[ $uname == *Darwin* ]]"
+
+zplug "modules/pacman", from:prezto, if:"[[ $uname == *Linux* ]]"
+
+zplug "modules/syntax-highlighting", from:prezto
+zplug "modules/history-substring-search", from:prezto
+zplug "modules/prompt", from:prezto
+
+zstyle ':prezto:*:*' color 'yes'
+zstyle ':prezto:module:prompt' theme 'sorin'
+
+zplug "Vifon/deer"
+zplug "rimraf/k"
+zplug "Tarrasch/zsh-bd"
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+# Then, source plugins and add commands to $PATH
+zplug load
+
+#
+## Imports ------------------------------------------------------------
+#
+
+source ~/.dotfiles/zsh/imports.zshrc

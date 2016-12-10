@@ -20,6 +20,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
 Plug 'simnalamburt/vim-mundo'
 Plug 'snoe/nvim-parinfer.js', { 'do': ':UpdateRemotePlugins' }
+Plug 'stephpy/vim-yaml'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tmux-plugins/vim-tmux'
@@ -199,6 +200,8 @@ set backspace=indent,eol,start
 set t_Co=256
 
 set hidden
+
+set cursorline
 
 let g:gruvbox_contrast_dark=''
 silent colorscheme gruvbox
