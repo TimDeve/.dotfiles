@@ -7,3 +7,5 @@ alias aci="apt-cyg install"
 alias acu="apt-cyg update"
 
 alias cyg-update="cygwin-setup --no-desktop --no-shortcuts --no-startmenu --quiet-mode --upgrade-also"
+
+alias clrtmp="rm -rf /tmp/*"
