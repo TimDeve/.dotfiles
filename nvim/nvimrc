@@ -11,6 +11,7 @@ Plug 'guns/vim-clojure-highlight'
 Plug 'guns/vim-clojure-static'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'jonhiggs/vim-readline'
+Plug 'junegunn/goyo.vim'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'morhetz/gruvbox'
 Plug 'neovim/node-host', {'do' : 'npm install'}
@@ -312,3 +313,7 @@ nnoremap <leader>cs :let @/ = ""<CR>
 
 " Easymotion
 map <leader><space> <Plug>(easymotion-prefix)
+
+" Goyo toggling
+nnoremap <leader>G :Goyo<CR>
+
