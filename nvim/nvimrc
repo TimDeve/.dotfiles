@@ -318,5 +318,5 @@ nnoremap <leader>cs :let @/ = ""<CR>
 map <leader><space> <Plug>(easymotion-prefix)
 
 " Goyo toggling
-nnoremap <leader>G :Goyo<CR>
+nnoremap <leader>df :Goyo<CR>
 
