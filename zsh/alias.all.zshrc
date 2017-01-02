@@ -32,10 +32,13 @@ alias gmerg="git merge"
 # Git diff
 alias gdiff="git diff --color"
 
+# Git diff HEAD and origin
+alias gdifff="git diff HEAD...origin"
+
 # Git Pretty Tree
 alias gtree="git log --oneline --graph --decorate --all"
 
-# Git change last commit message
+# Git fix last commit (wrong commit message, forgot to git add...)
 alias gfixcom="git commit --amend"
 
 # Git Deletes all local branch merged into master
