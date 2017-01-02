@@ -40,6 +40,12 @@
 	"scroll_past_end": true,
 	"tab_size": 2,
 	"tabs_medium": true,
-	"theme": "Asphalt-blue.sublime-theme",
-	"translate_tabs_to_spaces": true
+	"theme": "ayu-dark.sublime-theme",
+	"translate_tabs_to_spaces": true,
+	"ui_big_tabs": true,
+	"ui_fix_tab_labels": true,
+	"ui_font_size_small": true,
+	"ui_font_source_code_pro": true,
+	"ui_separator": true,
+	"ui_wide_scrollbars": true
 }

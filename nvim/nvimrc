@@ -320,3 +320,7 @@ map <leader><space> <Plug>(easymotion-prefix)
 " Goyo toggling
 nnoremap <leader>G :Goyo<CR>
 
+" Add new line without going to insert mode
+nmap <leader>o o<Esc>k
+nmap <leader>O O<Esc>j
+
