@@ -12,6 +12,7 @@ set $fgcolor                        #CCCCCC
 set $hfgcolor                       #404552
 set $bgcolor                        #2F343F
 set $iacolor                        #2F343F
+set $urcolor                        #565d6E
 # Font
 set $winfont                        pango:Lime 10
 set $barfont                        pango:Lime 10
@@ -25,7 +26,7 @@ floating_modifier $mod
 # APPEARANCE #
 ##############
 # Set window appearence             border    bg        fg       urgent
-client.focused                      $hfgcolor $hfgcolor $fgcolor $bgcolor
+client.focused                      $hfgcolor $hfgcolor $fgcolor $urcolor
 client.focused_inactive             $iacolor  $iacolor  $fgcolor $iacolor
 client.unfocused                    $hfgcolor $iacolor  $fgcolor $iacolor
 
