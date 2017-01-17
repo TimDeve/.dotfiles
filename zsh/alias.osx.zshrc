@@ -10,9 +10,6 @@ alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/C
 # VLC
 alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 
-# Midnight Commander exit in folder
-alias mc=". /usr/local/Cellar/midnight-commander/4.8.14/libexec/mc/mc-wrapper.sh"
-
 # cd to WDI folders
 alias cdhw="cd /Users/Tim/dev/WDI_LDN_17_HOMEWORK/timDeve"
 alias cdcw="cd /Users/Tim/dev/WDI_LDN_17_CLASSWORK"
