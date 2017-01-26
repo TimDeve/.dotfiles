@@ -13,6 +13,7 @@ alias pingt='ping 8.8.8.8'
 # Easy tar
 alias tgz='tar -zcvf'
 alias txz='tar -Jcvf'
+alias tzz="zip -r"
 alias untar='tar -xvf'
 
 #
@@ -28,6 +29,8 @@ alias gpull="git pull"
 alias gstat="git status"
 alias gchek="git checkout"
 alias gmerg="git merge"
+alias ginit="git init"
+alias gfech="git fetch"
 
 # Git diff
 alias gdiff="git diff --color"
@@ -46,6 +49,7 @@ alias gdelmerged='git branch --merged | grep -v "\*" | grep -v master | grep -v 
 
 # cd to root of repo
 alias cg='cd "$(git rev-parse --show-toplevel)"'
+
 #
 # End Git Stuff
 #
@@ -127,3 +131,6 @@ alias whatsmyip="dig +short myip.opendns.com @resolver1.opendns.com"
 
 # Folder size
 alias wh="du -sh"
+
+# Forgot sudo
+alias pls='sudo $(fc -ln -1)'
