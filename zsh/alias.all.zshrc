@@ -78,7 +78,7 @@ alias cpv="rsync -poghb --backup-dir=/tmp/rsync -e /dev/null --progress --"
 alias npmlist="npm list -g --depth=0"
 
 # Because you can't remember your aliases
-alias whalias="ag '^alias' ~/.dotfiles/zsh --no-numbers"
+alias whalias="ag '^alias' ~/.dotfiles/zsh --no-numbers -B 1"
 
 # Update dot files
 alias downdot="cd ~/.dotfiles && git pull"
