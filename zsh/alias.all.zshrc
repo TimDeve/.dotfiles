@@ -134,3 +134,7 @@ alias wh="du -sh"
 
 # Forgot sudo
 alias pls='sudo $(fc -ln -1)'
+
+# Tree without annoying folder
+alias treee="tree -I node_modules"
+
