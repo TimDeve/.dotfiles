@@ -99,9 +99,6 @@ alias mdc="mkcd"
 # Reload zshrc
 alias zreload="source ~/.zshrc"
 
-# Pokemon color script
-alias poke="bash ~/.dotfiles/scripts/general/c-poke"
-
 # Simple Python Server
 alias pyserv="python -m SimpleHTTPServer"
 
