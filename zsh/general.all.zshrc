@@ -9,3 +9,6 @@ PATH="$HOME/.dotfiles/scripts/general:${PATH}"
 
 # Add home bin to path
 PATH="$HOME/bin:${PATH}"
+
+# Add cargo to path
+PATH="$HOME/.cargo/bin:${PATH}"

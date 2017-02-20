@@ -133,5 +133,5 @@ alias wh="du -sh"
 alias pls='sudo $(fc -ln -1)'
 
 # Tree without annoying folder
-alias treee="tree -I node_modules"
+alias tre="tree -I node_modules"
 
