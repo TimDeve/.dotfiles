@@ -135,3 +135,9 @@ alias pls='sudo $(fc -ln -1)'
 # Tree without annoying folder
 alias tre="tree -I node_modules"
 
+# AWS S3
+alias ss="aws s3"
+alias sscp="aws s3 cp"
+alias ssmv="aws s3 mv"
+alias ssrm="aws s3 rm"
+alias ssls="aws s3 ls"
