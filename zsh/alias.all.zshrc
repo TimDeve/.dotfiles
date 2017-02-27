@@ -141,3 +141,11 @@ alias sscp="aws s3 cp"
 alias ssmv="aws s3 mv"
 alias ssrm="aws s3 rm"
 alias ssls="aws s3 ls"
+
+# NPM
+alias npi="npm install"
+alias npa="npm install --save"
+alias npad="npm install --save-dev"
+alias npag="npm install -g"
+alias npr="npm uninstall --save"
+alias nprg="npm uninstall -g"
