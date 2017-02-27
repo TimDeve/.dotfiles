@@ -261,7 +261,7 @@
     </keybind>
     <keybind key="A-space">
       <action name="Execute">
-        <command>rofi -show run -font "Office Code Pro 10" -fg "#CCCCCC" -bg "#2F343F" -hlfg "#CCCCCC" -hlbg "#404552" -bc "#2F343F" -padding 6 -hide-scrollbar -line-margin 4 -lines 10 -width 40 -yoffset -200</command>
+        <command>rofi -color-window "#273238, #273238, #1e2529" -color-normal "#273238, #c1c1c1, #273238, #394249, #ffffff" -color-active "#273238, #80cbaf, #273238, #394249, #80cbaf" -color-urgent "#273238, #ff1844, #273238, #394249, #ff1844" -padding 6 -hide-scrollbar -line-margin 4 -lines 10 -width 40 -yoffset -200 -show run</command>
       </action>
     </keybind>
     <!-- Keybindings for window resizing -->
