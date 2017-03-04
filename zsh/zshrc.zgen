@@ -55,7 +55,6 @@ if ! zgen saved; then
     zgen prezto prompt
 
     # other plugins
-    zgen load Vifon/deer deer
     zgen load rimraf/k
     zgen load Tarrasch/zsh-bd
 
