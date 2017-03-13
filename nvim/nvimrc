@@ -6,6 +6,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'easymotion/vim-easymotion'
 Plug 'guns/vim-clojure-highlight'
 Plug 'guns/vim-clojure-static'
 Plug 'jeetsukumaran/vim-buffergator'
@@ -314,6 +315,10 @@ nnoremap <leader>q :q<CR>
 
 " Clear search
 nnoremap <leader>cs :let @/ = ""<CR>
+
+" Easymotion
+map <leader><space> <Plug>(easymotion-prefix)
+map <Plug>(easymotion-prefix)<space> <Plug>(easymotion-bd-w)
 
 " Goyo toggling
 nnoremap <leader>df :Goyo<CR>
