@@ -6,12 +6,12 @@ Plug 'Raimondi/delimitMate'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'easymotion/vim-easymotion'
 Plug 'guns/vim-clojure-highlight'
 Plug 'guns/vim-clojure-static'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'jonhiggs/vim-readline'
 Plug 'junegunn/goyo.vim'
+Plug 'justinmk/vim-sneak'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'morhetz/gruvbox'
 Plug 'neovim/node-host', {'do' : 'npm install'}
@@ -315,13 +315,13 @@ nnoremap <leader>q :q<CR>
 " Clear search
 nnoremap <leader>cs :let @/ = ""<CR>
 
-" Easymotion
-map <leader><space> <Plug>(easymotion-prefix)
-
 " Goyo toggling
 nnoremap <leader>df :Goyo<CR>
 
 " Add new line without going to insert mode
 nmap <leader>o o<Esc>
 nmap <leader>O O<Esc>
+
+" Sneak keep searching with s
+let g:sneak#s_next = 1
 
