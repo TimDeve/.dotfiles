@@ -7,6 +7,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
+Plug 'francoiscabrol/ranger.vim'
 Plug 'guns/vim-clojure-highlight'
 Plug 'guns/vim-clojure-static'
 Plug 'jeetsukumaran/vim-buffergator'
@@ -16,6 +17,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'morhetz/gruvbox'
 Plug 'neovim/node-host', {'do' : 'npm install'}
+Plug 'rbgrouleff/bclose.vim'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
@@ -190,7 +192,7 @@ hi WildMenu ctermbg=27 ctermfg=white
 
 set linebreak
 set showbreak=+++
-set textwidth=100
+set textwidth=80
 set showmatch        " highlight matching [{()}]
 set visualbell
 
@@ -330,3 +332,9 @@ nmap <leader>O O<Esc>
 " Sneak keep searching with s
 let g:sneak#s_next = 1
 
+" Use jk as Escape
+inoremap kj <esc>
+
+" Remap ranger key
+let g:ranger_map_keys = 0
+map <leader>rg :Ranger<CR>
