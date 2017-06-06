@@ -16,7 +16,7 @@ Plug 'jeetsukumaran/vim-buffergator'
 Plug 'jonhiggs/vim-readline'
 Plug 'junegunn/goyo.vim'
 Plug 'justinmk/vim-sneak'
-Plug 'kien/rainbow_parentheses.vim'
+Plug 'luochen1990/rainbow'
 Plug 'morhetz/gruvbox'
 Plug 'neovim/node-host', {'do' : 'npm install'}
 Plug 'rbgrouleff/bclose.vim'
@@ -45,7 +45,8 @@ call plug#end()
 """ Maximum Awesome Start
 
 " enable syntax highlighting
-syntax enable
+syntax on
+filetype on
 
 set autoindent
 set autoread                                                 " reload files when changed on disk, i.e. via `git checkout`
@@ -253,31 +254,14 @@ let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 
-" Rainbow Parens
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
-
 " Set persistent undo
 set undofile                " Save undo's after file closes
 set undodir=$HOME/.config/nvim/undo " where to save undo histories
 set undolevels=1000         " How many undos
 set undoreload=10000        " number of lines to save for undo
+
+" Activate Rainbow parens only for Clojure
+autocmd FileType clojure :RainbowToggleOn
 
 """ Map Perso
 
@@ -317,7 +301,7 @@ nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 
 " Clear search
-nnoremap <leader>cs :let @/ = ""<CR>
+nnoremap <leader>sc :let @/ = ""<CR>
 
 " Easymotion
 map <leader><space> <Plug>(easymotion-prefix)
