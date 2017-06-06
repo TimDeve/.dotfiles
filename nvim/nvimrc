@@ -1,12 +1,14 @@
 """ vim-plug
 call plug#begin()
 
+" Plug 'snoe/nvim-parinfer.js', { 'do': ':UpdateRemotePlugins' }
 Plug '1995eaton/vim-better-javascript-completion'
 Plug 'Raimondi/delimitMate'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
+Plug 'fleischie/vim-styled-components'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'guns/vim-clojure-highlight'
 Plug 'guns/vim-clojure-static'
@@ -23,7 +25,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
 Plug 'simnalamburt/vim-mundo'
-Plug 'snoe/nvim-parinfer.js', { 'do': ':UpdateRemotePlugins' }
 Plug 'stephpy/vim-yaml'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'terryma/vim-multiple-cursors'
