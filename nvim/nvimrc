@@ -1,17 +1,23 @@
 """ vim-plug
 call plug#begin()
 
+" Plug 'mitermayer/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] } 
 " Plug 'snoe/nvim-parinfer.js', { 'do': ':UpdateRemotePlugins' }
+" Plug 'vim-syntastic/syntastic'
 Plug '1995eaton/vim-better-javascript-completion'
 Plug 'Raimondi/delimitMate'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimfiler.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
+Plug 'fatih/vim-go'
 Plug 'fleischie/vim-styled-components'
 Plug 'francoiscabrol/ranger.vim'
 Plug 'guns/vim-clojure-highlight'
 Plug 'guns/vim-clojure-static'
+Plug 'guns/vim-sexp'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'jonhiggs/vim-readline'
 Plug 'junegunn/goyo.vim'
@@ -22,7 +28,6 @@ Plug 'neovim/node-host', {'do' : 'npm install'}
 Plug 'rbgrouleff/bclose.vim'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
 Plug 'sheerun/vim-polyglot'
 Plug 'simnalamburt/vim-mundo'
 Plug 'stephpy/vim-yaml'
@@ -34,10 +39,14 @@ Plug 'tpope/vim-fireplace'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-salve'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-surround'
+Plug 'venantius/vim-cljfmt'
+Plug 'venantius/vim-eastwood'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/VimClojure'
+Plug 'w0rp/ale'
 
 call plug#end()
 """ End vim-plug
@@ -77,10 +86,11 @@ set mouse=a
 " keyboard shortcut
 map     <space> <leader>
 nnoremap <leader>a :Ag<space>
-nnoremap <leader>d :NERDTreeToggle<CR>
-nnoremap <leader>f :NERDTreeFind<CR>
-nnoremap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
+nnoremap <leader>d :VimFilerExplorer<CR>
+" nnoremap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
+
+
 
 " in case you forgot to sudo
 cnoremap w!! %!sudo tee > /dev/null %
@@ -213,6 +223,19 @@ let g:gruvbox_contrast_dark=''
 silent colorscheme gruvbox
 set background=dark
 
+set timeoutlen=500
+
+" Set vimfiler as default
+let g:vimfiler_as_default_explorer = 1
+
+" NerdCommenter
+let NERDCreateDefaultMappings=0
+
+" Disable sexp default for leader w
+let g:sexp_mappings={
+  \'sexp_round_head_wrap_element': ''
+\}
+
 " GitGutter
 set updatetime=250
 
@@ -262,6 +285,11 @@ set undoreload=10000        " number of lines to save for undo
 
 " Activate Rainbow parens only for Clojure
 autocmd FileType clojure :RainbowToggleOn
+
+" Ale config for js auto fmt
+let g:ale_fixers = {'javascript': ['prettier_standard']}
+let g:ale_linters = {'javascript': ['']}
+let g:ale_fix_on_save = 1
 
 """ Map Perso
 
@@ -317,9 +345,16 @@ nmap <leader>O O<Esc>
 " Sneak keep searching with s
 let g:sneak#s_next = 1
 
-" Use jk as Escape
+" Use kj as Escape
 inoremap kj <esc>
+
 
 " Remap ranger key
 let g:ranger_map_keys = 0
 map <leader>rg :Ranger<CR>
+
+" The only mapping I care about from NerdCommenter
+nmap <leader>cc <plug>NERDCommenterToggle 
+
+" Run test for golang
+autocmd FileType go nnoremap <buffer> <leader>T :GoTest<CR> 

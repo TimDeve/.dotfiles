@@ -57,6 +57,7 @@ if ! zgen saved; then
     # other plugins
     zgen load rimraf/k
     zgen load Tarrasch/zsh-bd
+    zgen load felixr/docker-zsh-completion
 
     # save all to init script
     zgen save
