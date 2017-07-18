@@ -12,3 +12,7 @@ PATH="$HOME/bin:${PATH}"
 
 # Add cargo to path
 PATH="$HOME/.cargo/bin:${PATH}"
+
+# Golang paths
+export GOPATH="$HOME/dev/go"
+PATH="${PATH}:$GOPATH/bin"

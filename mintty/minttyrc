@@ -1,6 +1,6 @@
 BoldAsFont=no
 Font=Menlo For Powerline
-FontHeight=11
+FontHeight=12
 Term=xterm-256color
 CursorType=underscore
 RightClickAction=paste

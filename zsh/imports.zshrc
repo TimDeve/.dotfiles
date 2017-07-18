@@ -46,7 +46,7 @@ case $uname in
     ;;
 esac
 
-source ~/.dotfiles/zsh/secrets.zshrc
+source ~/.dotfiles/zsh/localpost.zshrc
 
 # Cleanup uname variable
 unset -v uname

@@ -1,9 +1,11 @@
-# Manually set your environment language
+source ~/.dotfiles/zsh/localpre.zshrc
+
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-# Manually set your 'PATH' environment variable
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH}"
-# export MANPATH="/usr/local/man:$MANPATH"
+
+# Lazy load nvm so it does not slow down everything
+export NVM_LAZY_LOAD=true
 
 # Check platform
 uname=$(uname)
@@ -58,6 +60,7 @@ if ! zgen saved; then
     zgen load rimraf/k
     zgen load Tarrasch/zsh-bd
     zgen load felixr/docker-zsh-completion
+    zgen load lukechilds/zsh-nvm
 
     # save all to init script
     zgen save
