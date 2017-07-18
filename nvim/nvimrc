@@ -289,10 +289,11 @@ autocmd FileType clojure :RainbowToggleOn
 let g:go_fmt_command = "goimports"
 
 " Prettier
-let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
 let g:prettier#config#trailing_comma = 'es5'
 let g:prettier#config#semi = 'false'
+let g:prettier#config#bracket_spacing = 'true'
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
 
 
 """ Map Perso
