@@ -1,9 +1,9 @@
 """ vim-plug
 call plug#begin()
 
-" Plug 'mitermayer/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] } 
 " Plug 'snoe/nvim-parinfer.js', { 'do': ':UpdateRemotePlugins' }
 " Plug 'vim-syntastic/syntastic'
+" Plug 'w0rp/ale'
 Plug '1995eaton/vim-better-javascript-completion'
 Plug 'Raimondi/delimitMate'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -22,6 +22,7 @@ Plug 'jonhiggs/vim-readline'
 Plug 'junegunn/goyo.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'luochen1990/rainbow'
+Plug 'mitermayer/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] } 
 Plug 'morhetz/gruvbox'
 Plug 'neovim/node-host', {'do' : 'npm install'}
 Plug 'rbgrouleff/bclose.vim'
@@ -45,7 +46,6 @@ Plug 'venantius/vim-eastwood'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/VimClojure'
-Plug 'w0rp/ale'
 
 call plug#end()
 """ End vim-plug
@@ -285,13 +285,15 @@ set undoreload=10000        " number of lines to save for undo
 " Activate Rainbow parens only for Clojure
 autocmd FileType clojure :RainbowToggleOn
 
-" Ale config for js auto fmt
-let g:ale_fixers = {'javascript': ['prettier_standard']}
-let g:ale_linters = {'javascript': ['']}
-let g:ale_fix_on_save = 1
-
 " Vim-go
 let g:go_fmt_command = "goimports"
+
+" Prettier
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
+let g:prettier#config#trailing_comma = 'es5'
+let g:prettier#config#semi = 'false'
+
 
 """ Map Perso
 
