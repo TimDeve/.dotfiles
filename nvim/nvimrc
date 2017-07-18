@@ -14,7 +14,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'fatih/vim-go'
 Plug 'fleischie/vim-styled-components'
-Plug 'francoiscabrol/ranger.vim'
 Plug 'guns/vim-clojure-highlight'
 Plug 'guns/vim-clojure-static'
 Plug 'guns/vim-sexp'
@@ -291,6 +290,9 @@ let g:ale_fixers = {'javascript': ['prettier_standard']}
 let g:ale_linters = {'javascript': ['']}
 let g:ale_fix_on_save = 1
 
+" Vim-go
+let g:go_fmt_command = "goimports"
+
 """ Map Perso
 
 " Split navigation
@@ -347,11 +349,6 @@ let g:sneak#s_next = 1
 
 " Use kj as Escape
 inoremap kj <esc>
-
-
-" Remap ranger key
-let g:ranger_map_keys = 0
-map <leader>rg :Ranger<CR>
 
 " The only mapping I care about from NerdCommenter
 nmap <leader>cc <plug>NERDCommenterToggle 
