@@ -150,3 +150,9 @@ alias npad="npm install --save-dev"
 alias npag="npm install -g"
 alias npr="npm uninstall --save"
 alias nprg="npm uninstall -g"
+
+# Exa (ls improved)
+alias h="exa -gHl --git"
+alias ha="exa -gHla --git"
+alias lh="exa -gHl --git --sort=modified"
+alias lha="exa -gHla --git --sort=modified"

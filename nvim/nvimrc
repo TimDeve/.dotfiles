@@ -3,7 +3,6 @@ call plug#begin()
 
 " Plug 'snoe/nvim-parinfer.js', { 'do': ':UpdateRemotePlugins' }
 " Plug 'vim-syntastic/syntastic'
-" Plug 'w0rp/ale'
 Plug '1995eaton/vim-better-javascript-completion'
 Plug 'Raimondi/delimitMate'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -22,10 +21,11 @@ Plug 'jonhiggs/vim-readline'
 Plug 'junegunn/goyo.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'luochen1990/rainbow'
-Plug 'mitermayer/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] } 
+Plug 'mitermayer/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 Plug 'morhetz/gruvbox'
 Plug 'neovim/node-host', {'do' : 'npm install'}
 Plug 'rbgrouleff/bclose.vim'
+Plug 'rhysd/vim-crystal'
 Plug 'rking/ag.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'sheerun/vim-polyglot'
@@ -46,6 +46,7 @@ Plug 'venantius/vim-eastwood'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/VimClojure'
+Plug 'w0rp/ale'
 
 call plug#end()
 """ End vim-plug
