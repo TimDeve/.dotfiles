@@ -21,6 +21,7 @@ Plug 'jonhiggs/vim-readline'
 Plug 'junegunn/goyo.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'luochen1990/rainbow'
+Plug 'matze/vim-move'
 Plug 'mitermayer/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 Plug 'morhetz/gruvbox'
 Plug 'neovim/node-host', {'do' : 'npm install'}
@@ -296,6 +297,8 @@ let g:prettier#config#bracket_spacing = 'true'
 let g:prettier#autoformat = 0
 autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
 
+" vim-move
+let g:move_key_modifier = 'C'
 
 """ Map Perso
 
@@ -358,4 +361,4 @@ inoremap kj <esc>
 nmap <leader>cc <plug>NERDCommenterToggle 
 
 " Run test for golang
-autocmd FileType go nnoremap <buffer> <leader>T :GoTest<CR> 
+autocmd FileType go nnoremap <buffer> <leader>T :GoTest<CR>
