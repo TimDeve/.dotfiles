@@ -1,4 +1,6 @@
-""" vim-plug
+""""""""""""""""""""""""""""""""
+"          Vim Plug            "
+""""""""""""""""""""""""""""""""
 call plug#begin()
 
 " Plug 'snoe/nvim-parinfer.js', { 'do': ':UpdateRemotePlugins' }
@@ -50,77 +52,64 @@ Plug 'vim-scripts/VimClojure'
 Plug 'w0rp/ale'
 
 call plug#end()
-""" End vim-plug
 
-""" Maximum Awesome Start
 
-" enable syntax highlighting
+""""""""""""""""""""""""""""""""
+"         Vim Config           "
+""""""""""""""""""""""""""""""""
+
 syntax on
 filetype on
 
 set autoindent
 set autoread                                                 " reload files when changed on disk, i.e. via `git checkout`
-set backspace=2                                              " Fix broken backspace in some setups
+set backspace=indent,eol,start
 set backupcopy=yes                                           " see :help crontab
 set clipboard=unnamed                                        " yank and paste with the system clipboard
+set cursorline
 set directory-=.                                             " don't store swapfiles in the current directory
 set encoding=utf-8
 set expandtab                                                " expand tabs to spaces
+set hidden
+set hlsearch
 set ignorecase                                               " case-insensitive search
 set incsearch                                                " search as you type
 set laststatus=2                                             " always show statusline
+set linebreak
 set list                                                     " show trailing whitespace
 set listchars=tab:▸\ ,trail:▫
+set mouse=a                                                  " use mouse everywhere
 set number                                                   " show line numbers
 set ruler                                                    " show where you are
 set scrolloff=3                                              " show context above/below cursorline
 set shiftwidth=2                                             " normal mode indentation commands use 2 spaces
+set showbreak=+++
 set showcmd
+set showmatch                                                " highlight matching [{()}]
 set smartcase                                                " case-sensitive search if any caps
 set softtabstop=2                                            " insert mode tab and backspace use 2 spaces
+set splitbelow
+set splitright
+set t_Co=256
 set tabstop=2                                                " actual tabs occupy 8 characters
-set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
+set textwidth=80
+set timeoutlen=500
+set undodir=$HOME/.config/nvim/undo                          " where to save undo histories
+set undofile                                                 " save undo's after file closes
+set undolevels=1000                                          " how many undos
+set undoreload=10000                                         " number of lines to save for undo
+set visualbell
+set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc " ignore these folders
+set wildmenu
+set wildmode=full
 
-" Enable basic mouse behavior such as resizing buffers.
-set mouse=a
+hi StatusLine ctermbg=238 ctermfg=234
+hi WildMenu ctermbg=27 ctermfg=white
 
-" keyboard shortcut
-map     <space> <leader>
-nnoremap <leader>a :Ag<space>
-nnoremap <leader>d :VimFilerExplorer<CR>
-" nnoremap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
-nnoremap <leader>g :GitGutterToggle<CR>
-
-
-
-" in case you forgot to sudo
-cnoremap w!! %!sudo tee > /dev/null %
-
-" plugin settings
-let g:ctrlp_match_window = 'order:ttb,max:20'
-let g:NERDSpaceDelims=1
-
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-endif
-
-" fdoc is yaml
-autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 " md is markdown
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.md set spell
-" extra rails.vim help
-autocmd User Rails silent! Rnavcommand decorator      app/decorators            -glob=**/* -suffix=_decorator.rb
-autocmd User Rails silent! Rnavcommand observer       app/observers             -glob=**/* -suffix=_observer.rb
-autocmd User Rails silent! Rnavcommand feature        features                  -glob=**/* -suffix=.feature
-autocmd User Rails silent! Rnavcommand job            app/jobs                  -glob=**/* -suffix=_job.rb
-autocmd User Rails silent! Rnavcommand mediator       app/mediators             -glob=**/* -suffix=_mediator.rb
-autocmd User Rails silent! Rnavcommand stepdefinition features/step_definitions -glob=**/* -suffix=_steps.rb
+
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
@@ -133,98 +122,71 @@ else
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
+
+""""""""""""""""""""""""""""""""
+"         Vim Mapping          "
+""""""""""""""""""""""""""""""""
+
+" space is my leader
+map     <space> <leader>
+
+" in case you forgot to sudo
+cnoremap w!! %!sudo tee > /dev/null %
+
 " Don't copy the contents of an overwritten selection.
 vnoremap p "_dP
 
+" Split navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
-""" Maximum Awesome End
+" New Splits
+nmap <leader>= :vsp<cr>
+nmap <leader>- :sp<cr>
 
+" Redo
+nnoremap U <C-R>
 
-""" Key Map CtrlP Start
+" Jump to beginning and end of the line
+nnoremap <leader>h ^
+nnoremap <leader>l $
 
-" Setup some default ignores
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
-  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
-\}
+" Move up and down even on wrapped line
+noremap j gj
+noremap k gk
+noremap gj j
+noremap gk k
 
-" Use the nearest .git directory as the cwd
-" This makes a lot of sense if you are working on a project that is in version
-" control. It also supports works with .svn, .hg, .bzr.
-let g:ctrlp_working_path_mode = 'r'
+" Toggle Wrap
+nnoremap <leader>wr :set wrap!<CR>
 
-" Use a leader instead of the actual named binding
-nmap <leader>p :CtrlP<cr>
+" Add new line without going to insert mode
+nmap <leader>o o<Esc>
+nmap <leader>O O<Esc>
 
-" Easy bindings for its various modes
-nmap <leader>bb :CtrlPBuffer<cr>
-nmap <leader>bm :CtrlPMixed<cr>
-nmap <leader>bs :CtrlPMRU<cr>
+" Use kj as Escape
+inoremap kj <esc>
 
-""" Key Map CtrlP End
+" Save
+nnoremap <leader>w :w<CR>
 
+" Quit
+nnoremap <leader>q :q<CR>
 
-""" Key map BufferGattor Start
-
-" Use the right side of the screen
-let g:buffergator_viewport_split_policy = 'R'
-
-" I want my own keymappings...
-let g:buffergator_suppress_keymaps = 1
-
-" Looper buffers
-"let g:buffergator_mru_cycle_loop = 1
-
-" Go to the previous buffer open
-nmap <leader>j :BuffergatorMruCyclePrev<cr>
-
-" Go to the next buffer open
-nmap <leader>k :BuffergatorMruCycleNext<cr>
-
-" View the entire list of buffers open
-nmap <leader>bl :BuffergatorOpen<cr>
-
-" Open new buffer
-nmap <leader>t :enew<cr>
-
-" Close buffer
-nmap <leader>bc :bp <BAR> bd #<cr>
-
-""" Key map BufferGattor End
+" Clear search
+nnoremap <leader>sc :let @/ = ""<CR>
 
 
-""" Setting Perso
+""""""""""""""""""""""""""""""""
+"       Plugins Config         "
+""""""""""""""""""""""""""""""""
 
-set splitbelow
-set splitright
-
-set wildmenu
-set wildmode=full
-hi StatusLine ctermbg=238 ctermfg=234
-hi WildMenu ctermbg=27 ctermfg=white
-
-set linebreak
-set showbreak=+++
-set textwidth=80
-set showmatch        " highlight matching [{()}]
-set visualbell
-
-set hlsearch
-set smartcase
-
-set backspace=indent,eol,start
-
-set t_Co=256
-
-set hidden
-
-set cursorline
-
+" Gruvbox
 let g:gruvbox_contrast_dark=''
 silent colorscheme gruvbox
 set background=dark
-
-set timeoutlen=500
 
 " Set vimfiler as default
 let g:vimfiler_as_default_explorer = 1
@@ -234,8 +196,8 @@ let NERDCreateDefaultMappings=0
 
 " Disable sexp default for leader w
 let g:sexp_mappings={
-  \'sexp_round_head_wrap_element': ''
-\}
+      \'sexp_round_head_wrap_element': ''
+      \}
 
 " GitGutter
 set updatetime=250
@@ -278,11 +240,6 @@ let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 
-" Set persistent undo
-set undofile                " Save undo's after file closes
-set undodir=$HOME/.config/nvim/undo " where to save undo histories
-set undolevels=1000         " How many undos
-set undoreload=10000        " number of lines to save for undo
 
 " Activate Rainbow parens only for Clojure
 autocmd FileType clojure :RainbowToggleOn
@@ -300,45 +257,77 @@ autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
 " vim-move
 let g:move_key_modifier = 'C'
 
-""" Map Perso
+" keyboard shortcut
+nnoremap <leader>a :Ag<space>
+nnoremap <leader>d :VimFilerExplorer<CR>
+nnoremap <leader>g :GitGutterToggle<CR>
 
-" Split navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+" plugin settings
+let g:ctrlp_match_window = 'order:ttb,max:20'
+let g:NERDSpaceDelims=1
 
-" Redo
-nnoremap U <C-R>
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
 
-" Jump to beginning and end of the line
-nnoremap <leader>h ^
-nnoremap <leader>l $
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
 
-" New Splits
-nmap <leader>= :vsp<cr>
-nmap <leader>- :sp<cr>
+""" Key Map CtrlP Start
 
-" Move up and down even on wrapped line
-noremap j gj
-noremap k gk
-noremap gj j
-noremap gk k
+" Setup some default ignores
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+\}
+
+" Use the nearest .git directory as the cwd
+" This makes a lot of sense if you are working on a project that is in version
+" control. It also supports works with .svn, .hg, .bzr.
+let g:ctrlp_working_path_mode = 'r'
+
+" Use a leader instead of the actual named binding
+nmap <leader>p :CtrlP<cr>
+
+" Easy bindings for its various modes
+nmap <leader>bb :CtrlPBuffer<cr>
+nmap <leader>bm :CtrlPMixed<cr>
+nmap <leader>bs :CtrlPMRU<cr>
+
+""" Key Map CtrlP End
+
+""" Key map BufferGattor Start
+
+" Use the right side of the screen
+let g:buffergator_viewport_split_policy = 'R'
+
+" I want my own keymappings...
+let g:buffergator_suppress_keymaps = 1
+
+" Looper buffers
+"let g:buffergator_mru_cycle_loop = 1
+
+" Go to the previous buffer open
+nmap <leader>j :BuffergatorMruCyclePrev<cr>
+
+" Go to the next buffer open
+nmap <leader>k :BuffergatorMruCycleNext<cr>
+
+" View the entire list of buffers open
+nmap <leader>bl :BuffergatorOpen<cr>
+
+" Open new buffer
+nmap <leader>t :enew<cr>
+
+" Close buffer
+nmap <leader>bc :bp <BAR> bd #<cr>
+
+""" Key map BufferGattor End
 
 " Toggle gundo (better undo)
 nnoremap <leader>u :MundoToggle<CR>
-
-" Toggle Wrap
-nnoremap <leader>wr :set wrap!<CR>
-
-" Save
-nnoremap <leader>w :w<CR>
-
-" Quit
-nnoremap <leader>q :q<CR>
-
-" Clear search
-nnoremap <leader>sc :let @/ = ""<CR>
 
 " Easymotion
 map <leader><space> <Plug>(easymotion-prefix)
@@ -347,15 +336,8 @@ map <Plug>(easymotion-prefix)<space> <Plug>(easymotion-bd-w)
 " Goyo toggling
 nnoremap <leader>df :Goyo<CR>
 
-" Add new line without going to insert mode
-nmap <leader>o o<Esc>
-nmap <leader>O O<Esc>
-
 " Sneak keep searching with s
 let g:sneak#s_next = 1
-
-" Use kj as Escape
-inoremap kj <esc>
 
 " The only mapping I care about from NerdCommenter
 nmap <leader>cc <plug>NERDCommenterToggle 
