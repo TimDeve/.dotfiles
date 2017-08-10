@@ -110,6 +110,9 @@ hi WildMenu ctermbg=27 ctermfg=white
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.md set spell
 
+" gs is Javascript
+autocmd BufRead,BufNewFile *.gs set filetype=javascript
+
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
@@ -252,7 +255,7 @@ let g:prettier#config#trailing_comma = 'es5'
 let g:prettier#config#semi = 'false'
 let g:prettier#config#bracket_spacing = 'true'
 let g:prettier#autoformat = 0
-autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
+" autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
 
 " vim-move
 let g:move_key_modifier = 'C'
