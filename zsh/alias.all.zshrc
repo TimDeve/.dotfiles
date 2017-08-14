@@ -32,6 +32,7 @@ alias gchek="git checkout"
 alias gmerg="git merge"
 alias ginit="git init"
 alias gfech="git fetch"
+alias gclon="git clone"
 
 # Git diff
 alias gdiff="git diff --color"
