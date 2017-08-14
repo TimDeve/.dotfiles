@@ -16,3 +16,6 @@ PATH="$HOME/.cargo/bin:${PATH}"
 # Golang paths
 export GOPATH="$HOME/dev/go"
 PATH="${PATH}:$GOPATH/bin"
+
+# Deactivate dotnet telemetry
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
