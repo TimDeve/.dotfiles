@@ -22,7 +22,7 @@ if ! zgen saved; then
     zgen prezto prompt theme 'sorin'
     zgen prezto terminal auto-title 'yes'
     zgen prezto '*:*' color 'yes'
-    # zgen prezto 'module:ruby:chruby' auto-switch 'yes'
+    zgen prezto 'module:ruby:chruby' auto-switch 'yes'
 
     # prezto plugins
     zgen prezto
@@ -77,5 +77,3 @@ fi
 
 source ~/.dotfiles/zsh/imports.zshrc
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
