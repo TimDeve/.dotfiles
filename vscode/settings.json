@@ -1,0 +1,75 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "workbench.colorTheme": "Gruvbox Dark (Hard)",
+    "editor.tabSize": 2,
+    "editor.renderWhitespace": "boundary",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.fontFamily": "'ProggySquareTT', monospace",
+    "workbench.fontAliasing": "none",
+    "editor.fontAliasing": "none",
+    "editor.fontSize": 16,
+    "editor.lineHeight": 14,
+    "window.zoomLevel": 0,
+    "prettier.trailingComma": "es5",
+    "prettier.semi": false,
+    "vim.disableAnnoyingNeovimMessage": true,
+    "vim.easymotion": true,
+    "vim.incsearch": true,
+    "vim.useSystemClipboard": true,
+    "vim.useCtrlKeys": true,
+    "vim.hlsearch": true,
+    "vim.leader": "<space>",
+    "vim.searchHighlightColor": "rgb(255, 239, 68, 1)",
+    "vim.easymotionMarkerFontFamily": "'ProggySquareTT', monospace",
+    "vim.easymotionMarkerFontSize": "16",
+    "vim.easymotionMarkerFontWeight": "normal",
+    // "vim.easymotionMarkerYOffset": 13,
+    "vim.insertModeKeyBindings": [
+        {
+            "before": ["k", "j"],
+            "after": ["<Esc>"]
+        }
+    ],
+    "vim.otherModesKeyBindingsNonRecursive": [
+        {
+            "before":["leader", "s", "c"],
+            "after":[],
+            "commands": [
+                {
+                    "command": ":nohl",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "before": ["leader", "w"],
+            "after": [],
+            "commands": [
+                {
+                    "command": "workbench.action.files.save",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "before": ["<C-j>"],
+            "after": [],
+            "commands": [
+                {
+                    "command": "editor.action.moveLinesDownAction",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "before": ["<C-k>"],
+            "after": [],
+            "commands": [
+                {
+                    "command": "editor.action.moveLinesUpAction",
+                    "args": []
+                }
+            ]
+        }
+    ]
+}
