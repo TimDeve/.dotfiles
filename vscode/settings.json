@@ -6,7 +6,7 @@
     "editor.multiCursorModifier": "ctrlCmd",
     "editor.fontFamily": "'ProggySquareTT', monospace",
     "workbench.fontAliasing": "none",
-    "editor.fontAliasing": "none",
+    // "editor.fontAliasing": "none",
     "editor.fontSize": 16,
     "editor.lineHeight": 14,
     "window.zoomLevel": 0,
@@ -23,7 +23,6 @@
     "vim.easymotionMarkerFontFamily": "'ProggySquareTT', monospace",
     "vim.easymotionMarkerFontSize": "16",
     "vim.easymotionMarkerFontWeight": "normal",
-    // "vim.easymotionMarkerYOffset": 13,
     "vim.insertModeKeyBindings": [
         {
             "before": ["k", "j"],
@@ -31,6 +30,18 @@
         }
     ],
     "vim.otherModesKeyBindingsNonRecursive": [
+        {
+            "before":["U"],
+            "after":["<C-r>"]
+        },
+        {
+            "before":["leader", "o"],
+            "after":["o", "<Esc>"]
+        },
+        {
+            "before":["leader", "O"],
+            "after":["O", "<Esc>"]
+        },
         {
             "before":["leader", "s", "c"],
             "after":[],
