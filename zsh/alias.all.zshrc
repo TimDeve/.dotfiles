@@ -1,8 +1,10 @@
 # Ranger
 alias rg='ranger'
 
-# NeoVim
+# Shorter editors
 alias v='nvim'
+alias s='subl'
+alias c='code'
 
 # Quick Exit
 alias ee='exit'
@@ -115,12 +117,6 @@ alias lst="livestreamer -p mpv"
 
 # Docker
 alias dk="docker"
-
-# Shorter subl
-alias s="subl"
-
-# Allows to run sudo on aliases
-# alias sudo="sudo "
 
 # Trash
 alias th="trash"
