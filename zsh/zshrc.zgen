@@ -35,10 +35,8 @@ if ! zgen saved; then
     zgen prezto utility
     zgen prezto completion
     zgen prezto git
-    zgen prezto node
     zgen prezto python
     zgen prezto ruby
-#    zgen prezto ssh
     zgen prezto rsync
     zgen prezto archive
     zgen prezto fasd
