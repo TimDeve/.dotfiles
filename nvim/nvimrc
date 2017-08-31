@@ -169,6 +169,9 @@ nnoremap <leader>wr :set wrap!<CR>
 nmap <leader>o o<Esc>
 nmap <leader>O O<Esc>
 
+" Insert new line at cursor
+nmap <leader><CR> i<CR><ESC>
+
 " Use kj as Escape
 inoremap kj <esc>
 
