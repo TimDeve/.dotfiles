@@ -154,3 +154,9 @@ alias h="exa -gHl --git"
 alias ha="exa -gHla --git"
 alias lh="exa -gHl --git --sort=modified"
 alias lha="exa -gHla --git --sort=modified"
+
+# Fasd
+alias f="fasd_cd -d"
+alias fo="fasd -e"
+alias fv="fasd -e nvim"
+alias fc="fasd -e code"
