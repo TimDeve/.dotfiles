@@ -1,46 +1,47 @@
 #!/bin/bash
 
-
-### Packets to install
-toInstall=('zsh'\
-  'tmux'\
-  'ranger'\
-  'nvim'\
-  'coreutils'\
-  'moreutils'\
-  'findutils'\
-  'wget'\
-  'curl'\
-  'openssh'\
+### Packages to install
+toInstall=(\
   'ack'\
-  'the_silver_surfer'\
-  'brew-cask'\
-  'cheat'\
-  'duck'\
+  'coreutils'\
+  'curl'\
   'fasd'\
   'ffmpeg'\
+  'findutils'\
+  'git'\
   'htop'\
   'imagemagick'\
   'mas'\
   'md5sha1sum'\
   'mobile-shell'\
+  'moreutils'\
+  'neovim'\
   'nmap'\
-  'pastebinit'\
   'node'\
+  'openssh'\
   'python'\
   'python3'\
-  'ruby'\
+  'ranger'\
   'rsync'\
+  'ruby'\
   'speedtest_cli'\
+  'the_silver_surfer'\
   'tig'\
-  'irssi'\
-  'weechat'\
+  'tmux'\
   'vim'\
-  'git'\
+  'weechat'\
+  'wget'\
+  'zsh'\
 )
 
 for i in "${toInstall[@]}"
 do
   brew install $i
+
+  echo ""
+  echo "---------"
   echo ""
 done
+
+unset toInstall
+

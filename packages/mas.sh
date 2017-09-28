@@ -2,14 +2,13 @@
 
 ### Packages to install
 toInstall=(\
-  'livestreamer'\
-  'neovim'\
-  'rtv'\
+  # Amphetamine
+  '937984704'\
 )
 
 for i in "${toInstall[@]}"
 do
-  sudo pip install $i
+  mas install $i
 
   echo ""
   echo "---------"
