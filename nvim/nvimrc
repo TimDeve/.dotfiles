@@ -198,6 +198,8 @@ set background=dark
 let g:vimfiler_as_default_explorer = 1
 
 " NerdCommenter
+let g:NERDDefaultAlign = 'left'
+let g:NERDCommentEmptyLines = 1
 let NERDCreateDefaultMappings=0
 
 " Disable sexp default for leader w
@@ -346,7 +348,7 @@ nnoremap <leader>df :Goyo<CR>
 let g:sneak#s_next = 1
 
 " The only mapping I care about from NerdCommenter
-nmap <leader>cc <plug>NERDCommenterToggle 
+map <leader>cc <plug>NERDCommenterToggle 
 
 " Run test for golang
 autocmd FileType go nnoremap <buffer> <leader>T :GoTest<CR>
