@@ -46,3 +46,21 @@ gdifs() {
   printf '─%.0s' {1..$COLUMNS}
   git status
 }
+
+n() {
+        nnn "$@"
+
+        if [ -f "/tmp/nnn" ]; then
+                . "/tmp/nnn"
+                rm -f "/tmp/nnn"
+        fi
+}
+
+# Quick Notes
+nq() {
+  not -q "$*"
+}
+
+nt() {
+  not -t "$*"
+}

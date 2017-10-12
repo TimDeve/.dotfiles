@@ -160,3 +160,7 @@ alias f="fasd_cd -d"
 alias fo="fasd -e"
 alias fv="fasd -e nvim"
 alias fc="fasd -e code"
+
+#Notes
+alias nn="not"
+alias ns="not -s"
