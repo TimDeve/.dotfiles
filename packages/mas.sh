@@ -1,9 +1,11 @@
 #!/bin/bash
 
 ### Packages to install
-toInstall=(\
+toInstall=(
   # Amphetamine
-  '937984704'\
+  '937984704'
+  # Affinity Photo
+  '824171161'
 )
 
 for i in "${toInstall[@]}"

@@ -1,15 +1,16 @@
 #!/bin/bash
 
 ### Packages to install
-toInstall=(\
-  'livestreamer'\
-  'neovim'\
-  'rtv'\
+toInstall=(
+  'diff-highlight'
+  'livestreamer'
+  'neovim'
+  'rtv'
 )
 
 for i in "${toInstall[@]}"
 do
-  sudo pip install $i
+  sudo pip3 install $i
 
   echo ""
   echo "---------"
