@@ -17,8 +17,8 @@
     "vim.useSystemClipboard": true,
     "vim.useCtrlKeys": true,
     "vim.hlsearch": true,
+    "vim.searchHighlightColor": "#f9ab02",
     "vim.leader": "<space>",
-    "vim.searchHighlightColor": "rgb(255, 239, 68, 1)",
     "vim.easymotionMarkerFontFamily": "'Monoid-Regular', 'ProggySquareTT', monospace",
     "vim.easymotionMarkerFontSize": "12",
     "vim.easymotionMarkerFontWeight": "normal",
@@ -81,5 +81,6 @@
                 }
             ]
         }
-    ]
+    ],
+    "extensions.ignoreRecommendations": false
 }

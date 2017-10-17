@@ -10,11 +10,6 @@ alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/C
 # VLC
 alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
 
-# cd to WDI folders
-alias cdhw="cd /Users/Tim/dev/WDI_LDN_17_HOMEWORK/timDeve"
-alias cdcw="cd /Users/Tim/dev/WDI_LDN_17_CLASSWORK"
-alias cdln="cd /Users/Tim/dev/WDI_LDN_17_LESSON_NOTES"
-
 # Copy Current Path
 alias copp="pwd | pbcopy"
 
@@ -43,3 +38,6 @@ alias redis="redis-server /usr/local/etc/redis.conf"
 
 # Find Gateway
 alias findgate="netstat -nr | grep '^default'"
+
+# Other cask alias
+alias caskr="brew cask reinstall"

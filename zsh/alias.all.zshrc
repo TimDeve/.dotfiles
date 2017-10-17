@@ -148,6 +148,7 @@ alias npag="npm install -g"
 alias npx="npm uninstall --save"
 alias npxg="npm uninstall -g"
 alias npr="npm run"
+alias nps="npm start"
 
 # Exa (ls improved)
 alias h="exa -gHl --git"
