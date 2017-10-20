@@ -1,6 +1,3 @@
-# Ranger
-alias rg='ranger'
-
 # Shorter editors
 alias v='nvim'
 alias s='subl'
@@ -162,6 +159,7 @@ alias fo="fasd -e"
 alias fv="fasd -e nvim"
 alias fc="fasd -e code"
 
-#Notes
+# Notes
 alias nn="not"
 alias ns="not -s"
+

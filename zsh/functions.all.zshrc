@@ -19,9 +19,9 @@ transfer() {
   rm -f $tmpfile;
 }
 
-function gi() { curl -L -s "https://www.gitignore.io/api/$@";}
+function gi() { curl -L -s "https://www.gitignore.io/api/$@" }
 
-weather(){curl "http://wttr.in/$1"}
+weather(){ curl "http://wttr.in/$1" }
 
 up() {
   local x='';
@@ -48,12 +48,12 @@ gdifs() {
 }
 
 n() {
-        nnn "$@"
+  nnn "$@"
 
-        if [ -f "/tmp/nnn" ]; then
-                . "/tmp/nnn"
-                rm -f "/tmp/nnn"
-        fi
+  if [ -f "/tmp/nnn" ]; then
+    . "/tmp/nnn"
+    rm -f "/tmp/nnn"
+  fi
 }
 
 # Quick Notes
@@ -63,4 +63,14 @@ nq() {
 
 nt() {
   not -t "$*"
+}
+
+# Count line in given folder
+countln() {
+  local folder="$1"
+  if [ -z $folder ]
+  then
+    folder="."
+  fi
+  find $folder -type f | xargs wc -l
 }

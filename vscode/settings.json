@@ -10,6 +10,7 @@
     "window.zoomLevel": 0,
     "prettier.trailingComma": "es5",
     "prettier.semi": false,
+    "prettier.printWidth": 110,
     "gitProjectManager.baseProjectsFolders": ["~/dev"],
     "vim.disableAnnoyingNeovimMessage": true,
     "vim.easymotion": true,
