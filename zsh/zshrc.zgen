@@ -18,11 +18,12 @@ if ! zgen saved; then
     echo "Creating a zgen save"
 
     # prezto options
-    zgen prezto editor key-bindings 'emacs'
     zgen prezto prompt theme 'sorin'
     zgen prezto terminal auto-title 'yes'
     zgen prezto '*:*' color 'yes'
     zgen prezto 'module:ruby:chruby' auto-switch 'yes'
+    zgen prezto editor key-bindings 'vi'
+    bindkey -M viins 'kj' vi-cmd-mode
 
     # prezto plugins
     zgen prezto
@@ -65,9 +66,6 @@ if ! zgen saved; then
     # save all to init script
     zgen save
 fi
-
-# CUSTOM:
-# ===============================================================================================
 
 #
 ## Imports ------------------------------------------------------------
