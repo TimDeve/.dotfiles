@@ -19,3 +19,6 @@ PATH="${PATH}:$GOPATH/bin"
 
 # Deactivate dotnet telemetry
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+# Allow to exit vi input mode with kj
+bindkey -M viins 'kj' vi-cmd-mode

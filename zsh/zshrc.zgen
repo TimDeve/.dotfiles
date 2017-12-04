@@ -23,7 +23,6 @@ if ! zgen saved; then
     zgen prezto '*:*' color 'yes'
     zgen prezto 'module:ruby:chruby' auto-switch 'yes'
     zgen prezto editor key-bindings 'vi'
-    bindkey -M viins 'kj' vi-cmd-mode
 
     # prezto plugins
     zgen prezto
