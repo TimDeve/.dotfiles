@@ -146,6 +146,7 @@ alias npx="npm uninstall --save"
 alias npxg="npm uninstall -g"
 alias npr="npm run"
 alias nps="npm start"
+alias npt="npm test"
 
 # Exa (ls improved)
 alias h="exa -gHl --git"

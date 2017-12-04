@@ -83,5 +83,6 @@
             ]
         }
     ],
-    "extensions.ignoreRecommendations": false
+    "extensions.ignoreRecommendations": false,
+    "editor.minimap.enabled": true
 }
