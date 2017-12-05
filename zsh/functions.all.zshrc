@@ -37,7 +37,9 @@ countstr() {
 }
 
 gdrop() {
-  git stash && git stash drop
+  if yorn "Discard all changes?"; then
+    git stash > /dev/null 2>&1 && git stash drop > /dev/null 2>&1
+  fi
 }
 
 gdifs() {
@@ -73,4 +75,17 @@ countln() {
     folder="."
   fi
   find $folder -type f | xargs wc -l
+}
+
+yorn() {
+  local question="$1" answer
+
+  echo "$question (y/N)"
+
+  read -sk answer
+  if [ $answer = y ]; then
+    return 0
+  else
+    return 1
+  fi
 }
