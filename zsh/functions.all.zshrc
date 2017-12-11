@@ -49,6 +49,13 @@ gdifs() {
   git status
 }
 
+gclonorg() {
+  local org=$1 tfa=$2 
+  while read -r repo
+    do git clone $repo
+  done <<< $(curl -H "X-GitHub-OTP: $tfa" -u timdeve -s "https://api.github.com/orgs/$org/repos?per_page=200" | jq -r ".[].ssh_url")
+}
+
 n() {
   nnn "$@"
 
