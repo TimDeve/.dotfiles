@@ -165,3 +165,5 @@ alias fc="fasd -e code"
 alias nn="not"
 alias ns="not -s"
 
+# Rake
+alias rk="rake"
