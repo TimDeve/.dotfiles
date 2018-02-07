@@ -96,3 +96,7 @@ yorn() {
     return 1
   fi
 }
+
+nprl() {
+  jq .scripts < $(git rev-parse --show-toplevel)/package.json
+}

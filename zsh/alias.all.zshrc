@@ -145,7 +145,6 @@ alias npag="npm install -g"
 alias npx="npm uninstall --save"
 alias npxg="npm uninstall -g"
 alias npr="npm run"
-alias nprl="jq .scripts < $(git rev-parse --show-toplevel)/package.json"
 alias nps="npm start"
 alias npt="npm test"
 
