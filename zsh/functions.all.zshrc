@@ -42,6 +42,18 @@ gdrop() {
   fi
 }
 
+guncom() {
+  if yorn "Uncommit latest changes?"; then
+    git reset HEAD~
+  fi
+}
+
+gdelcom() {
+  if yorn "Delete latest commit?"; then
+    git reset HEAD~ --hard
+  fi
+}
+
 gdifs() {
   git diff --color
   printf '─%.0s' {1..$COLUMNS}
@@ -54,6 +66,10 @@ gclonorg() {
   while read -r repo
     do git clone $repo
   done <<< $(curl -H "X-GitHub-OTP: $tfa" -u timdeve -s "https://api.github.com/orgs/$org/repos?per_page=200" | jq -r ".[].ssh_url")
+}
+
+gpushf() {
+  git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
 }
 
 n() {

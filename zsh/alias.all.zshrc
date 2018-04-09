@@ -21,8 +21,8 @@ alias untar='tar -xvf'
 
 alias gcom="git commit"
 alias gadd="git add"
-alias gaddcom="git add -u && git commit"
-alias gadddcom="git add --all && git commit"
+alias gaddcom="git add -u && git commit --verbose"
+alias gadddcom="git add --all && git commit --verbose"
 alias gpush="git push"
 alias gpull="git pull"
 alias gpullr="git pull --rebase"
