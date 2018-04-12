@@ -19,7 +19,7 @@ alias untar='tar -xvf'
 # Git Stuff
 #
 
-alias gcom="git commit"
+alias gcom="git commit --verbose"
 alias gadd="git add"
 alias gaddcom="git add -u && git commit --verbose"
 alias gadddcom="git add --all && git commit --verbose"
@@ -142,8 +142,8 @@ alias npi="npm install"
 alias npa="npm install --save"
 alias npad="npm install --save-dev"
 alias npag="npm install -g"
-alias npx="npm uninstall --save"
-alias npxg="npm uninstall -g"
+alias npd="npm uninstall --save"
+alias npdg="npm uninstall -g"
 alias npr="npm run"
 alias nps="npm start"
 alias npt="npm test"
