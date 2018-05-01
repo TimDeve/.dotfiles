@@ -116,3 +116,14 @@ yorn() {
 nprl() {
   jq .scripts < $(git rev-parse --show-toplevel)/package.json
 }
+
+poll() {
+  local sleepTime=$1
+
+  shift
+
+  while true; do
+    eval $@
+    sleep $sleepTime
+  done
+}
