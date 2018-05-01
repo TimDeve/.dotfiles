@@ -1,18 +1,41 @@
 // Place your settings in this file to overwrite the default settings
 {
-    "workbench.colorTheme": "Gruvbox Dark (Hard)",
+    "workbench.colorTheme": "Alabaster",
+    "files.autoSave": "onFocusChange",
     "editor.tabSize": 2,
-    "editor.renderWhitespace": "boundary",
+    // "editor.renderWhitespace": "boundary",
+    "files.trimTrailingWhitespace": false,
     "editor.multiCursorModifier": "ctrlCmd",
     "editor.fontFamily": "'Monoid-Regular', 'ProggySquareTT', monospace",
     "editor.fontSize": 12,
     "terminal.integrated.fontSize": 12,
+    "editor.folding": false,
+    "editor.hideCursorInOverviewRuler": true,
+    "editor.lineHeight": 22,
+    "editor.lineNumbers": "off",
+    "editor.matchBrackets": false,
+    "editor.minimap.enabled": false,
+    "editor.occurrencesHighlight": false,
+    "editor.overviewRulerBorder": false,
+    "editor.renderIndentGuides": false,
+    "editor.renderLineHighlight": "none",
+    // "editor.scrollbar.horizontal": "hidden",
+    "explorer.openEditors.visible": 0,
+    "extensions.ignoreRecommendations": false,
+    "workbench.activityBar.visible": false,
+    "workbench.iconTheme": null,
+    "workbench.editor.showIcons": false,
+    "workbench.statusBar.visible": false,
     "window.zoomLevel": 0,
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
     "prettier.trailingComma": "es5",
     "prettier.semi": false,
     "prettier.printWidth": 110,
-    "gitProjectManager.baseProjectsFolders": ["~/dev"],
-    "vim.disableAnnoyingNeovimMessage": true,
+    "gitProjectManager.baseProjectsFolders": [
+        "~/dev"
+    ],
     "vim.easymotion": true,
     "vim.incsearch": true,
     "vim.useSystemClipboard": true,
@@ -83,6 +106,5 @@
             ]
         }
     ],
-    "extensions.ignoreRecommendations": false,
-    "editor.minimap.enabled": true
+    "vim.disableExtension": false,
 }
