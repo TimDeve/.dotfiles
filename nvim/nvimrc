@@ -11,6 +11,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'benmills/vimux'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'fatih/vim-go'
@@ -18,6 +19,7 @@ Plug 'fleischie/vim-styled-components'
 Plug 'guns/vim-clojure-highlight'
 Plug 'guns/vim-clojure-static'
 Plug 'guns/vim-sexp'
+Plug 'janko-m/vim-test'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'jonhiggs/vim-readline'
 Plug 'junegunn/goyo.vim'
@@ -352,3 +354,6 @@ map <leader>cc <plug>NERDCommenterToggle
 
 " Run test for golang
 autocmd FileType go nnoremap <buffer> <leader>T :GoTest<CR>
+
+" vim-test
+let test#strategy = "vimux" " Run test in tmux window 
