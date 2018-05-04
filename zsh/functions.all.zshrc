@@ -55,7 +55,7 @@ gdelcom() {
 }
 
 gdifs() {
-  git diff --color
+  git --no-pager diff --color
   printf '─%.0s' {1..$COLUMNS}
   printf '─%.0s' {1..$COLUMNS}
   git status
