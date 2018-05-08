@@ -170,3 +170,4 @@ alias rk="rake"
 # Nix
 alias nxe="nix-env"
 alias nxi="nix-env -i"
+alias nxr="nix-env -e"
