@@ -127,3 +127,8 @@ poll() {
     sleep $sleepTime
   done
 }
+
+# Nix
+nxs() {
+  nix-env -qaP ".*$@.*"
+}

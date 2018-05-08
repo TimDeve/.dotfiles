@@ -166,3 +166,7 @@ alias ns="not -s"
 
 # Rake
 alias rk="rake"
+
+# Nix
+alias nxe="nix-env"
+alias nxi="nix-env -i"
