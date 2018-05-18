@@ -171,3 +171,6 @@ alias rk="rake"
 alias nxe="nix-env"
 alias nxi="nix-env -i"
 alias nxr="nix-env -e"
+alias nxu="nix-env -u"
+alias nxs="nix-channel --update"
+
