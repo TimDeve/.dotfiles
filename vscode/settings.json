@@ -1,6 +1,6 @@
 // Place your settings in this file to overwrite the default settings
 {
-    "workbench.colorTheme": "Alabaster",
+    "workbench.colorTheme": "Gruvbox Dark (Hard)",
     "files.autoSave": "onFocusChange",
     "editor.tabSize": 2,
     // "editor.renderWhitespace": "boundary",
