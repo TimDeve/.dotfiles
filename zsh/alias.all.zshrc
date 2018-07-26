@@ -32,6 +32,8 @@ alias gmerg="git merge"
 alias ginit="git init"
 alias gfech="git fetch"
 alias gclon="git clone"
+alias gclean="git clean"
+alias gclin="git clean -i"
 
 # Git diff
 alias gdiff="git diff --color"
@@ -44,6 +46,7 @@ alias gtree="git log --oneline --graph --decorate --all"
 
 # Git fix last commit (wrong commit message, forgot to git add...)
 alias gfixcom="git commit --amend"
+alias gfixcomq="git commit --amend --no-edit"
 
 # Git Deletes all local branch merged into master
 alias gdelmerged='git branch --merged | grep -v "\*" | grep -v master | grep -v dev | grep -v production | xargs -n 1 git branch -d'
