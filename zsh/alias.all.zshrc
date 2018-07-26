@@ -34,6 +34,9 @@ alias gfech="git fetch"
 alias gclon="git clone"
 alias gclean="git clean"
 alias gclin="git clean -i"
+alias gsta="git stash"
+alias gstap="git stash pop"
+alias gstad="git stash drop"
 
 # Git diff
 alias gdiff="git diff --color"
