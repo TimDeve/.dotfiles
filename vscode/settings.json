@@ -107,4 +107,5 @@
         }
     ],
     "vim.disableExtension": false,
+    "workbench.editor.enablePreview": false,
 }
