@@ -7,9 +7,6 @@ alias masui="bash ~/dev/masui/masui"
 # Airport utility
 alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
 
-# VLC
-alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
-
 # Copy Current Path
 alias copp="pwd | pbcopy"
 
