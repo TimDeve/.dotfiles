@@ -133,6 +133,6 @@ poll() {
 }
 
 # Nix
-nxs() {
+nxf() {
   nix-env -qaP ".*$@.*"
 }
