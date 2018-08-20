@@ -72,6 +72,10 @@ gpushf() {
   git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
 }
 
+gfindcom() {
+  git log  | rg "$*" -C 3
+}
+
 n() {
   nnn "$@"
 
