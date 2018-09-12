@@ -341,7 +341,7 @@ map <leader><space> <Plug>(easymotion-prefix)
 map <Plug>(easymotion-prefix)<space> <Plug>(easymotion-bd-w)
 
 " Goyo toggling
-nnoremap <leader>df :Goyo<CR>
+nnoremap <leader>ff :Goyo<CR>
 
 " Sneak keep searching with s
 let g:sneak#s_next = 1
