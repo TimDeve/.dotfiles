@@ -1,0 +1,11 @@
+brew "mas"
+cask "keybase"
+cask "signal"
+cask "sourcetree"
+cask "torbrowser"
+cask "tunnelblick"
+cask "virtualbox"
+cask "virtualbox-extension-pack"
+mas "Affinity Photo", id: 824183456
+mas "CCMenu", id: 603117688
+mas "Xcode", id: 497799835
