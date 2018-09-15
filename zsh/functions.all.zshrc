@@ -76,6 +76,10 @@ gfindcom() {
   git log  | rg "$*" -C 3
 }
 
+gcomsincet() {
+  git log $1..HEAD --oneline
+}
+
 n() {
   nnn "$@"
 
