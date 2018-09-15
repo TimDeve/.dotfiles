@@ -11,8 +11,8 @@
     "terminal.integrated.fontSize": 12,
     "editor.folding": false,
     "editor.hideCursorInOverviewRuler": true,
-    "editor.lineHeight": 22,
-    "editor.lineNumbers": "off",
+    "editor.lineHeight": 20,
+    // "editor.lineNumbers": "off",
     "editor.matchBrackets": false,
     "editor.minimap.enabled": false,
     "editor.occurrencesHighlight": false,
@@ -25,7 +25,6 @@
     "workbench.activityBar.visible": false,
     "workbench.iconTheme": null,
     "workbench.editor.showIcons": false,
-    "workbench.statusBar.visible": false,
     "window.zoomLevel": 0,
     "[javascript]": {
         "editor.formatOnSave": true
@@ -108,4 +107,8 @@
     ],
     "vim.disableExtension": false,
     "workbench.editor.enablePreview": false,
+    "workbench.statusBar.visible": true,
+    "workbench.colorCustomizations": {
+        "statusBar.background": "#1B1D1E",
+    }
 }
