@@ -180,3 +180,5 @@ alias nxr="nix-env -e"
 alias nxu="nix-env -u"
 alias nxs="nix-channel --update"
 
+alias epoch="date +'%s'"
+
