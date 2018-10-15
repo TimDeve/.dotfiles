@@ -3,7 +3,13 @@
 set -euo pipefail
 
 function v() {
-  nvim "$@" || vim "$@"
+  if hash nvim 2>/dev/null; then
+    nvim "$@"
+  elif hash vim 2>/dev/null; then
+    vim "$@"
+  else
+    vi "$@"
+  fi
 }
 
 function usage() {
@@ -38,7 +44,7 @@ while getopts "shl:t:q:" opt; do
        content=$OPTARG
        ;;
      l)
-        labels=$OPTARG
+       labels=$OPTARG
        ;;
      t)
        title=$OPTARG
