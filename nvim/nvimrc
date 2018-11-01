@@ -3,7 +3,16 @@
 """"""""""""""""""""""""""""""""
 call plug#begin()
 
+" Plug 'guns/vim-clojure-highlight'
+" Plug 'guns/vim-clojure-static'
+" Plug 'guns/vim-sexp'
 " Plug 'snoe/nvim-parinfer.js', { 'do': ':UpdateRemotePlugins' }
+" Plug 'tpope/vim-fireplace'
+" Plug 'tpope/vim-projectionist'
+" Plug 'tpope/vim-salve'
+" Plug 'tpope/vim-sexp-mappings-for-regular-people'
+" Plug 'venantius/vim-cljfmt'
+" Plug 'venantius/vim-eastwood'
 " Plug 'vim-syntastic/syntastic'
 Plug '1995eaton/vim-better-javascript-completion'
 Plug 'Raimondi/delimitMate'
@@ -11,14 +20,12 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/vimfiler.vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next','do': 'bash install.sh' }
 Plug 'benmills/vimux'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'fatih/vim-go'
 Plug 'fleischie/vim-styled-components'
-Plug 'guns/vim-clojure-highlight'
-Plug 'guns/vim-clojure-static'
-Plug 'guns/vim-sexp'
 Plug 'janko-m/vim-test'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'jonhiggs/vim-readline'
@@ -32,6 +39,7 @@ Plug 'neovim/node-host', {'do' : 'npm install'}
 Plug 'rbgrouleff/bclose.vim'
 Plug 'rhysd/vim-crystal'
 Plug 'rking/ag.vim'
+Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'sheerun/vim-polyglot'
 Plug 'simnalamburt/vim-mundo'
@@ -41,14 +49,8 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-fireplace'
-Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-salve'
-Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-surround'
-Plug 'venantius/vim-cljfmt'
-Plug 'venantius/vim-eastwood'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/VimClojure'
@@ -354,3 +356,16 @@ autocmd FileType go nnoremap <buffer> <leader>T :GoTest<CR>
 
 " vim-test
 let test#strategy = "vimux" " Run test in tmux window 
+
+" Silence vim go warning
+let g:go_version_warning = 0
+
+" Rust
+let g:rustfmt_autosave = 1
+
+" LanguageClient
+let g:LanguageClient_autoStart = 0
+nnoremap <leader>lcs :LanguageClientStart<CR>
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ }
