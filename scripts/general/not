@@ -17,7 +17,7 @@ function usage() {
 }
 
 if [ $# -eq 0 ]; then
-  v "$(find $HOME/not -type f | fzf --height 20% --reverse)"
+  v "$(find $HOME/not/ -type f | fzf --height 20% --reverse)"
   exit
 fi
 
