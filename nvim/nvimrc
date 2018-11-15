@@ -342,8 +342,23 @@ nnoremap <leader>u :MundoToggle<CR>
 map <leader><space> <Plug>(easymotion-prefix)
 map <Plug>(easymotion-prefix)<space> <Plug>(easymotion-bd-w)
 
-" Goyo toggling
+" Goyo
 nnoremap <leader>ff :Goyo<CR>
+
+function! s:goyo_enter()
+  silent !tmux set status off
+  set noshowmode
+  set noshowcmd
+endfunction
+
+function! s:goyo_leave()
+  silent !tmux set status on
+  set showmode
+  set showcmd
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " Sneak keep searching with s
 let g:sneak#s_next = 1
@@ -369,3 +384,4 @@ nnoremap <leader>lcs :LanguageClientStart<CR>
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ }
+
