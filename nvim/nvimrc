@@ -29,6 +29,7 @@ Plug 'fleischie/vim-styled-components'
 Plug 'janko-m/vim-test'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'jonhiggs/vim-readline'
+Plug 'junegunn/fzf'
 Plug 'junegunn/goyo.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'luochen1990/rainbow'
@@ -107,6 +108,7 @@ set visualbell
 set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc " ignore these folders
 set wildmenu
 set wildmode=full
+set inccommand=nosplit                                       " enables live preview of substitute
 
 hi StatusLine ctermbg=238 ctermfg=234
 hi WildMenu ctermbg=27 ctermfg=white
@@ -370,7 +372,11 @@ map <leader>cc <plug>NERDCommenterToggle
 autocmd FileType go nnoremap <buffer> <leader>T :GoTest<CR>
 
 " vim-test
-let test#strategy = "vimux" " Run test in tmux window 
+let test#strategy = "vimux" " Run test in tmux window
+nnoremap <leader>T :TestNearest<CR>
+nnoremap <leader>TT :TestLast<CR>
+nnoremap <leader>Ts :TestSuite<CR>
+nnoremap <leader>Tf :TestFile<CR>
 
 " Silence vim go warning
 let g:go_version_warning = 0
@@ -379,9 +385,19 @@ let g:go_version_warning = 0
 let g:rustfmt_autosave = 1
 
 " LanguageClient
-let g:LanguageClient_autoStart = 0
-nnoremap <leader>lcs :LanguageClientStart<CR>
+let g:LanguageClient_autoStart = 1
+nnoremap <leader>lcst :LanguageClientStart<CR>
+nnoremap <leader>lcsp :LanguageClientStop<CR>
+
+nnoremap <leader>lcc :call LanguageClient_contextMenu()<CR>
+nnoremap <leader>ss :call LanguageClient_contextMenu()<CR>
+
+nnoremap <leader>lcr :call LanguageClient_textDocument_rename()<CR>
+nnoremap <leader>lcd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <leader>lch :call LanguageClient_textDocument_hover()<CR>
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['javascript-typescript-stdio'],
     \ }
 
