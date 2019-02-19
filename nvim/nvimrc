@@ -197,7 +197,7 @@ nnoremap <leader>sc :let @/ = ""<CR>
 """"""""""""""""""""""""""""""""
 
 " Gruvbox
-let g:gruvbox_contrast_dark=''
+let g:gruvbox_contrast_dark='hard'
 silent colorscheme gruvbox
 set background=dark
 

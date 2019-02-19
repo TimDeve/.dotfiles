@@ -61,6 +61,7 @@ if ! zgen saved; then
     zgen load Tarrasch/zsh-bd
     zgen load felixr/docker-zsh-completion
     zgen load lukechilds/zsh-nvm
+    zgen load skywind3000/z.lua
 
     # save all to init script
     zgen save

@@ -110,5 +110,6 @@
     "workbench.statusBar.visible": true,
     "workbench.colorCustomizations": {
         "statusBar.background": "#1B1D1E",
-    }
+    },
+    "editor.formatOnSave": true
 }
