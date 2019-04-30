@@ -371,6 +371,9 @@ map <leader>cc <plug>NERDCommenterToggle
 " Run test for golang
 autocmd FileType go nnoremap <buffer> <leader>T :GoTest<CR>
 
+" Format and import on save for golang
+autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
+
 " vim-test
 let test#strategy = "vimux" " Run test in tmux window
 nnoremap <leader>T :TestNearest<CR>
@@ -381,8 +384,12 @@ nnoremap <leader>Tf :TestFile<CR>
 " Silence vim go warning
 let g:go_version_warning = 0
 
+" Use ripgrep with fzf
+let FZF_DEFAULT_COMMAND = 'rg --files --hidden'
+
 " Rust
 let g:rustfmt_autosave = 1
+let g:syntastic_rust_checkers = []
 
 " LanguageClient
 let g:LanguageClient_autoStart = 1
@@ -399,5 +406,8 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
+    \ 'typescript': ['javascript-typescript-stdio'],
+    \ 'typescript.jsx': ['javascript-typescript-stdio'],
+    \ 'go': ['gopls'],
     \ }
 

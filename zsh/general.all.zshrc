@@ -3,6 +3,7 @@ export EDITOR="nvim"
 
 # import fzf (fuzzy file finder)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='rg --files --hidden'
 
 # Add script folder to path
 PATH="$HOME/.dotfiles/scripts/general:${PATH}"
