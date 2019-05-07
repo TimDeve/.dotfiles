@@ -40,6 +40,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/VimClojure'
+Plug 'ziglang/zig.vim'
 
 call plug#end()
 
@@ -265,8 +266,9 @@ nnoremap <leader>g :GitGutterToggle<CR>
 let g:ctrlp_match_window = 'order:ttb,max:20'
 let g:NERDSpaceDelims=1
 
-if executable('fd')
-  let g:ctrlp_user_command = 'fd --type f --color=never "" %s'
+if executable('rg')
+  set grepprg=rg\ --color=never
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
   let g:ctrlp_use_caching = 0
 endif
 
@@ -288,8 +290,8 @@ nmap <leader>p :CtrlP<cr>
 
 " Easy bindings for its various modes
 nmap <leader>b :CtrlPBuffer<cr>
-nmap <leader>bm :CtrlPMixed<cr>
-nmap <leader>bs :CtrlPMRU<cr>
+" nmap <leader>bm :CtrlPMixed<cr>
+" nmap <leader>bs :CtrlPMRU<cr>
 
 """ Key Map CtrlP End
 
