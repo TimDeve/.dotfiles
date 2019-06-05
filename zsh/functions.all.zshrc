@@ -38,7 +38,7 @@ countstr() {
 
 gdrop() {
   if yorn "Discard all changes?"; then
-    git checkout .
+    git add --all && git stash && git stash drop
   fi
 }
 
