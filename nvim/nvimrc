@@ -16,7 +16,8 @@ Plug 'fatih/vim-go'
 Plug 'janko-m/vim-test'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'jonhiggs/vim-readline'
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'matze/vim-move'
@@ -28,6 +29,7 @@ Plug 'rhysd/vim-crystal'
 Plug 'rking/ag.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/nerdcommenter'
+Plug 'sebdah/vim-delve'
 Plug 'sheerun/vim-polyglot'
 Plug 'simnalamburt/vim-mundo'
 Plug 'stephpy/vim-yaml'
@@ -176,6 +178,8 @@ nnoremap <leader>q :q<CR>
 " Clear search
 nnoremap <leader>sc :let @/ = ""<CR>
 
+" Delete all other buffers
+nnoremap <leader>bco :%bd\|e#\|bd#<CR>
 
 """"""""""""""""""""""""""""""""
 "       Plugins Config         "
