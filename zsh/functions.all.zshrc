@@ -140,3 +140,7 @@ poll() {
 nxf() {
   nix-env -qaP ".*$@.*"
 }
+
+tmuxa() {
+  tmux attach-session -t $@ || tmux new-session -s $@
+}

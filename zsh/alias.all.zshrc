@@ -66,7 +66,6 @@ alias cg='cd "$(git rev-parse --show-toplevel)"'
 
 # Tmux
 alias tmuxn="tmux new-session -s"
-alias tmuxa="tmux attach-session -t"
 alias tmuxl="tmux list-sessions"
 alias tmuxaa="tmux attach"
 alias tmuxad="tmux attach-session -t Default || tmux new-session -s Default"
