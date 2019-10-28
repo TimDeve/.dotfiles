@@ -362,9 +362,6 @@ map <leader>cc <plug>NERDCommenterToggle
 " Run test for golang
 autocmd FileType go nnoremap <buffer> <leader>T :GoTest<CR>
 
-" Format and import on save for golang
-autocmd BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()
-
 " vim-test
 let test#strategy = "vimux" " Run test in tmux window
 nnoremap <leader>T :TestNearest<CR>
