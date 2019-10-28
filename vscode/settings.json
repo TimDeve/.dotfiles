@@ -117,5 +117,9 @@
 		"**/.project": true,
 		"**/.settings": true,
 		"**/.factorypath": true
+	},
+	"C_Cpp.updateChannel": "Insiders",
+	"[json]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	}
 }
