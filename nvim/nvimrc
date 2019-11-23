@@ -396,6 +396,7 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
     \ 'typescript': ['javascript-typescript-stdio'],
     \ 'typescript.tsx': ['javascript-typescript-stdio'],
+    \ 'typescript.jsx': ['javascript-typescript-stdio'],
     \ 'go': ['gopls'],
     \ }
 
