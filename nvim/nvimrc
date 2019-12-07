@@ -22,6 +22,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --bin' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'justinmk/vim-sneak'
+Plug 'luochen1990/rainbow'
 Plug 'matze/vim-move'
 Plug 'mitermayer/vim-prettier', { 'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 Plug 'morhetz/gruvbox'
@@ -246,7 +247,8 @@ let g:airline_right_alt_sep = ''
 
 
 " Activate Rainbow parens only for Clojure
-autocmd FileType clojure :RainbowToggleOn
+let g:rainbow_active = 0 " Defaults to off
+autocmd FileType clojure,carp :RainbowToggleOn
 
 " Vim-go
 let g:go_fmt_command = "goimports"
