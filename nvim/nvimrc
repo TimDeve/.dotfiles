@@ -11,6 +11,7 @@ Plug 'TimDeve/vim-todo-lists'
 Plug 'airblade/vim-gitgutter'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next','do': 'bash install.sh' }
 Plug 'benmills/vimux'
+Plug 'bhurlow/vim-parinfer'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'fatih/vim-go'
