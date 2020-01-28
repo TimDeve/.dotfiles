@@ -38,3 +38,4 @@ alias findgate="netstat -nr | grep '^default'"
 
 # Other cask alias
 alias caskr="brew cask reinstall"
+alias casku="caskr"
