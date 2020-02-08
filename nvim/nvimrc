@@ -23,7 +23,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'matze/vim-move'
-Plug 'mitermayer/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
+Plug 'mitermayer/vim-prettier', { 'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 Plug 'morhetz/gruvbox'
 Plug 'neovim/node-host', {'do' : 'npm install'}
 Plug 'rbgrouleff/bclose.vim'
