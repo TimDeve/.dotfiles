@@ -392,13 +392,13 @@ nnoremap <leader>lcr :call LanguageClient_textDocument_rename()<CR>
 nnoremap <leader>lcd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <leader>lch :call LanguageClient_textDocument_hover()<CR>
 let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'javascript':     ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
-    \ 'typescript': ['javascript-typescript-stdio'],
+    \ 'typescript':     ['javascript-typescript-stdio'],
     \ 'typescript.tsx': ['javascript-typescript-stdio'],
     \ 'typescript.jsx': ['javascript-typescript-stdio'],
-    \ 'go': ['gopls'],
+    \ 'rust':           ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ 'go':             ['gopls'],
     \ }
 
 
