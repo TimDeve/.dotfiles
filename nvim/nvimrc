@@ -358,7 +358,7 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 let g:sneak#s_next = 1
 
 " The only mapping I care about from NerdCommenter
-map <leader>cc <plug>NERDCommenterToggle 
+map <leader>cc <plug>NERDCommenterToggle
 
 " Run test for golang
 autocmd FileType go nnoremap <buffer> <leader>T :GoTest<CR>
