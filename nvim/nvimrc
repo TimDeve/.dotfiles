@@ -360,9 +360,6 @@ let g:sneak#s_next = 1
 " The only mapping I care about from NerdCommenter
 map <leader>cc <plug>NERDCommenterToggle
 
-" Run test for golang
-autocmd FileType go nnoremap <buffer> <leader>T :GoTest<CR>
-
 " vim-test
 let test#strategy = "vimux" " Run test in tmux window
 nnoremap <leader>T :TestNearest<CR>
@@ -385,12 +382,13 @@ let g:LanguageClient_autoStart = 1
 nnoremap <leader>lcst :LanguageClientStart<CR>
 nnoremap <leader>lcsp :LanguageClientStop<CR>
 
-nnoremap <leader>lcc :call LanguageClient_contextMenu()<CR>
 nnoremap <leader>ss :call LanguageClient_contextMenu()<CR>
 
-nnoremap <leader>lcr :call LanguageClient_textDocument_rename()<CR>
-nnoremap <leader>lcd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <leader>lch :call LanguageClient_textDocument_hover()<CR>
+nnoremap <leader>R :call LanguageClient_textDocument_rename()<CR>
+nnoremap <leader>A :call LanguageClient_textDocument_codeAction()<CR>
+nnoremap <leader>D :call LanguageClient_textDocument_definition()<CR>
+nnoremap <leader>H :call LanguageClient_textDocument_hover()<CR>
+
 let g:LanguageClient_serverCommands = {
     \ 'javascript':     ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
