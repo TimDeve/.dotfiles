@@ -180,8 +180,6 @@ nnoremap <leader>q :q<CR>
 " Clear search
 nnoremap <leader>sc :let @/ = ""<CR>
 
-" Delete all other buffers
-nnoremap <leader>bco :%bd\|e#\|bd#<CR>
 
 """"""""""""""""""""""""""""""""
 "       Plugins Config         "
@@ -291,13 +289,8 @@ let g:ctrlp_custom_ignore = {
 " control. It also supports works with .svn, .hg, .bzr.
 let g:ctrlp_working_path_mode = 'r'
 
-" Use a leader instead of the actual named binding
-nmap <leader>p :CtrlP<cr>
-
 " Easy bindings for its various modes
 nmap <leader>b :CtrlPBuffer<cr>
-" nmap <leader>bm :CtrlPMixed<cr>
-" nmap <leader>bs :CtrlPMRU<cr>
 
 """ Key Map CtrlP End
 
@@ -309,10 +302,10 @@ let g:buffergator_viewport_split_policy = 'R'
 " I want my own keymappings...
 let g:buffergator_suppress_keymaps = 1
 
-" Looper buffers
-"let g:buffergator_mru_cycle_loop = 1
+" go to last buffer
+nmap <leader><tab> <C-^>
 
-" Go to the previous buffer open
+" go to the previous buffer open
 nmap <leader>j :BuffergatorMruCyclePrev<cr>
 
 " Go to the next buffer open
@@ -326,6 +319,9 @@ nmap <leader>t :enew<cr>
 
 " Close buffer
 nmap <leader>bc :bp <BAR> bd #<cr>
+
+" Close all other buffers
+nnoremap <leader>bco :%bd\|e#\|bd#<CR>
 
 """ Key map BufferGattor End
 
@@ -379,15 +375,21 @@ let g:syntastic_rust_checkers = []
 
 " LanguageClient
 let g:LanguageClient_autoStart = 1
+let g:LanguageClient_useFloatingHover = 1
 nnoremap <leader>lcst :LanguageClientStart<CR>
 nnoremap <leader>lcsp :LanguageClientStop<CR>
 
-nnoremap <leader>ss :call LanguageClient_contextMenu()<CR>
+function LC_maps()
+  if has_key(g:LanguageClient_serverCommands, &filetype)
+    nnoremap <leader>ss :call LanguageClient_contextMenu()<CR>
 
-nnoremap <leader>R :call LanguageClient_textDocument_rename()<CR>
-nnoremap <leader>A :call LanguageClient_textDocument_codeAction()<CR>
-nnoremap <leader>D :call LanguageClient_textDocument_definition()<CR>
-nnoremap <leader>H :call LanguageClient_textDocument_hover()<CR>
+    nnoremap <leader>R :call LanguageClient_textDocument_rename()<CR>
+    nnoremap <leader>A :call LanguageClient_textDocument_codeAction()<CR>
+    nnoremap <leader>D :call LanguageClient_textDocument_definition()<CR>
+    nnoremap <leader>H :call LanguageClient_textDocument_hover()<CR>
+  endif
+endfunction
+autocmd FileType * call LC_maps()
 
 let g:LanguageClient_serverCommands = {
     \ 'javascript':     ['javascript-typescript-stdio'],
@@ -398,7 +400,6 @@ let g:LanguageClient_serverCommands = {
     \ 'rust':           ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
     \ 'go':             ['gopls'],
     \ }
-
 
 " Todo
 let g:VimTodoListsMoveItems = 0
