@@ -185,3 +185,6 @@ alias nxs="nix-channel --update"
 
 alias epoch="date +'%s'"
 
+# Select which package you want to update on npm
+alias ncus="ncu | selector | awk '{ print $1 }' | xargs -0 -n1 ncu -u"
+
