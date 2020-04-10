@@ -11,9 +11,9 @@ Plug 'TimDeve/vim-todo-lists'
 Plug 'airblade/vim-gitgutter'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next','do': 'bash install.sh' }
 Plug 'benmills/vimux'
-Plug 'bhurlow/vim-parinfer'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
+Plug 'TimDeve/parinfer-rust', {'do': 'cargo build --release', 'branch': 'add-support-for-carp'}
 Plug 'fatih/vim-go'
 Plug 'janko-m/vim-test'
 Plug 'jeetsukumaran/vim-buffergator'
@@ -27,6 +27,7 @@ Plug 'matze/vim-move'
 Plug 'mitermayer/vim-prettier', { 'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 Plug 'morhetz/gruvbox'
 Plug 'neovim/node-host', {'do' : 'npm install'}
+Plug 'neovimhaskell/haskell-vim'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'rhysd/vim-crystal'
 Plug 'rking/ag.vim'
