@@ -217,6 +217,8 @@ autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " deoplete tab-complete
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <expr><S-tab> pumvisible() ? "\<c-p>" : "\<S-tab>"
+inoremap <expr><CR> pumvisible() ? "\<c-y>" : "\<CR>"
 
 " omnifuncs
 augroup omnifuncs
@@ -293,7 +295,7 @@ let g:ctrlp_custom_ignore = {
 let g:ctrlp_working_path_mode = 'r'
 
 " Easy bindings for its various modes
-nmap <leader>b :CtrlPBuffer<cr>
+nmap <C-b> :CtrlPBuffer<cr>
 
 """ Key Map CtrlP End
 
