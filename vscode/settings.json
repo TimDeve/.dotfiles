@@ -124,5 +124,9 @@
 	},
 	"[html]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
-	}
+	},
+	"liveshare.featureSet": "stable",
+	"gitlens.codeLens.enabled": false,
+	"gitlens.currentLine.enabled": false,
+	"gitlens.hovers.currentLine.over": "line"
 }
