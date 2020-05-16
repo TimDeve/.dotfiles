@@ -40,6 +40,7 @@ alias gstap="git stash pop"
 alias gstad="git stash drop"
 alias greba="git rebase"
 alias grebac="git rebase --continue"
+alias gaddupstream="git remote add upstream"
 
 # Git diff
 alias gdiff="git diff --color"

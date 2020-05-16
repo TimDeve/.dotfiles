@@ -1,6 +1,8 @@
 # Mkdir and cd
 mkcd() { mkdir -p "$@" && cd "$_"; }
 
+sdb() { mkcd "$HOME/dev/sandbox/$1" }
+
 # cd & ls
 cl() { cd "$@" && ls; }
 
