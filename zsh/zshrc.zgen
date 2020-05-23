@@ -35,11 +35,6 @@ if ! zgen saved; then
     zgen prezto utility
     zgen prezto completion
     zgen prezto git
-    zgen prezto python
-    zgen prezto ruby
-    zgen prezto rsync
-    zgen prezto archive
-    zgen prezto fasd
 
     # Platform Specific prezto plungins
     case $uname in
@@ -57,7 +52,6 @@ if ! zgen saved; then
     zgen prezto prompt
 
     # other plugins
-    zgen load rimraf/k
     zgen load Tarrasch/zsh-bd
     zgen load felixr/docker-zsh-completion
     zgen load lukechilds/zsh-nvm
