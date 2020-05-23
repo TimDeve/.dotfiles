@@ -42,11 +42,19 @@ alias greba="git rebase"
 alias grebac="git rebase --continue"
 alias gaddupstream="git remote add upstream"
 
-# Git diff
-alias gdiff="git diff --color"
+if [[ -f $(which delta) ]]; then
+  # Git diff
+  alias gdiff="git diff | delta --paging=never --keep-plus-minus-markers"
 
-# Git diff HEAD and origin
-alias gdifff="git diff HEAD...origin"
+  # Git diff HEAD and origin
+  alias gdifff="git diff HEAD...origin | delta --paging=never --keep-plus-minus-markers"
+else
+  # Git diff
+  alias gdiff="git diff --color"
+
+  # Git diff HEAD and origin
+  alias gdifff="git diff HEAD...origin"
+fi
 
 # Git Pretty Tree
 alias gtree="git log --oneline --graph --decorate --all"

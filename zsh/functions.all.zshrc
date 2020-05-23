@@ -56,12 +56,21 @@ gdelcom() {
   fi
 }
 
-gdifs() {
-  git --no-pager diff --color
-  printf '─%.0s' {1..$COLUMNS}
-  printf '─%.0s' {1..$COLUMNS}
-  git status
-}
+if [[ -f $(which delta) ]]; then
+  gdifs() {
+    git --no-pager diff | delta --paging=never --keep-plus-minus-markers
+    printf '─%.0s' {1..$COLUMNS}
+    printf '─%.0s' {1..$COLUMNS}
+    git status
+  }
+else
+  gdifs() {
+    git --no-pager diff --color
+    printf '─%.0s' {1..$COLUMNS}
+    printf '─%.0s' {1..$COLUMNS}
+    git status
+  }
+fi
 
 gclonorg() {
   local org=$1 tfa=$2 
@@ -145,4 +154,8 @@ nxf() {
 
 tmuxa() {
   tmux attach-session -t $@ || tmux new-session -s $@
+}
+
+carpw() {
+  npx nodemon -e carp -x "carp -x $@ || exit 1"
 }

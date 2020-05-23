@@ -30,3 +30,6 @@ export HOMEBREW_NO_ANALYTICS=1
 
 # Allow to exit vi input mode with kj
 bindkey -M viins 'kj' vi-cmd-mode
+
+export BAT_THEME="base16"
+
