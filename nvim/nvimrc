@@ -13,7 +13,7 @@ Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next','do': 'bash install.sh
 Plug 'benmills/vimux'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
-Plug 'TimDeve/parinfer-rust', {'do': 'cargo build --release', 'branch': 'add-support-for-carp'}
+Plug 'eraserhd/parinfer-rust', { 'do': 'cargo build --release' }
 Plug 'fatih/vim-go'
 Plug 'janko-m/vim-test'
 Plug 'jeetsukumaran/vim-buffergator'
@@ -392,6 +392,7 @@ function LC_maps()
     nnoremap <leader>A :call LanguageClient_textDocument_codeAction()<CR>
     nnoremap <leader>D :call LanguageClient_textDocument_definition()<CR>
     nnoremap <leader>H :call LanguageClient_textDocument_hover()<CR>
+    nnoremap <leader>S :call LanguageClient_workspace_symbol()<CR>
   endif
 endfunction
 autocmd FileType * call LC_maps()
