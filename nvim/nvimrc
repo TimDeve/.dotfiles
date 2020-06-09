@@ -108,8 +108,8 @@ hi WildMenu ctermbg=27 ctermfg=white
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.md set spell
 
-" gs is Javascript
-autocmd BufRead,BufNewFile *.gs set filetype=javascript
+" zshrc is zsh
+autocmd BufRead,BufNewFile *.zshrc set filetype=zsh
 
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
