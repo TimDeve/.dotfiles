@@ -157,5 +157,10 @@ tmuxa() {
 }
 
 carpw() {
-  npx nodemon -e carp -x "carp -x $@ || exit 1"
+  npx nodemon -e carp,h -x "carp -x $@ || exit 1"
 }
+
+carpwsan() {
+  npx nodemon -e carp,h -x "carp -x --log-memory --eval-preload '(Debug.sanitize-addresses)' $@ || exit 1"
+}
+
