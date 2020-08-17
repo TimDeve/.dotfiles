@@ -164,3 +164,7 @@ carpwsan() {
   npx nodemon -e carp,h -x "carp -x --log-memory --eval-preload '(Debug.sanitize-addresses)' $@ || exit 1"
 }
 
+newsh() {
+  echo "#!/usr/bin/env bash\nset -Eeuo pipefail\n" > $1 && chmod +x $1
+}
+

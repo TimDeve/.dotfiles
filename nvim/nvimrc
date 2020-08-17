@@ -11,6 +11,7 @@ Plug 'TimDeve/vim-todo-lists'
 Plug 'airblade/vim-gitgutter'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next','do': 'bash install.sh' }
 Plug 'benmills/vimux'
+Plug 'brooth/far.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'eraserhd/parinfer-rust', { 'do': 'cargo build --release' }
@@ -31,7 +32,7 @@ Plug 'neovimhaskell/haskell-vim'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'rhysd/vim-crystal'
 Plug 'rking/ag.vim'
-Plug 'rust-lang/rust.vim'
+" Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'sebdah/vim-delve'
 Plug 'sheerun/vim-polyglot'
@@ -89,7 +90,6 @@ set splitbelow
 set splitright
 set t_Co=256
 set tabstop=2                                                " actual tabs occupy 8 characters
-set textwidth=80
 set timeoutlen=500
 set undodir=$HOME/.config/nvim/undo                          " where to save undo histories
 set undofile                                                 " save undo's after file closes
