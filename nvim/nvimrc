@@ -25,6 +25,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'justinmk/vim-sneak'
 Plug 'luochen1990/rainbow'
 Plug 'matze/vim-move'
+Plug 'mcchrish/nnn.vim'
 Plug 'mitermayer/vim-prettier', { 'do': 'npm install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 Plug 'morhetz/gruvbox'
 Plug 'neovim/node-host', {'do' : 'npm install'}

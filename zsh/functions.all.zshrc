@@ -92,11 +92,13 @@ gcomsincet() {
 }
 
 n() {
+  local lastDir=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd
+
   nnn "$@"
 
-  if [ -f "/tmp/nnn" ]; then
-    . "/tmp/nnn"
-    rm -f "/tmp/nnn"
+  if [ -f $lastDir ]; then
+    . $lastDir
+    rm -f $lastDir
   fi
 }
 
