@@ -33,7 +33,6 @@ Plug 'neovimhaskell/haskell-vim'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'rhysd/vim-crystal'
 Plug 'rking/ag.vim'
-" Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'sebdah/vim-delve'
 Plug 'sheerun/vim-polyglot'
@@ -212,9 +211,6 @@ set updatetime=250
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
-endif
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 " deoplete tab-complete
@@ -250,8 +246,7 @@ let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 
-
-" Activate Rainbow parens only for Clojure
+" Activate Rainbow parens only for Lisps
 let g:rainbow_active = 0 " Defaults to off
 autocmd FileType clojure,carp :RainbowToggleOn
 
@@ -263,7 +258,6 @@ let g:prettier#config#trailing_comma = 'es5'
 let g:prettier#config#semi = 'false'
 let g:prettier#config#bracket_spacing = 'true'
 let g:prettier#autoformat = 0
-" autocmd BufWritePre *.js,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
 
 " vim-move
 let g:move_key_modifier = 'C'
