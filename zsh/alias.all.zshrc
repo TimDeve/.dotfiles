@@ -1,5 +1,6 @@
 # Shorter editors
 alias v='nvim'
+alias vi='nvim -u ~/.dotfiles/nvim/bare.nvimrc'
 alias s='subl'
 alias c='code'
 

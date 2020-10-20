@@ -1,12 +1,10 @@
 call plug#begin()
 
 source ~/.dotfiles/nvim/lightplug.nvimrc
-source ~/.dotfiles/nvim/fullplug.nvimrc
 
 call plug#end()
 
 source ~/.dotfiles/nvim/bare.nvimrc
 
 source ~/.dotfiles/nvim/lightplugconf.nvimrc
-source ~/.dotfiles/nvim/fullplugconf.nvimrc
 
