@@ -147,7 +147,7 @@ alias whatsmyip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias wh="du -sh"
 
 # Forgot sudo
-alias pls='sudo $(fc -ln -1)'
+alias pls='sudo $(\fc -ln -1)'
 
 # Tree without annoying folder
 alias tre="tree -I node_modules"
