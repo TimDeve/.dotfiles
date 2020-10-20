@@ -16,6 +16,9 @@ alias txz='tar -Jcvf'
 alias tzz="zip -r"
 alias untar='tar -xvf'
 
+# Expand aliases when calling sudo
+alias sudo="sudo "
+
 #
 # Git Stuff
 #
