@@ -20,7 +20,8 @@ PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # Golang paths
 export GOPATH="$HOME/dev/go"
-PATH="${PATH}:$GOPATH/bin"
+export GOBIN="$GOPATH/bin"
+export PATH="$PATH:$GOBIN"
 
 # Deactivate dotnet telemetry
 export DOTNET_CLI_TELEMETRY_OPTOUT=1

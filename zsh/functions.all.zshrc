@@ -162,6 +162,14 @@ carpw() {
   npx nodemon -e carp,h -x "carp -x $@ || exit 1"
 }
 
+carpwc() {
+  npx nodemon -e carp,h -x "carp --check $@ || exit 1"
+}
+
+carpwb() {
+  npx nodemon -e carp,h -x "carp -b $@ || exit 1"
+}
+
 carpwsan() {
   npx nodemon -e carp,h -x "carp -x --log-memory --eval-preload '(Debug.sanitize-addresses)' $@ || exit 1"
 }
@@ -170,3 +178,31 @@ newsh() {
   echo "#!/usr/bin/env bash\nset -Eeuo pipefail\n" > $1 && chmod +x $1
 }
 
+rgff() {
+  rgf --no-heading --color=always -n $@ | fzf --ansi
+}
+
+rgfv() {
+  local selection=$(rgff $@)
+
+  if [[ -z $selection ]]; then
+    return
+  fi
+
+  nvim +$(echo $selection | cut -d ':' -f 2) $(echo $selection | cut -d ':' -f 1)
+}
+
+scarpd() {
+  local selection=$(cd $CARP_DIR/docs && rgff $@)
+
+  if [[ -z $selection ]]; then
+    return
+  fi
+
+  w3m "$CARP_DIR/docs/$(echo $selection | cut -d ':' -f 1)"
+}
+
+scarp() {
+  cd $CARP_DIR \
+    && rgfv $@
+}

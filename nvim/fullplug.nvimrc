@@ -22,6 +22,7 @@ Plug 'neovim/node-host', {'do' : 'npm install'}
 Plug 'neovimhaskell/haskell-vim'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'rhysd/vim-crystal'
+Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 Plug 'sebdah/vim-delve'
 Plug 'sheerun/vim-polyglot'
 Plug 'simnalamburt/vim-mundo'
@@ -30,7 +31,8 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'vim-scripts/VimClojure'
 Plug 'ziglang/zig.vim'
+

@@ -46,6 +46,8 @@ alias greba="git rebase"
 alias grebac="git rebase --continue"
 alias gaddupstream="git remote add upstream"
 
+alias ghpush="gh repo create && gpushf"
+
 if [[ -f $(which delta) ]]; then
   # Git diff
   alias gdiff="git diff | delta --paging=never --keep-plus-minus-markers"

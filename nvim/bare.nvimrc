@@ -89,10 +89,6 @@ nmap <leader>- :sp<cr>
 " Redo
 nnoremap U <C-R>
 
-" Jump to beginning and end of the line
-nnoremap <leader>h ^
-nnoremap <leader>l $
-
 " Move up and down even on wrapped line
 noremap j gj
 noremap k gk
@@ -111,12 +107,14 @@ nmap <leader><CR> i<CR><ESC>
 
 " Use kj as Escape
 inoremap kj <esc>
+tnoremap kj <C-\><C-n>
 
 " Save
 nnoremap <leader>w :w<CR>
 
 " Quit
 nnoremap <leader>q :q<CR>
+nnoremap <leader>Q :qa!<CR>
 
 " Clear search
 nnoremap <leader>sc :let @/ = ""<CR>
@@ -132,4 +130,8 @@ nmap <leader>bc :bp <BAR> bd #<cr>
 
 " Close all other buffers
 nnoremap <leader>bco :%bd\|e#\|bd#<CR>
+
+command! -bang -nargs=* Fd call fzf#vim#grep('cd $(git rev-parse --show-toplevel 2>/dev/null || pwd) && rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape (<q-args>).'| tr -d "\017"', 1, <bang>0)
+
+nmap <leader>f :Fd<CR>
 
