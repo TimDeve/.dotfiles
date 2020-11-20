@@ -133,5 +133,5 @@ nnoremap <leader>bco :%bd\|e#\|bd#<CR>
 
 command! -bang -nargs=* Fd call fzf#vim#grep('cd $(git rev-parse --show-toplevel 2>/dev/null || pwd) && rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape (<q-args>).'| tr -d "\017"', 1, <bang>0)
 
-nmap <leader>f :Fd<CR>
+nnoremap <leader>f :Fd<CR>
 

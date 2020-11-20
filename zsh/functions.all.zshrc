@@ -192,17 +192,27 @@ rgfv() {
   nvim +$(echo $selection | cut -d ':' -f 2) $(echo $selection | cut -d ':' -f 1)
 }
 
-scarpd() {
-  local selection=$(cd $CARP_DIR/docs && rgff $@)
+scarp() {
+  if [[ -z "$@" ]]; then
+    local selection=$(cd $CARP_DIR/docs/core && ls -1A | rg html | fzf)
 
-  if [[ -z $selection ]]; then
-    return
+    if [[ -z $selection ]]; then
+      return
+    fi
+
+    w3m "$CARP_DIR/docs/core/$selection"
+  else
+    local selection=$(cd $CARP_DIR/docs && rgff $@)
+
+    if [[ -z $selection ]]; then
+      return
+    fi
+
+    w3m "$CARP_DIR/docs/$(echo $selection | cut -d ':' -f 1)"
   fi
-
-  w3m "$CARP_DIR/docs/$(echo $selection | cut -d ':' -f 1)"
 }
 
-scarp() {
+scarps() {
   cd $CARP_DIR \
     && rgfv $@
 }
