@@ -33,7 +33,6 @@ let g:prettier#autoformat = 0
 " vim-move
 let g:move_key_modifier = 'C'
 
-
 " Use the right side of the screen
 let g:buffergator_viewport_split_policy = 'R'
 
@@ -61,12 +60,14 @@ nnoremap <leader>ff :Goyo<CR>
 
 function! s:goyo_enter()
   silent !tmux set status off
+  silent !tmux resize-pane -Z
   set noshowmode
   set noshowcmd
 endfunction
 
 function! s:goyo_leave()
   silent !tmux set status on
+  silent !tmux resize-pane -Z
   set showmode
   set showcmd
 endfunction
@@ -94,23 +95,13 @@ let g:syntastic_rust_checkers = []
 " LanguageClient
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_useFloatingHover = 1
-nnoremap <leader>lcst :LanguageClientStart<CR>
-nnoremap <leader>lcsp :LanguageClientStop<CR>
-
-function LC_maps()
-  if has_key(g:LanguageClient_serverCommands, &filetype)
-    nnoremap <leader>ss :call LanguageClient_contextMenu()<CR>
-
-    nnoremap <leader>R :call LanguageClient_textDocument_rename()<CR>
-    nnoremap <leader>A :call LanguageClient_textDocument_codeAction()<CR>
-    nnoremap <leader>D :call LanguageClient_textDocument_definition()<CR>
-    nnoremap <leader>H :call LanguageClient_textDocument_hover()<CR>
-    nnoremap <leader>S :call LanguageClient_workspace_symbol()<CR>
-  endif
-endfunction
-autocmd FileType * call LC_maps()
+let g:LanguageClient_fzfContextMenu = 1
+" let $LANGUAGECLIENT_DEBUG=1
+" let g:LanguageClient_loggingLevel='DEBUG'
+" let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
 
 let g:LanguageClient_serverCommands = {
+    \ 'haskell':        ['haskell-language-server-wrapper', '--lsp'],
     \ 'javascript':     ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
     \ 'typescript':     ['javascript-typescript-stdio'],
@@ -120,5 +111,21 @@ let g:LanguageClient_serverCommands = {
     \ 'go':             ['gopls'],
     \ }
 
+function LC_maps()
+  if has_key(g:LanguageClient_serverCommands, &filetype)
+    nnoremap <leader>ll :call LanguageClient_contextMenu()<CR>
+    nnoremap <Leader>lh :call LanguageClient#textDocument_hover()<CR>
+    nnoremap <Leader>ld :call LanguageClient#textDocument_definition()<CR>
+    nnoremap <Leader>lr :call LanguageClient#textDocument_rename()<CR>
+    nnoremap <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
+    nnoremap <Leader>lb :call LanguageClient#textDocument_references()<CR>
+    nnoremap <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
+    nnoremap <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
+    nnoremap <Leader>lc :call LanguageClient_handleCodeLensAction()<CR>
+  endif
+endfunction
+autocmd FileType * call LC_maps()
+
 " Todo
 let g:VimTodoListsMoveItems = 0
+

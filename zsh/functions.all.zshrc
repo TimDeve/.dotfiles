@@ -213,6 +213,8 @@ scarp() {
 }
 
 scarps() {
+  local wd=$PWD
   cd $CARP_DIR \
     && rgfv $@
+  cd $wd
 }
