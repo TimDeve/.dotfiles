@@ -53,6 +53,9 @@ autocmd BufRead,BufNewFile *.md set spell
 " zshrc is zsh
 autocmd BufRead,BufNewFile *.zshrc set filetype=zsh
 
+" tsx is tsx :)
+autocmd BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
+
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
@@ -107,7 +110,6 @@ nmap <leader><CR> i<CR><ESC>
 
 " Use kj as Escape
 inoremap kj <esc>
-tnoremap kj <C-\><C-n>
 
 " Save
 nnoremap <leader>w :w<CR>
@@ -133,5 +135,5 @@ nnoremap <leader>bco :%bd\|e#\|bd#<CR>
 
 command! -bang -nargs=* Fd call fzf#vim#grep('cd $(git rev-parse --show-toplevel 2>/dev/null || pwd) && rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape (<q-args>).'| tr -d "\017"', 1, <bang>0)
 
-nnoremap <leader>f :Fd<CR>
+nnoremap <leader>f :Fd 
 

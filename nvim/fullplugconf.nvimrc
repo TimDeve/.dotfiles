@@ -60,14 +60,12 @@ nnoremap <leader>ff :Goyo<CR>
 
 function! s:goyo_enter()
   silent !tmux set status off
-  silent !tmux resize-pane -Z
   set noshowmode
   set noshowcmd
 endfunction
 
 function! s:goyo_leave()
   silent !tmux set status on
-  silent !tmux resize-pane -Z
   set showmode
   set showcmd
 endfunction
@@ -96,6 +94,7 @@ let g:syntastic_rust_checkers = []
 let g:LanguageClient_autoStart = 1
 let g:LanguageClient_useFloatingHover = 1
 let g:LanguageClient_fzfContextMenu = 1
+let g:LanguageClient_hideVirtualTextsOnInsert = 1
 " let $LANGUAGECLIENT_DEBUG=1
 " let g:LanguageClient_loggingLevel='DEBUG'
 " let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
@@ -104,9 +103,8 @@ let g:LanguageClient_serverCommands = {
     \ 'haskell':        ['haskell-language-server-wrapper', '--lsp'],
     \ 'javascript':     ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
-    \ 'typescript':     ['javascript-typescript-stdio'],
-    \ 'typescript.tsx': ['javascript-typescript-stdio'],
-    \ 'typescript.jsx': ['javascript-typescript-stdio'],
+    \ 'typescript':     ['typescript-language-server', '--stdio'],
+    \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
     \ 'rust':           ['rust-analyzer'],
     \ 'go':             ['gopls'],
     \ }
@@ -129,3 +127,8 @@ autocmd FileType * call LC_maps()
 " Todo
 let g:VimTodoListsMoveItems = 0
 
+" Carp
+let g:syntastic_carp_checkers = ['carp']
+
+" nnn
+let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6 } }

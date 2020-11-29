@@ -1,4 +1,3 @@
-Plug 'Shougo/vimfiler.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdcommenter'

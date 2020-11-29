@@ -3,9 +3,6 @@ let g:gruvbox_contrast_dark='hard'
 silent colorscheme gruvbox
 set background=dark
 
-" Set vimfiler as default
-let g:vimfiler_as_default_explorer = 1
-
 " NerdCommenter
 let g:NERDDefaultAlign = 'left'
 let g:NERDCommentEmptyLines = 1
@@ -49,7 +46,6 @@ let g:ctrlp_working_path_mode = 'r'
 " Easy bindings for its various modes
 nmap <C-b> :CtrlPBuffer<cr>
 
-nnoremap <leader>d :VimFilerExplorer<CR>
 nnoremap <leader>g :GitGutterToggle<CR>
 
 " Disable sexp default for leader w
