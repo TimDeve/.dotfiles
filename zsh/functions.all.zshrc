@@ -178,6 +178,10 @@ newsh() {
   echo "#!/usr/bin/env bash\nset -Eeuo pipefail\n" > $1 && chmod +x $1
 }
 
+newshf() {
+  cp ~/.dotfiles/template/bash.sh $1 && chmod +x $1
+}
+
 rgff() {
   rgf --no-heading --color=always -n $@ | fzf --ansi
 }
