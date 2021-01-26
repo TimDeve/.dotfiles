@@ -210,3 +210,7 @@ alias rgf="rg -F"
 
 alias tunn="cloudflared tunnel"
 
+alias mk="make"
+alias mkx="make.exe"
+alias cmk="cmake"
+
