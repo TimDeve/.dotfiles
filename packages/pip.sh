@@ -4,7 +4,7 @@
 toInstall=(
   'diff-highlight'
   'livestreamer'
-  'neovim'
+  'pynvim'
   'rtv'
 )
 

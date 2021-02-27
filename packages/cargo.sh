@@ -2,15 +2,16 @@
 
 ### Packages to install
 toInstall=(
-  # Amphetamine
-  '937984704'
-  # Affinity Photo
-  '824171161'
+  'git-delta'
+  'cargo-edit'
+  'cargo-watch'
+  'cargo-update'
+  'ht'
 )
 
 for i in "${toInstall[@]}"
 do
-  mas install $i
+  cargo install $i
 
   echo ""
   echo "---------"

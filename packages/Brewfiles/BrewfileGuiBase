@@ -1,7 +1,7 @@
 brew "mas"
+cask "scroll-reverser"
+cask "firefox"
 cask "google-chrome"
 cask "docker"
-cask "firefox"
-cask "font-monoid"
 cask "vlc"
 mas "Amphetamine", id: 937984704
