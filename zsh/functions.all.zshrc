@@ -91,6 +91,10 @@ gcomsincet() {
   git log $1..HEAD --oneline
 }
 
+grebai() {
+  git rebase -i $(git log --pretty=oneline --color=always | fzf --ansi | cut -d ' ' -f1)
+}
+
 n() {
   local lastDir=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd
 

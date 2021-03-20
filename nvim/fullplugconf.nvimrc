@@ -132,3 +132,6 @@ let g:syntastic_carp_checkers = ['carp']
 
 " nnn
 let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+
+let g:vim_markdown_folding_disabled = 1
+
