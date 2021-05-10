@@ -152,7 +152,7 @@ alias wh="du -sh"
 alias pls='sudo $(\fc -ln -1)'
 
 # Tree without annoying folder
-alias tre="tree -I node_modules"
+alias tre="rg --files | tree --fromfile"
 
 # AWS S3
 alias ss="aws s3"
