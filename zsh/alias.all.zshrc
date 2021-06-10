@@ -214,3 +214,5 @@ alias mk="make"
 alias mkx="make.exe"
 alias cmk="cmake"
 
+alias get="aria2c -x2"
+
