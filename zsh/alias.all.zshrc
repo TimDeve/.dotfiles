@@ -17,7 +17,7 @@ alias tzz="zip -r"
 alias untar='tar -xvf'
 
 # Expand aliases when calling sudo
-alias sudo='nocorrect sudo\t'
+alias sudo='nocorrect sudo '
 
 #
 # Git Stuff
