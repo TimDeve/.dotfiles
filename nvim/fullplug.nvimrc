@@ -26,6 +26,7 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'vim-syntastic/syntastic'
+Plug 'vitalk/vim-shebang'
 
 " Languages
 Plug 'cespare/vim-toml'

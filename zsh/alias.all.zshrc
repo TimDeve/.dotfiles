@@ -208,11 +208,12 @@ alias chillhd="streamlink 'https://www.youtube.com/watch?v=5qap5aO4i9A' 1080p"
 
 alias rgf="rg -F"
 
-alias tunn="cloudflared tunnel"
+alias tunn="npx localtunnel --local-host localhost"
 
 alias mk="make"
 alias mkx="make.exe"
 alias cmk="cmake"
 
 alias get="aria2c -x2"
+alias rsy="rsync -Paz"
 

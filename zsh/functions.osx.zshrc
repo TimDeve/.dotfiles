@@ -8,16 +8,8 @@ function md2word () {
   pandoc -o $2 -f markdown -t docx $1
 }
 
-function dkmstart() {
-  docker-machine start $1 && docker-machine env $1 && eval "$(docker-machine env $1)"
-}
-
-function dkmenv() {
-  eval $(docker-machine env $1)
-}
-
 function dokku() {
-  ssh dokkuroot "dokku $@"
+  ssh dokkudk "dokku $@"
 }
 
 function timer() {

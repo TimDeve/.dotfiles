@@ -135,3 +135,8 @@ let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 
 let g:vim_markdown_folding_disabled = 1
 
+
+" Extra shebang detection
+AddShebangPattern! clojure ^#!.*/bin/env\s\+bb\>
+AddShebangPattern! typescript ^#!.*/bin/env\s\+deno\>
+
