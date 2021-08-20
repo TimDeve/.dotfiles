@@ -135,8 +135,16 @@ let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 
 let g:vim_markdown_folding_disabled = 1
 
-
 " Extra shebang detection
 AddShebangPattern! clojure ^#!.*/bin/env\s\+bb\>
 AddShebangPattern! typescript ^#!.*/bin/env\s\+deno\>
+
+" Telescope
+nnoremap <C-p> <cmd>Telescope find_files<cr>
+nnoremap <leader>fp <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope git_files<cr>
+nnoremap <leader>ff <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>ft <cmd>Telescope file_browser<cr>
+nnoremap <leader>fa <cmd>Telescope builtin<cr>
 

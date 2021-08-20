@@ -25,26 +25,10 @@ let g:NERDSpaceDelims=1
 
 if executable('rg')
   set grepprg=rg\ --color=never
-  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-  let g:ctrlp_use_caching = 0
 
   " Use ripgrep with fzf
   let FZF_DEFAULT_COMMAND = 'rg --files --hidden'
 endif
-
-" Setup some default ignores
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
-  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
-\}
-
-" Use the nearest .git directory as the cwd
-" This makes a lot of sense if you are working on a project that is in version
-" control. It also supports works with .svn, .hg, .bzr.
-let g:ctrlp_working_path_mode = 'r'
-
-" Easy bindings for its various modes
-nmap <C-b> :CtrlPBuffer<cr>
 
 nnoremap <leader>g :GitGutterToggle<CR>
 
