@@ -217,3 +217,5 @@ alias cmk="cmake"
 alias get="aria2c -x2"
 alias rsy="rsync -Paz"
 
+alias bbrepl="rlwrap bb"
+
