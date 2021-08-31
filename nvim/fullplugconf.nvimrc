@@ -130,14 +130,12 @@ let g:VimTodoListsMoveItems = 0
 " Carp
 let g:syntastic_carp_checkers = ['carp']
 
-" nnn
-let g:nnn#layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-
 let g:vim_markdown_folding_disabled = 1
 
 " Extra shebang detection
 AddShebangPattern! clojure ^#!.*/bin/env\s\+bb\>
-AddShebangPattern! typescript ^#!.*/bin/env\s\+deno\>
+AddShebangPattern! typescript ^#!.*/bin/env\s\+deno.*\>
+AddShebangPattern! typescript ^#!.*/bin/env\s-S\sdeno.*\>
 
 " Telescope
 nnoremap <C-p> <cmd>Telescope find_files<cr>
