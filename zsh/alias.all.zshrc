@@ -203,7 +203,7 @@ alias epoch="date +'%s'"
 # Select which package you want to update on npm
 alias ncus="ncu | selector | awk '{ print $1 }' | xargs -0 -n1 ncu -u"
 
-alias chill="streamlink 'https://www.youtube.com/watch?v=5qap5aO4i9A' 360p"
+alias chill="streamlink 'https://www.youtube.com/watch?v=5qap5aO4i9A' 360p --player='vlc --intf dummy' --quiet"
 alias chillhd="streamlink 'https://www.youtube.com/watch?v=5qap5aO4i9A' 1080p"
 
 alias rgf="rg -F"
