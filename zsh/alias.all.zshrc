@@ -219,3 +219,5 @@ alias rsy="rsync -Paz"
 
 alias bbrepl="rlwrap bb"
 
+alias lal="la -tr"
+
