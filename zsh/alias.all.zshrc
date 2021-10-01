@@ -175,8 +175,8 @@ alias npt="npm test"
 # Exa (ls improved)
 alias h="exa -gHl --git"
 alias ha="exa -gHla --git"
-alias lh="exa -gHl --git --sort=modified"
-alias lha="exa -gHla --git --sort=modified"
+alias hl="exa -gHl --git --sort=modified"
+alias hal="exa -gHla --git --sort=modified"
 
 # Fasd
 alias f="fasd_cd -d"
