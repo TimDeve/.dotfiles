@@ -21,7 +21,7 @@ transfer() {
   rm -f $tmpfile;
 }
 
-function gi() { curl -L -s "https://www.gitignore.io/api/$@" }
+gi() { curl -L -s "https://www.gitignore.io/api/$@" }
 
 weather(){ curl "http://wttr.in/$1" }
 

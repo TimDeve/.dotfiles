@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-function v() {
+v() {
   if hash nvim 2>/dev/null; then
     nvim "$@"
   elif hash vim 2>/dev/null; then
@@ -12,33 +12,29 @@ function v() {
   fi
 }
 
-function usage() {
+usage() {
   echo "I am trapped in a notes factory"
 }
 
 if [ $# -eq 0 ]; then
-  v "$(find $HOME/not/ -type f | fzf --height 20% --reverse)"
+  v "$(find "$HOME/not/" -type f | fzf --height 20% --reverse)"
   exit
 fi
 
-DATE=`date +%Y-%m-%d`
-TIME=`date +%H%M%S`
+DATE=$(date +%Y-%m-%d)
+TIME=$(date +%H:%M:%S)
 
 filename=''
 title=''
 content=''
 labels=''
 formattedLabels=''
-scratch=false
 
-while getopts "shl:t:q:" opt; do
+while getopts "hl:t:q:" opt; do
    case $opt in
      h)
        usage
        exit
-       ;;
-     s)
-       scratch=true
        ;;
      q)
        content=$OPTARG
@@ -49,21 +45,26 @@ while getopts "shl:t:q:" opt; do
      t)
        title=$OPTARG
        ;;
+     *)
+       usage
+       exit 1
    esac
 done
 
 if [[ -z $title ]]; then
-  title="Scratch ${TIME}"
+  title="Scratch at ${TIME}"
 fi
 
-if [[ ! -z $labels ]]; then
+if [[ -n $labels ]]; then
   formattedLabels=" [${labels// /, }]"
 fi
 
 filename="$HOME/not/[${DATE}] ${title}${formattedLabels}.md"
 
+mkdir -p "$HOME/not"
+
 if [[ -z $content ]]; then
   v "${filename}"
 else
-  echo $content > "${filename}"
+  echo "$content" > "${filename}"
 fi
