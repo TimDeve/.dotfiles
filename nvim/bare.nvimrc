@@ -137,3 +137,5 @@ command! -bang -nargs=* Fd call fzf#vim#grep('cd $(git rev-parse --show-toplevel
 
 nnoremap <leader>f :Fd 
 
+nnoremap !! :!!<CR>
+
