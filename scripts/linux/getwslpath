@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+
+pwsh=$1
+shift
+
+getwinpath="$(wslpath -w $SCRIPT_DIR/getwinpath.ps1)"
+
+"$pwsh" "$getwinpath" "$@" | xargs -I{} -d$'\n' wslpath -u '{}'
+
