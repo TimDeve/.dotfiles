@@ -56,7 +56,7 @@ map <leader><space> <Plug>(easymotion-prefix)
 map <Plug>(easymotion-prefix)<space> <Plug>(easymotion-bd-w)
 
 " Goyo
-nnoremap <leader>ff :Goyo<CR>
+nnoremap <leader>fd :Goyo<CR>
 
 function! s:goyo_enter()
   silent !tmux set status off

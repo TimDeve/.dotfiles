@@ -1,7 +1,5 @@
 " Gruvbox
-let g:gruvbox_contrast_dark='hard'
-silent colorscheme gruvbox
-set background=dark
+silent colorscheme gruvbox8_hard
 
 " NerdCommenter
 let g:NERDDefaultAlign = 'left'

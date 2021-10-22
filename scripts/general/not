@@ -3,9 +3,9 @@
 set -euo pipefail
 
 v() {
-  if hash nvim 2>/dev/null; then
+  if hash nvim > /dev/null 2>&1; then
     nvim "$@"
-  elif hash vim 2>/dev/null; then
+  elif hash vim > /dev/null 2>&1; then
     vim "$@"
   else
     vi "$@"
@@ -17,7 +17,19 @@ usage() {
 }
 
 if [ $# -eq 0 ]; then
-  v "$(find "$HOME/not/" -type f | fzf --height 20% --reverse)"
+  previewer="cat"
+  if hash glow > /dev/null 2>&1; then
+    previewer="glow -l --style=auto"
+  elif hash bat > /dev/null 2>&1; then
+    previewer="bat --color=always --plain"
+  fi
+
+  cd "$HOME/notes"
+
+  noteToOpen="$(find . -type f -printf '%P\n' | \
+                sort -r | \
+                fzf --height 30% --reverse --preview "$previewer {}")"
+  v "$noteToOpen"
   exit
 fi
 
@@ -59,9 +71,9 @@ if [[ -n $labels ]]; then
   formattedLabels=" [${labels// /, }]"
 fi
 
-filename="$HOME/not/[${DATE}] ${title}${formattedLabels}.md"
+filename="$HOME/notes/[${DATE}] ${title}${formattedLabels}.md"
 
-mkdir -p "$HOME/not"
+mkdir -p "$HOME/notes"
 
 if [[ -z $content ]]; then
   v "${filename}"
