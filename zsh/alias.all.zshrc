@@ -224,3 +224,5 @@ alias lal="la -tr"
 alias each="xargs -n 1"
 alias each-line="xargs -n 1 -d $'\n'"
 
+alias caddy-serve="caddy file-server --listen :2015 --browse"
+

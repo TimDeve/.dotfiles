@@ -11,5 +11,5 @@ export PATH=$PATH:~/dev/OtherGit/dasht/bin
 cdpath=(~/dev ~)
 
 # C Header location for homebrew
-export CPATH="/usr/local/include"
+export CPATH="/usr/local/include:$CPATH"
 
