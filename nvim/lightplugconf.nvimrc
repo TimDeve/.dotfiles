@@ -1,3 +1,23 @@
+" Bufferline
+set termguicolors
+lua << EOF
+require("bufferline").setup{
+  options = {
+    buffer_close_icon = '×',
+    show_close_icon = false,
+    show_buffer_icons = false,
+    diagnostics = false,
+    numbers = "ordinal",
+    left_trunc_marker = '<',
+    right_trunc_marker = '>',
+  }
+}
+EOF
+
+nmap <leader>k :BufferLineCyclePrev<cr>
+nmap <leader>j :BufferLineCycleNext<cr>
+nmap <leader>bp :BufferLinePick<cr>
+
 " Gruvbox
 silent colorscheme gruvbox8_hard
 
@@ -11,7 +31,7 @@ map <leader>cc <plug>NERDCommenterToggle
 """ Airline Stuff
 let g:airline_powerline_fonts = 1
 let g:airline_theme='raven'
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#whitespace#mixed_indent_algo = 1
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''

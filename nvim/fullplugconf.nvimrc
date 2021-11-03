@@ -39,17 +39,9 @@ let g:buffergator_viewport_split_policy = 'R'
 " I want my own keymappings...
 let g:buffergator_suppress_keymaps = 1
 
-" go to the previous buffer open
-nmap <leader>j :BuffergatorMruCyclePrev<cr>
-
-" Go to the next buffer open
-nmap <leader>k :BuffergatorMruCycleNext<cr>
 
 " View the entire list of buffers open
 nmap <leader>bl :BuffergatorOpen<cr>
-
-" Toggle gundo (better undo)
-nnoremap <leader>u :MundoToggle<CR>
 
 " Easymotion
 map <leader><space> <Plug>(easymotion-prefix)
