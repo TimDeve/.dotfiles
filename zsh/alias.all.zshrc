@@ -126,9 +126,6 @@ alias zreload="source ~/.zshrc"
 # Simple Python Server
 alias pyserv="python -m SimpleHTTPServer"
 
-# Make a new github repo here
-alias gn="gitnew timdeve"
-
 # Peerflix
 alias pf="peerflix -k"
 
@@ -172,24 +169,9 @@ alias npr="npm run"
 alias nps="npm start"
 alias npt="npm test"
 
-# Exa (ls improved)
-alias h="exa -gHl --git"
-alias ha="exa -gHla --git"
-alias hl="exa -gHl --git --sort=modified"
-alias hal="exa -gHla --git --sort=modified"
-
-# Fasd
-alias f="fasd_cd -d"
-alias fo="fasd -e"
-alias fv="fasd -e nvim"
-alias fc="fasd -e code"
-
 # Notes
 alias nn="not"
 alias ns="not -s"
-
-# Rake
-alias rk="rake"
 
 # Nix
 alias nxe="nix-env"
@@ -225,4 +207,8 @@ alias each="xargs -n 1"
 alias each-line="xargs -n 1 -d $'\n'"
 
 alias caddy-serve="caddy file-server --listen :2015 --browse"
+
+# k8s
+alias k="kubectl"
+alias h="helm"
 
