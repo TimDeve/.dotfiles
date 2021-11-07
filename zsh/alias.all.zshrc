@@ -9,6 +9,7 @@ alias ee='exit'
 
 # Test Connection
 alias pingt='ping 8.8.8.8'
+alias spingt='sping 8.8.8.8'
 
 # Easy tar
 alias tgz='tar -zcvf'
