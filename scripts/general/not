@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+mkdir -p "$HOME/notes"
+
 v() {
   if hash nvim > /dev/null 2>&1; then
     nvim "$@"
@@ -20,13 +22,18 @@ if [ $# -eq 0 ]; then
   previewer="cat"
   if hash glow > /dev/null 2>&1; then
     previewer="glow -l --style=auto"
+    if hash stty > /dev/null 2>&1; then
+      read -r _ columns < <(stty size)
+      previewer="$previewer -w '$((columns / 2))'"
+    fi
   elif hash bat > /dev/null 2>&1; then
     previewer="bat --color=always --plain"
   fi
 
   cd "$HOME/notes"
 
-  noteToOpen="$(find . -type f -printf '%P\n' | \
+  noteToOpen="$(find . -type f | \
+                cut -c 3- | \
                 sort -r | \
                 fzf --height 30% --reverse --preview "$previewer {}")"
   v "$noteToOpen"
@@ -72,8 +79,6 @@ if [[ -n $labels ]]; then
 fi
 
 filename="$HOME/notes/[${DATE}] ${title}${formattedLabels}.md"
-
-mkdir -p "$HOME/notes"
 
 if [[ -z $content ]]; then
   v "${filename}"

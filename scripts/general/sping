@@ -4,7 +4,7 @@ set -Eeuo pipefail
 SAVE_CURSOR="\033[s"
 RESTORE_CURSOR="\033[u"
 
-printf "%s" "$SAVE_CURSOR"
+printf "$SAVE_CURSOR%s"
 
 lastTimeLength=0
 
