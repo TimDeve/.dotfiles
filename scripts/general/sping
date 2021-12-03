@@ -9,9 +9,10 @@ printf "$SAVE_CURSOR%s"
 lastTimeLength=0
 
 while true; do
-  time=$(ping "$@" -c 1 | rg "^.*time=(.*$)" -r "\$1")
+  time="Ping: $(ping "$@" -c 1 | rg "^.*time=(.*$)" -r "\$1")"
   printf "${RESTORE_CURSOR}%${lastTimeLength}s"
   lastTimeLength="${#time}"
   printf "${RESTORE_CURSOR}%s" "$time"
   sleep 1
 done
+

@@ -3,6 +3,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'TimDeve/vim-todo-lists'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next','do': 'bash install.sh' }
 Plug 'benmills/vimux'
+Plug 'brooth/far.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'eraserhd/parinfer-rust', { 'do': 'cargo build --release' }
 Plug 'janko-m/vim-test'
@@ -23,6 +24,7 @@ Plug 'sebdah/vim-delve'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'vim-syntastic/syntastic'

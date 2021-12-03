@@ -10,6 +10,7 @@ require("bufferline").setup{
     numbers = "ordinal",
     left_trunc_marker = '<',
     right_trunc_marker = '>',
+    enforce_regular_tabs = true,
   }
 }
 EOF
