@@ -211,5 +211,6 @@ alias caddy-serve="caddy file-server --listen :2015 --browse"
 
 # k8s
 alias k="kubectl"
+alias kuse='k config use-context $(k config get-contexts -o name | fzf)'
 alias h="helm"
 
