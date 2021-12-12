@@ -214,3 +214,9 @@ alias k="kubectl"
 alias kuse='k config use-context $(k config get-contexts -o name | fzf)'
 alias h="helm"
 
+# Signal
+alias sigint="kill -2"
+alias sigquit="kill -3"
+alias sigkill="kill -9"
+alias sigterm="kill -15"
+

@@ -238,3 +238,13 @@ co() {
     awk -F "$2" "{print \$$1}"
   fi
 }
+
+unalias d
+d() {
+  local dir
+  dir="$(dirs -v | fzf)"
+  if [[ ! -z "$dir" ]]; then
+    cd "+$(echo $dir | awk '{ print $1 }')"
+  fi
+}
+
