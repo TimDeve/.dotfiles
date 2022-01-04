@@ -1,3 +1,5 @@
+errcho() { echo "$@" 1>&2 }
+
 # Mkdir and cd
 mkcd() { mkdir -p "$@" && cd "$_"; }
 
@@ -228,7 +230,21 @@ scarps() {
 }
 
 video2gif() {
-  ffmpeg -i "$1" -vf "fps=10,scale=320:-1:flags=lanczos" -c:v pam -f image2pipe - | convert -delay 10 - -loop 0 -layers optimize "$2"
+  if [[ -z "$1" ]]; then
+    errcho "Needs input video file"
+    return 1
+  fi
+
+  local out
+  if [[ -z "$2" ]]; then
+    out="${1}.gif"
+  else
+    out="$2"
+  fi
+
+  ffmpeg -i "$1" -vf "fps=10,scale=320:-1:flags=lanczos" \
+         -c:v pam -f image2pipe - \
+         | convert -delay 10 - -loop 0 -layers optimize "$out"
 }
 
 co() {
@@ -246,5 +262,13 @@ d() {
   if [[ ! -z "$dir" ]]; then
     cd "+$(echo $dir | awk '{ print $1 }')"
   fi
+}
+
+tre() {
+  rg --files $@ | tree --fromfile
+}
+
+bytelen() {
+  stat "$@" | awk '{ print $8 "bytes" }'
 }
 

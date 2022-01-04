@@ -149,9 +149,6 @@ alias wh="du -sh"
 # Forgot sudo
 alias pls='sudo $(\fc -ln -1)'
 
-# Tree without annoying folder
-alias tre="rg --files | tree --fromfile"
-
 # AWS S3
 alias ss="aws s3"
 alias sscp="aws s3 cp"
@@ -184,7 +181,7 @@ alias nxs="nix-channel --update"
 alias epoch="date +'%s'"
 
 # Select which package you want to update on npm
-alias ncus="ncu | selector | awk '{ print $1 }' | xargs -0 -n1 ncu -u"
+alias ncus="ncu | fzf -m | awk '{ print $1 }' | xargs -0 -n1 ncu -u"
 
 alias chill="streamlink 'https://www.youtube.com/watch?v=5qap5aO4i9A' 360p --player='vlc --intf dummy' --quiet"
 alias chillhd="streamlink 'https://www.youtube.com/watch?v=5qap5aO4i9A' 1080p"
