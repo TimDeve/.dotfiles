@@ -272,3 +272,9 @@ bytelen() {
   stat "$@" | awk '{ print $8 "bytes" }'
 }
 
+fixdotssh() {
+  chmod 700 ~/.ssh
+  chmod 600 ~/.ssh/*
+  chmod 644 ~/.ssh/*.pub
+}
+
