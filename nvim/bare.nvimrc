@@ -56,6 +56,9 @@ autocmd BufRead,BufNewFile *.zshrc set filetype=zsh
 " tsx is tsx :)
 autocmd BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
 
+# bats is bash
+autocmd BufRead,BufNewFile *.bats set filetype=bash
+
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
