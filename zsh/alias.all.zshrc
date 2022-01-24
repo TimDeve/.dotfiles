@@ -199,7 +199,7 @@ alias rsy="rsync -Paz"
 
 alias bbrepl="rlwrap bb"
 
-alias lal="la -tR"
+alias lal="la -t"
 
 alias each="xargs -n 1"
 alias each-line="xargs -n 1 -d $'\n'"
