@@ -9,7 +9,7 @@ function md2word () {
 }
 
 function dokku() {
-  ssh dokkudk "dokku $@"
+  ssh dokkudk "$@"
 }
 
 function timer() {

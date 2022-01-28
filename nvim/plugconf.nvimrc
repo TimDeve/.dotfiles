@@ -1,3 +1,66 @@
+" Bufferline
+set termguicolors
+lua << EOF
+require("bufferline").setup{
+  options = {
+    buffer_close_icon = '×',
+    show_close_icon = false,
+    show_buffer_icons = false,
+    diagnostics = false,
+    numbers = "ordinal",
+    left_trunc_marker = '<',
+    right_trunc_marker = '>',
+    tab_size = 16,
+    max_name_length = 26,
+    enforce_regular_tabs = false,
+  }
+}
+EOF
+
+nmap <leader>k :BufferLineCyclePrev<cr>
+nmap <leader>j :BufferLineCycleNext<cr>
+nmap <leader>bp :BufferLinePick<cr>
+
+" Gruvbox
+silent colorscheme gruvbox8_hard
+
+" NerdCommenter
+let g:NERDDefaultAlign = 'left'
+let g:NERDCommentEmptyLines = 1
+let NERDCreateDefaultMappings = 0
+let g:NERDCustomDelimiters = { 'carp': { 'left': ';' } }
+map <leader>cc <plug>NERDCommenterToggle
+
+""" Airline Stuff
+let g:airline_powerline_fonts = 1
+let g:airline_theme='raven'
+let g:airline#extensions#tabline#enabled = 0
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+
+let g:ctrlp_match_window = 'order:ttb,max:20'
+let g:NERDSpaceDelims=1
+
+if executable('rg')
+  set grepprg=rg\ --color=never
+
+  " Use ripgrep with fzf
+  let FZF_DEFAULT_COMMAND = 'rg --files --hidden'
+endif
+
+nnoremap <leader>g :GitGutterToggle<CR>
+
+" Disable sexp default for leader w
+let g:sexp_mappings={
+      \'sexp_round_head_wrap_element': ''
+      \}
+
+" GitGutter
+set updatetime=250
+
 " Deoplete
 let g:deoplete#enable_at_startup = 1
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
@@ -131,11 +194,49 @@ AddShebangPattern! typescript ^#!.*/bin/env\s\+deno.*\>
 AddShebangPattern! typescript ^#!.*/bin/env\s-S\sdeno.*\>
 
 " Telescope
-nnoremap <C-p> <cmd>Telescope find_files<cr>
+nnoremap <C-p>      <cmd>Telescope find_files<cr>
 nnoremap <leader>fp <cmd>Telescope find_files<cr>
 nnoremap <leader>fg <cmd>Telescope git_files<cr>
 nnoremap <leader>ff <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>ft <cmd>Telescope file_browser<cr>
 nnoremap <leader>fa <cmd>Telescope builtin<cr>
+
+let g:nvim_tree_icons = {
+    \ 'default': "",
+    \ 'symlink': "",
+    \ 'folder': {
+    \   'arrow_open': "v",
+    \   'arrow_closed': ">",
+    \   'default': "",
+    \   'open': "",
+    \   'empty': "",
+    \   'empty_open': "",
+    \   'symlink': "",
+    \   'symlink_open': "",
+    \   }
+    \ }
+
+let g:nvim_tree_icon_padding = ''
+
+let g:nvim_tree_show_icons = {
+    \ 'git': 0,
+    \ 'folders': 1,
+    \ 'files': 0,
+    \ 'folder_arrows': 1,
+    \ }
+
+lua << LUA
+require'nvim-tree'.setup {
+  git = {
+    enable = false
+  },
+  view = {
+    signcolumn = "no"
+  }
+}
+LUA
+
+nnoremap <leader>tt :NvimTreeToggle<CR>
+nnoremap <leader>tf :NvimTreeFindFile<CR>
 

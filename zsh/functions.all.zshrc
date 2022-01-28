@@ -5,9 +5,6 @@ mkcd() { mkdir -p "$@" && cd "$_"; }
 
 sdb() { mkcd "$HOME/dev/sandbox/$1" }
 
-# cd & ls
-cl() { cd "$@" && ls; }
-
 # Upload file to transfert.sh
 transfer() {
   if [ $# -eq 0 ];
@@ -81,7 +78,7 @@ gclonorg() {
   done <<< $(curl -H "X-GitHub-OTP: $tfa" -u timdeve -s "https://api.github.com/orgs/$org/repos?per_page=200" | jq -r ".[].ssh_url")
 }
 
-gpushf() {
+gpushu() {
   git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
 }
 
@@ -138,10 +135,6 @@ yorn() {
   else
     return 1
   fi
-}
-
-nprl() {
-  jq .scripts < $(git rev-parse --show-toplevel)/package.json
 }
 
 poll() {
