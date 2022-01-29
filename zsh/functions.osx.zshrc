@@ -8,10 +8,6 @@ function md2word () {
   pandoc -o $2 -f markdown -t docx $1
 }
 
-function dokku() {
-  ssh dokkudk "$@"
-}
-
 function timer() {
 
   case $2 in

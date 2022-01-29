@@ -271,3 +271,8 @@ fixdotssh() {
   chmod 644 ~/.ssh/*.pub
 }
 
+
+function dokku() {
+  ssh dokkudk "$@"
+}
+

@@ -135,7 +135,7 @@ alias lst="livestreamer -p mpv"
 
 # Docker
 alias dk="docker"
-alias dkc="docker-compose"
+alias dkc="docker compose"
 
 # Trash
 alias th="trash"

@@ -237,6 +237,7 @@ require'nvim-tree'.setup {
 }
 LUA
 
-nnoremap <leader>tt :NvimTreeToggle<CR>
+nnoremap <leader>tt :NvimTreeFocus<CR>
+nnoremap <leader>tc :NvimTreeClose<CR>
 nnoremap <leader>tf :NvimTreeFindFile<CR>
 
