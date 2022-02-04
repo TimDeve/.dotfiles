@@ -32,6 +32,7 @@ set splitbelow
 set splitright
 set t_Co=256
 set tabstop=2                                                " actual tabs occupy 8 characters
+set termguicolors
 set timeoutlen=500
 set undodir=$HOME/.config/nvim/undo                          " where to save undo histories
 set undofile                                                 " save undo's after file closes
@@ -59,11 +60,16 @@ autocmd BufNewFile,BufRead *.tsx setlocal filetype=typescript.tsx
 " bats is bash
 autocmd BufRead,BufNewFile *.bats set filetype=bash
 
+" Use tabs with Go
+autocmd BufRead,BufNewFile *.go set noexpandtab
+
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
+let g:is_in_tmux = executable('tmux') && strlen($TMUX)
+
 " Fix Cursor in TMUX
-if exists('$TMUX')
+if g:is_in_tmux
   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
   let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 else
@@ -104,10 +110,6 @@ noremap gk k
 " Toggle Wrap
 nnoremap <leader>wr :set wrap!<CR>
 
-" Add new line without going to insert mode
-nmap <leader>o o<Esc>
-nmap <leader>O O<Esc>
-
 " Use kj as Escape
 inoremap kj <esc>
 
@@ -119,41 +121,16 @@ nnoremap <leader>q :q<CR>
 nnoremap <leader>Q :qa!<CR>
 
 " Clear search
-nnoremap <leader>sc :let @/ = ""<CR>
+nnoremap <leader>/ :let @/ = ""<CR>
 
 " go to last buffer
 nmap <leader><tab> <C-^>
-
-" Open new buffer
-nmap <leader>t :enew<cr>
 
 " Close buffer
 nmap <leader>bc :bp <BAR> bd #<cr>
 
 " Close all other buffers
-nnoremap <leader>bco :%bd\|e#\|bd#<CR>
-
-command! -bang -nargs=* Fd call fzf#vim#grep('cd $(git rev-parse --show-toplevel 2>/dev/null || pwd) && rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape (<q-args>).'| tr -d "\017"', 1, <bang>0)
-
-nnoremap <leader>f :Fd 
+nnoremap <leader>bo :%bd\|e#\|bd#<CR>
 
 nnoremap !! :!!<CR>
-
-if system('uname -a | egrep [Mm]icrosoft') != ''
-  if executable('win32yank.exe')
-    set clipboard+=unnamedplus
-    let g:clipboard = {
-    \   'name': 'win32yank-wsl',
-    \   'copy': {
-    \      '+': 'win32yank.exe -i --crlf',
-    \      '*': 'win32yank.exe -i --crlf',
-    \    },
-    \   'paste': {
-    \      '+': 'win32yank.exe -o --lf',
-    \      '*': 'win32yank.exe -o --lf',
-    \   },
-    \   'cache_enabled': 0,
-    \ }
-  endif
-endif
 

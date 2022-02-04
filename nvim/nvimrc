@@ -1,6 +1,4 @@
-call plug#begin()
 source ~/.dotfiles/nvim/plug.nvimrc
-call plug#end()
 
 source ~/.dotfiles/nvim/bare.nvimrc
 

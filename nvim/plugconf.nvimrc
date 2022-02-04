@@ -1,26 +1,3 @@
-" Bufferline
-set termguicolors
-lua << EOF
-require("bufferline").setup{
-  options = {
-    buffer_close_icon = '×',
-    show_close_icon = false,
-    show_buffer_icons = false,
-    diagnostics = false,
-    numbers = "ordinal",
-    left_trunc_marker = '<',
-    right_trunc_marker = '>',
-    tab_size = 16,
-    max_name_length = 26,
-    enforce_regular_tabs = false,
-  }
-}
-EOF
-
-nmap <leader>k :BufferLineCyclePrev<cr>
-nmap <leader>j :BufferLineCycleNext<cr>
-nmap <leader>bp :BufferLinePick<cr>
-
 " Gruvbox
 silent colorscheme gruvbox8_hard
 
@@ -29,7 +6,6 @@ let g:NERDDefaultAlign = 'left'
 let g:NERDCommentEmptyLines = 1
 let NERDCreateDefaultMappings = 0
 let g:NERDCustomDelimiters = { 'carp': { 'left': ';' } }
-map <leader>cc <plug>NERDCommenterToggle
 
 """ Airline Stuff
 let g:airline_powerline_fonts = 1
@@ -50,8 +26,6 @@ if executable('rg')
   " Use ripgrep with fzf
   let FZF_DEFAULT_COMMAND = 'rg --files --hidden'
 endif
-
-nnoremap <leader>g :GitGutterToggle<CR>
 
 " Disable sexp default for leader w
 let g:sexp_mappings={
@@ -97,47 +71,48 @@ let g:prettier#autoformat = 0
 " vim-move
 let g:move_key_modifier = 'C'
 
-" Use the right side of the screen
-let g:buffergator_viewport_split_policy = 'R'
-
-" I want my own keymappings...
-let g:buffergator_suppress_keymaps = 1
-
-
-" View the entire list of buffers open
-nmap <leader>bl :BuffergatorOpen<cr>
-
-" Easymotion
-map <leader><space> <Plug>(easymotion-prefix)
-map <Plug>(easymotion-prefix)<space> <Plug>(easymotion-bd-w)
-
-" Goyo
-nnoremap <leader>fd :Goyo<CR>
-
 function! s:goyo_enter()
-  silent !tmux set status off
+  if g:is_in_tmux
+    silent !tmux set status off
+    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  endif
+
   set noshowmode
   set noshowcmd
+  set scrolloff=999
+
+  silent colorscheme monotone
+  Monotone 0 0 70 0 0 0 0.785
+  Limelight
 endfunction
 
 function! s:goyo_leave()
-  silent !tmux set status on
+  if g:is_in_tmux
+    silent !tmux set status on
+    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  endif
+
   set showmode
   set showcmd
+  set scrolloff=3
+
+  silent colorscheme gruvbox8_hard
+  Limelight!
+
+  call s:setup_bufferline()
 endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
-" Sneak keep searching with s
-let g:sneak#s_next = 1
-
 " vim-test
-let test#strategy = "vimux" " Run test in tmux window
-nnoremap <leader>T :TestNearest<CR>
-nnoremap <leader>TT :TestLast<CR>
-nnoremap <leader>Ts :TestSuite<CR>
-nnoremap <leader>Tf :TestFile<CR>
+if g:is_in_tmux
+  let test#strategy = "vimux"
+else
+  let test#strategy = "neovim"
+endif
+
+let test#go#runner = "richgo"
 
 " Silence vim go warning
 let g:go_version_warning = 0
@@ -151,9 +126,15 @@ let g:LanguageClient_autoStart = 1
 let g:LanguageClient_useFloatingHover = 1
 let g:LanguageClient_fzfContextMenu = 1
 let g:LanguageClient_hideVirtualTextsOnInsert = 1
-" let $LANGUAGECLIENT_DEBUG=1
-" let g:LanguageClient_loggingLevel='DEBUG'
-" let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
+
+function g:LanguageClient_startDebug()
+  let $LANGUAGECLIENT_DEBUG=1
+  let g:LanguageClient_loggingLevel='DEBUG'
+  let g:LanguageClient_loggingFile = expand('~/.local/share/nvim/LanguageClient.log')
+  LanguageClientStop
+  sleep 100m
+  LanguageClientStart
+endfunction
 
 let g:LanguageClient_serverCommands = {
     \ 'haskell':        ['haskell-language-server-wrapper', '--lsp'],
@@ -164,21 +145,6 @@ let g:LanguageClient_serverCommands = {
     \ 'rust':           ['rust-analyzer'],
     \ 'go':             ['gopls'],
     \ }
-
-function LC_maps()
-  if has_key(g:LanguageClient_serverCommands, &filetype)
-    nnoremap <leader>ll :call LanguageClient_contextMenu()<CR>
-    nnoremap <Leader>lh :call LanguageClient#textDocument_hover()<CR>
-    nnoremap <Leader>ld :call LanguageClient#textDocument_definition()<CR>
-    nnoremap <Leader>lr :call LanguageClient#textDocument_rename()<CR>
-    nnoremap <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
-    nnoremap <Leader>lb :call LanguageClient#textDocument_references()<CR>
-    nnoremap <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
-    nnoremap <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
-    nnoremap <Leader>lc :call LanguageClient_handleCodeLensAction()<CR>
-  endif
-endfunction
-autocmd FileType * call LC_maps()
 
 " Todo
 let g:VimTodoListsMoveItems = 0
@@ -193,14 +159,46 @@ AddShebangPattern! clojure ^#!.*/bin/env\s\+bb\>
 AddShebangPattern! typescript ^#!.*/bin/env\s\+deno.*\>
 AddShebangPattern! typescript ^#!.*/bin/env\s-S\sdeno.*\>
 
-" Telescope
-nnoremap <C-p>      <cmd>Telescope find_files<cr>
-nnoremap <leader>fp <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope git_files<cr>
-nnoremap <leader>ff <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>ft <cmd>Telescope file_browser<cr>
-nnoremap <leader>fa <cmd>Telescope builtin<cr>
+" Use cross platform clipboard if on WSL
+if system('uname -a | egrep [Mm]icrosoft') != ''
+  if executable('win32yank.exe')
+    set clipboard+=unnamedplus
+    let g:clipboard = {
+    \   'name': 'win32yank-wsl',
+    \   'copy': {
+    \      '+': 'win32yank.exe -i --crlf',
+    \      '*': 'win32yank.exe -i --crlf',
+    \    },
+    \   'paste': {
+    \      '+': 'win32yank.exe -o --lf',
+    \      '*': 'win32yank.exe -o --lf',
+    \   },
+    \   'cache_enabled': 0,
+    \ }
+  endif
+endif
+
+" Bufferline
+
+function s:setup_bufferline()
+lua << EOF
+require("bufferline").setup{
+  options = {
+    buffer_close_icon = '×',
+    show_close_icon = false,
+    show_buffer_icons = false,
+    diagnostics = false,
+    numbers = "ordinal",
+    left_trunc_marker = '<',
+    right_trunc_marker = '>',
+    tab_size = 16,
+    max_name_length = 26,
+    enforce_regular_tabs = false,
+  }
+}
+EOF
+endfunction
+call s:setup_bufferline()
 
 let g:nvim_tree_icons = {
     \ 'default': "",
@@ -237,7 +235,106 @@ require'nvim-tree'.setup {
 }
 LUA
 
-nnoremap <leader>tt :NvimTreeFocus<CR>
-nnoremap <leader>tc :NvimTreeClose<CR>
-nnoremap <leader>tf :NvimTreeFindFile<CR>
+lua << LUA
+require("which-key").setup {
+  popup_mappings = {
+    scroll_up = '<c-p>',
+    scroll_down = '<c-n>',
+  },
+}
+
+local wk = require("which-key")
+
+-- Normal mode mappings
+wk.register({
+  ["!!"] = { "<Cmd>!!<CR>", "Replay Last Shell Command" },
+  ["<C-p>"] = { "<Cmd>Telescope find_files<CR>", "Find files" },
+  ["<leader>"] = {
+    ["<space>"] = { "<Plug>(easymotion-prefix)", "Easymotion" },
+    ["<tab>"]   = { "<C-^>",                     "Switch to previous buffer" },
+    ["="]       = { "<Cmd>vsp<CR>",              "Vertical split" },
+    ["-"]       = { "<Cmd>sp<CR>",               "Horizontal split" },
+    ["/"]       = { "<Cmd>let @/ = \"\"<CR>",    "Clear search", },
+    b = {
+      name = "Buffers",
+      c = { "<Cmd>bp <BAR> bd #<CR>",  "Close buffer"},
+      o = { "<Cmd>%bd|e#|bd#<CR>",     "Close other buffers"},
+      p = { "<Cmd>BufferLinePick<CR>", "Pick buffer"},
+    },
+    f = {
+      name = "Telescope",
+      a = { "<Cmd>Telescope builtin<CR>",      "Builtins" },
+      b = { "<Cmd>Telescope buffers<CR>",      "Buffers" },
+      f = { "<Cmd>Telescope live_grep<CR>",    "Grep" },
+      g = { "<Cmd>Telescope git_files<CR>",    "Git files" },
+      p = { "<Cmd>Telescope find_files<CR>",   "Find files" },
+      t = { "<Cmd>Telescope file_browser<CR>", "File browser" },
+    },
+    s = {
+      name = "File Browser",
+      c = { "<Cmd>NvimTreeClose<CR>",    "Close sidebar" },
+      f = { "<Cmd>NvimTreeFindFile<CR>", "Go to current file" },
+      s = { "<Cmd>NvimTreeFocus<CR>",    "Focus sidebar" },
+    },
+    t = {
+      name = "Test",
+      t = { "<Cmd>TestLast<CR>",    "Last" },
+      f = { "<Cmd>TestFile<CR>",    "File" },
+      n = { "<Cmd>TestNearest<CR>", "Nearest" },
+      s = { "<Cmd>TestSuite<CR>",   "Suite" },
+      g = { "<Cmd>TestVisit<CR>",   "Go to test file" },
+    },
+    Q  = { "<Cmd>qa!<CR>",                 "Force quit all" },
+    cc = { "<Plug>NERDCommenterToggle",    "Toggle comment" },
+    g  = { "<Cmd>GitGutterToggle<CR>",     "Toggle GitGutter" },
+    j  = { "<Cmd>BufferLineCyclePrev<CR>", "Previous buffer" },
+    k  = { "<Cmd>BufferLineCycleNext<CR>", "Next buffer" },
+    q  = { "<Cmd>q<CR>",                   "Quit" },
+    w  = { "<Cmd>w<CR>",                   "Save" },
+    wr = { "<Cmd>set wrap!<CR>",           "Toggle wrap" },
+    z  = { "<Cmd>Goyo<CR>",                "Zen mode" },
+  }
+})
+
+-- Visual mode mappings
+wk.register(
+  {
+    ["<leader><space>"] = { "<Plug>(easymotion-prefix)", "Easymotion" },
+    ["<leader>cc"]      = { "<Plug>NERDCommenterToggle", "Toggle comment" },
+  },
+  { mode = "v" }
+)
+LUA
+
+" Only set language client mappings on filetype with matching language servers
+function LC_maps()
+  if has_key(g:LanguageClient_serverCommands, &filetype)
+
+    autocmd BufWritePre *.rs,*.go call LanguageClient#textDocument_formatting_sync()
+
+lua << LUA
+local wk = require("which-key")
+
+wk.register({
+  ["<leader>"] = {
+    l = {
+      name = "LSP",
+      a = { "<Cmd>call LanguageClient#textDocument_codeAction()<CR>",     "Code Actions" },
+      b = { "<Cmd>call LanguageClient#textDocument_references()<CR>",     "Find references" },
+      c = { "<Cmd>call LanguageClient_handleCodeLensAction()<CR>",        "Code lens" },
+      d = { "<Cmd>call LanguageClient#textDocument_definition()<CR>",     "Go to definition" },
+      f = { "<Cmd>call LanguageClient#textDocument_formatting()<CR>",     "Format" },
+      i = { "<Cmd>call LanguageClient#textDocument_implementation()<CR>", "Go to implementation" },
+      h = { "<Cmd>call LanguageClient#textDocument_hover()<CR>",          "Hover" },
+      l = { "<Cmd>call LanguageClient_contextMenu()<CR>",                 "Context Menu" },
+      r = { "<Cmd>call LanguageClient#textDocument_rename()<CR>",         "Rename" },
+      s = { "<Cmd>call LanguageClient#textDocument_documentSymbol()<CR>", "Document symbol" },
+      t = { "<Cmd>call LanguageClient#textDocument_typeDefinition()<CR>", "Go to type definition" },
+    },
+  },
+})
+LUA
+  endif
+endfunction
+autocmd FileType * call LC_maps()
 
