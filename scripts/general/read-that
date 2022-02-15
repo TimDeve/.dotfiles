@@ -1,0 +1,98 @@
+#!/usr/bin/env bb
+(require '[babashka.curl :as curl]
+         '[clojure.tools.cli :refer [parse-opts]]
+         '[babashka.tasks :as tasks]
+         '[babashka.process :as p :refer [process]])
+(use '[clojure.data.xml :only (parse-str)])
+(use 'clojure.string)
+
+(def cli-options
+  [["-l" "--limit LIMIT" "Limit number of stories"
+    :default 20
+    :parse-fn #(Integer/parseInt %)
+    :validate [#(< 0 % 999) "Must be a number between 0 and 999"]]
+   ["-h" "--help"]])
+
+(defn parse-rss [xml] (parse-str xml))
+
+(defn get-body [url]
+  (:body (curl/get url)))
+
+(defn pick-feed [name]
+  (case name
+    "nyt" "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml"
+    "hn"  "https://hnrss.org/frontpage"
+    (do
+     (.println *err* (str "'" name "' is not a valid feed name"))
+     ((System/exit 1)))))
+
+(defn find-first [f coll]
+  (first (drop-while (complement f) coll)))
+
+(defn cleanup-item [item]
+  {:title (first (:content (find-first #(= (:tag %) :title) item)))
+   :link (first (:content (find-first #(= (:tag %) :link) item)))})
+
+(defn get-items [rss]
+  (->> rss
+       :content
+       (find-first #(= (:tag %) :channel))
+       :content
+       (filter #(= (:tag %) :item))
+       (map :content)
+       (map cleanup-item)))
+
+(defn gen-id-string [current-num max-num]
+  (let [max-id (str "[" (dec max-num) "]")
+        max-id-length (count max-id)]
+    (format (str "%-" (inc max-id-length) "s") (str "[" current-num "]"))))
+
+(defn display-titles [items]
+  (String/join "\n" (map-indexed #(str (gen-id-string %1 (count items)) (:title %2)) items)))
+
+(let [opts   (parse-opts *command-line-args* cli-options)
+      limit  (:limit (:options opts))
+      [name] (:arguments opts)
+      errors (:errors opts)]
+  (do
+    (when (:help (:options opts))
+      (do
+        (println "read-that")
+        (println "Read some news in the terminal.")
+        (println)
+        (println "USAGE:")
+        (println "  read-that [options...] <feed name>")
+        (println)
+        (println "OPTIONS:")
+        (println (:summary opts))
+        (println)
+        (println "ARGS:")
+        (println "  <feed name>: hn | nyt")
+        (System/exit 0)))
+
+    (when (< 0 (count errors))
+      (do
+        (.println *err* (String/join "\n" errors))
+        (System/exit 1)))
+
+    (when (empty? name)
+      (do
+        (.println *err* "You need to pass in a feed name")
+        (System/exit 1)))
+
+    (let [items (->> (pick-feed name)
+                     get-body
+                     parse-rss
+                     get-items)]
+      (do
+        (.println *err* (->> items
+                             (take limit)
+                             display-titles))
+        (let [i (Integer/parseInt (trim (read-line)))
+              link (:link (nth items i))]
+          (-> (process ["readable" link])
+              (process "w3m -T text/html" {:out :inherit})
+              (p/check)
+              :exit
+              (System/exit)))))))
+

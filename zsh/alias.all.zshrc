@@ -217,3 +217,10 @@ alias sigquit="kill -3"
 alias sigkill="kill -9"
 alias sigterm="kill -15"
 
+# Frawk
+alias fk="frawk"
+alias fks="frawk -i csv -o csv"
+alias fkt="frawk -i tsv -o tsv"
+
+alias rt="read-that"
+
