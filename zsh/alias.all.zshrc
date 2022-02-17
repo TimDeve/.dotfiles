@@ -167,6 +167,16 @@ alias npr="npm run"
 alias nps="npm start"
 alias npt="npm test"
 
+# PNPM
+alias pni="npm install"
+alias pnid="npm install --save-dev"
+alias pnag="npm install -g"
+alias pnd="npm uninstall --save"
+alias pndg="npm uninstall -g"
+alias pnr="npm run"
+alias pns="npm start"
+alias pnt="npm test"
+
 # Notes
 alias nn="not"
 alias ns="not -s"

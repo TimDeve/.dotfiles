@@ -66,5 +66,3 @@ fi
 
 source ~/.dotfiles/zsh/imports.zshrc
 
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /Users/tim/dev/go/bin/bitcomplete bit
