@@ -272,7 +272,7 @@ fixdotssh() {
 }
 
 
-function dokku() {
+dokku() {
   ssh dokkudk "$@"
 }
 

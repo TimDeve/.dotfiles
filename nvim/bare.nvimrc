@@ -47,6 +47,9 @@ set inccommand=nosplit                                       " enables live prev
 hi StatusLine ctermbg=238 ctermfg=234
 hi WildMenu ctermbg=27 ctermfg=white
 
+" Turns on spellcheck for git commits
+autocmd FileType gitcommit setlocal spell
+
 " md is markdown
 autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd BufRead,BufNewFile *.md set spell

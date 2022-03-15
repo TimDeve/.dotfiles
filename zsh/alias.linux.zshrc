@@ -9,6 +9,4 @@ alias timesync="sudo systemctl restart systemd-timesyncd.service"
 # xbps
 alias xbi="sudo xbps-install -S"
 alias xbu="sudo xbps-install -Su"
-alias xbs="xbps-query -Rs"
-alias xbr="sudo xbps-remove -R"
 
