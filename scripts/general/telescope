@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+PLANET_HOME="https://raw.githubusercontent.com/nvim-telescope/telescope.nvim/2592586533868aede5c254f4599601bf53f699da/data/memes/planets"
+
+PLANETS=(
+  earth
+  jupiter
+  mars
+  mercury
+  moon
+  neptune
+  pluto
+  saturn
+  uranus
+  venus
+)
+
+TARGET_PLANET="${1-}"
+
+planet_exists() {
+  for i in "${PLANETS[@]}"
+  do
+    if [ "$i" == "$1" ] ; then return 0; fi
+  done
+  return 1
+}
+
+if [[ -z "$TARGET_PLANET" ]]; then
+  echo "You see a telescope in front of you, look for a specific planet?"
+  exit 1
+elif planet_exists "$TARGET_PLANET"; then
+  curl -s "$PLANET_HOME/$TARGET_PLANET" | sed -E 's/[[:cntrl:]]\[38;5;0;48;5;0m▓/ /g' | sed -E 's/ *.([[:cntrl:]]\[0m)/\1/g'
+else
+  echo "You look in the sky but can't find $1..."
+  exit 1
+fi
+

@@ -258,6 +258,7 @@ wk.register({
     b = {
       name = "Buffers",
       c = { "<Cmd>bp <BAR> bd #<CR>",  "Close buffer"},
+      C = { "<Cmd>bp <BAR> bd! #<CR>", "Force close buffer"},
       o = { "<Cmd>%bd|e#|bd#<CR>",     "Close other buffers"},
       p = { "<Cmd>BufferLinePick<CR>", "Pick buffer"},
     },
