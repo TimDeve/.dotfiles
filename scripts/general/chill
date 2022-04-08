@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+if [[ "${1-}" == "--hd" ]]; then
+  IN_HD=1
+fi
+
+errcho() {
+  echo "$@" 1>&2
+}
+
+get_streamer() {
+  if hash streamlink.exe 1>&2 2>/dev/null; then
+    echo "streamlink.exe"
+  elif hash streamlink 1>&2 2>/dev/null; then
+    echo "streamlink"
+  else
+    errcho "Can't find streamlink nor streamlink.exe"
+    errcho "Exiting..."
+    exit 1
+  fi
+}
+
+play() {
+  if [[ -n "${IN_HD-}" ]]; then
+    "$(get_streamer)" 'https://www.youtube.com/watch?v=5qap5aO4i9A' 1080p
+  else
+    "$(get_streamer)" 'https://www.youtube.com/watch?v=5qap5aO4i9A' \
+                      360p --player='vlc --intf dummy' --quiet
+  fi
+}
+
+just_chillin() {
+  echo " . . . C H I L L I N . . ."
+}
+
+ART=$(cat <<GIRL
+
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠖⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣸⠃⠀⠀⠀⠀⢀⠏⠀⠀⠙⣦⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣠⠚⠛⠒⠲⢤⣄⣷⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠘⣷⡀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⢀⣠⣤⣴⣾⡉⠉⠁⠉⠓⢤⡀⠀⠀⠈⠙⠻⣿⡟⢦⡀⠀⠀⠀⠀⠀⠀⠘⣷⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⢀⡴⠋⠀⠀⠀⠀⠙⢶⡄⠀⠀⠀⠙⣆⠀⠀⠀⠀⠀⠙⠦⠑⠀⠀⠀⠀⠀⠀⠀⠹⣇⠀⠀⠀⠀⠀
+⠀⠀⠀⢰⠏⠀⠀⠀⠀⠀⠀⠀⠀⠙⣦⠀⣀⣀⣨⣦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⠀⠀⠀⠀⠀
+⠀⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣯⢥⠤⠴⣾⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⡼⠋⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠙⠎⠷⣿⢿⡅⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⡼⠁⠀⠀⠀⠀⠀⠀⠀⠀⡼⠀⠀⠀⢀⣠⢴⣿⣶⣿⣤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢰⡇⠀⠀⠀⠀⠀⠀⠀⠰⣢⠀⠀⠀⢠⡏⢠⣿⠟⠉⠤⠌⠹⣧⠀⠀⠀⠀⠀⠀⣠⡖⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⢸⣀⡀⠀⣰⢢⡀⠀⠀⠀⢹⣄⠀⠀⢸⠀⣿⡏⠀⠀⠀⠂⠀⣹⡇⠀⡀⠀⠀⢸⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠈⠙⠳⠤⠿⠟⣿⣶⣶⣾⣿⣿⣷⣤⡄⠁⠹⣿⣄⠠⣛⣴⣴⣿⠃⢠⠃⢀⡴⠋⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠙⢿⣿⣯⡿⣿⣿⣷⡄⠀⠈⠛⠶⠦⠶⠛⠁⢀⡖⢶⡾⠀⠐⠻⠒⠒⠦⣄⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿⣿⣿⣾⣿⣯⠳⢦⣄⣀⡀⣀⣠⣤⠶⢋⣾⠞⠀⠀⠀⠀⣀⣤⠴⢾⣧⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠰⣿⢿⣿⣿⣿⣿⣿⣶⣿⠇⠉⠁⠀⣀⣴⠟⠉⢠⠆⢀⣴⠞⣻⠃⠀⠀⠈⠳⣄⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⣴⣶⣾⣿⣿⣿⡟⣿⣿⣿⡏⣠⠖⠛⣲⠟⠁⠀⣠⢋⣴⠟⠁⣰⠃⠀⠀⠀⠀⠀⠈⠓⢦⡀
+⠀⠀⠀⠀⠀⠀⢰⣿⣿⣿⢿⢷⠙⠿⡾⢿⡿⠞⠁⣰⠞⠁⠀⠀⡴⢁⣾⠿⠂⢰⠃⠀⠀⠀⠀⠀⠀⠀⢀⡾⠁
+⠀⠀⠀⠀⠀⠀⠈⠻⢿⣿⣷⣄⣆⠀⠀⠀⢙⡆⢻⢃⠀⠀⠀⢸⢀⣿⠃⠀⠀⣿⠀⠀⠀⠀⠀⠀⠀⣰⠋⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠛⠛⣿⠛⠛⠛⠙⡄⠸⡏⠳⢄⡠⢆⣾⠃⠀⠀⠀⢿⠀⠀⠀⠀⠀⣠⠎⠁⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣇⠀⠀⠀⡇⠀⡟⣦⡀⠀⣼⣯⣲⠿⣖⣦⣸⡀⠀⣀⠴⠋⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣾⣝⣦⡀⡼⠁⠰⠃⠸⣷⢰⡟⠁⠀⠀⣀⣹⡿⠗⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠛⠻⠦⠴⠇⠻⠿⠷⠒⠚⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+
+       . . . C H I L L I N . . .
+
+GIRL
+)
+
+ART_WIDTH=41
+ART_HEIGHT=24
+
+if hash tput; then
+  columns=$(tput cols)
+  lines=$(tput lines)
+  if [[ "$columns" -ge "$ART_WIDTH" ]] && [[ "$lines" -ge "$ART_HEIGHT" ]]; then
+    padding=$(echo "($columns - $ART_WIDTH) / 2" | bc)
+
+    printf "%s\n" "$ART" | awk "{print sprintf(\"% ${padding}s\", \"\") \$0}"
+  else
+    just_chillin
+  fi
+else
+  just_chillin
+fi
+
+play

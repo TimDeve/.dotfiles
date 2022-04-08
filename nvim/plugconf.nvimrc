@@ -127,14 +127,20 @@ let g:LanguageClient_useFloatingHover = 1
 let g:LanguageClient_fzfContextMenu = 1
 let g:LanguageClient_hideVirtualTextsOnInsert = 1
 
-function g:LanguageClient_startDebug()
-  let $LANGUAGECLIENT_DEBUG=1
-  let g:LanguageClient_loggingLevel='DEBUG'
-  let g:LanguageClient_loggingFile = expand('~/.local/share/nvim/LanguageClient.log')
+function g:LanguageClientRestart()
   LanguageClientStop
   sleep 100m
   LanguageClientStart
 endfunction
+command LanguageClientRestart call g:LanguageClientRestart()
+
+function g:LanguageClientDebug()
+  let $LANGUAGECLIENT_DEBUG=1
+  let g:LanguageClient_loggingLevel='DEBUG'
+  let g:LanguageClient_loggingFile = expand('~/.local/share/nvim/LanguageClient.log')
+  call g:LanguageClientRestart()
+endfunction
+command LanguageClientDebug call g:LanguageClientDebug()
 
 let g:LanguageClient_serverCommands = {
     \ 'haskell':        ['haskell-language-server-wrapper', '--lsp'],
@@ -320,13 +326,14 @@ wk.register({
   ["<leader>"] = {
     l = {
       name = "LSP",
+      R = { "<Cmd>call LanguageClientRestart()<CR>",                      "Restart LanguageClient" },
       a = { "<Cmd>call LanguageClient#textDocument_codeAction()<CR>",     "Code Actions" },
       b = { "<Cmd>call LanguageClient#textDocument_references()<CR>",     "Find references" },
       c = { "<Cmd>call LanguageClient_handleCodeLensAction()<CR>",        "Code lens" },
       d = { "<Cmd>call LanguageClient#textDocument_definition()<CR>",     "Go to definition" },
       f = { "<Cmd>call LanguageClient#textDocument_formatting()<CR>",     "Format" },
-      i = { "<Cmd>call LanguageClient#textDocument_implementation()<CR>", "Go to implementation" },
       h = { "<Cmd>call LanguageClient#textDocument_hover()<CR>",          "Hover" },
+      i = { "<Cmd>call LanguageClient#textDocument_implementation()<CR>", "Go to implementation" },
       l = { "<Cmd>call LanguageClient_contextMenu()<CR>",                 "Context Menu" },
       r = { "<Cmd>call LanguageClient#textDocument_rename()<CR>",         "Rename" },
       s = { "<Cmd>call LanguageClient#textDocument_documentSymbol()<CR>", "Document symbol" },
