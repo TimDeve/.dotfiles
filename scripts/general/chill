@@ -21,12 +21,27 @@ get_streamer() {
   fi
 }
 
+get_player() {
+  if hash mpv.exe 1>&2 2>/dev/null || mpv 1>&2 2>/dev/null; then
+    echo "mpv --vo=null --no-video"
+  elif hash vlc.exe 1>&2 2>/dev/null || vlc 1>&2 2>/dev/null; then
+    echo "vlc --intf dummy"
+  fi
+}
+
 play() {
+  local streamer player
+  streamer="$(get_streamer)"
   if [[ -n "${IN_HD-}" ]]; then
-    "$(get_streamer)" 'https://www.youtube.com/watch?v=5qap5aO4i9A' 1080p
+    "$streamer" 'https://www.youtube.com/watch?v=5qap5aO4i9A' 1080p
   else
-    "$(get_streamer)" 'https://www.youtube.com/watch?v=5qap5aO4i9A' \
-                      360p --player='vlc --intf dummy' --quiet
+    player="$(get_player)"
+    if [[ -n "$player" ]]; then
+      "$streamer" 'https://www.youtube.com/watch?v=5qap5aO4i9A' \
+                        360p --player="$player" --quiet
+    else
+      "$streamer" 'https://www.youtube.com/watch?v=5qap5aO4i9A' 360p
+    fi
   fi
 }
 
@@ -82,3 +97,4 @@ else
 fi
 
 play
+
