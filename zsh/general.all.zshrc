@@ -18,6 +18,8 @@ PATH="${PATH}:$HOME/.cargo/bin"
 # Add yarn to path
 PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
+
 # Golang paths
 export GOPATH="$HOME/dev/go"
 export GOBIN="$GOPATH/bin"
