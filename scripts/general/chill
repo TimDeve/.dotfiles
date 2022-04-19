@@ -22,9 +22,9 @@ get_streamer() {
 }
 
 get_player() {
-  if hash mpv.exe 1>&2 2>/dev/null || mpv 1>&2 2>/dev/null; then
+  if hash mpv.exe 1>&2 2>/dev/null || hash mpv 1>&2 2>/dev/null; then
     echo "mpv --vo=null --no-video"
-  elif hash vlc.exe 1>&2 2>/dev/null || vlc 1>&2 2>/dev/null; then
+  elif hash vlc.exe 1>&2 2>/dev/null || hash vlc 1>&2 2>/dev/null; then
     echo "vlc --intf dummy"
   fi
 }
