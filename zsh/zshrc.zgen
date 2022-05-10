@@ -55,6 +55,7 @@ if ! zgen saved; then
     zgen load Tarrasch/zsh-bd
     zgen load felixr/docker-zsh-completion
     zgen load lukechilds/zsh-nvm
+    zgen load ianthehenry/sd
 
     # save all to init script
     zgen save
@@ -65,4 +66,6 @@ fi
 #
 
 source ~/.dotfiles/zsh/imports.zshrc
+
+compinit # Re-init completion to fix sd's completion
 

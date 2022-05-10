@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Edit me! I'm documentation!
+
+set -Eeuo pipefail
+

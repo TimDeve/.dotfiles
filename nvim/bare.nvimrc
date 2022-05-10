@@ -66,6 +66,8 @@ autocmd BufRead,BufNewFile *.bats set filetype=bash
 " Use tabs with Go
 autocmd BufRead,BufNewFile *.go set noexpandtab
 
+autocmd FileType gitconfig set noexpandtab
+
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
@@ -136,4 +138,6 @@ nmap <leader>bc :bp <BAR> bd #<cr>
 nnoremap <leader>bo :%bd\|e#\|bd#<CR>
 
 nnoremap !! :!!<CR>
+
+command GitLastMessage r ! git log -1 --pretty=format:\%B
 

@@ -69,7 +69,7 @@ let g:prettier#config#bracket_spacing = 'true'
 let g:prettier#autoformat = 0
 
 " vim-move
-let g:move_key_modifier = 'C'
+let g:move_key_modifier = 'S'
 
 function! s:goyo_enter()
   if g:is_in_tmux
@@ -149,6 +149,7 @@ let g:LanguageClient_serverCommands = {
     \ 'typescript':     ['typescript-language-server', '--stdio'],
     \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
     \ 'rust':           ['rust-analyzer'],
+    \ 'python':         ['pylsp'],
     \ 'go':             ['gopls'],
     \ }
 

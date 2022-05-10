@@ -1,6 +1,8 @@
 # nvim as editor
 export EDITOR="nvim"
 
+export SD_ROOT="$HOME/.dotfiles/scripts/sd"
+
 # import fzf (fuzzy file finder)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='rg --files --hidden'

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Retrieves last commit message
+
+set -Eeuo pipefail
+
+git log -1 --pretty=format:%B
