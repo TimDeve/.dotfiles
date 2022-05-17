@@ -55,21 +55,16 @@ gdelcom() {
   fi
 }
 
-if [[ -f $(which delta) ]]; then
-  gdifs() {
+gdifs() {
+  if hash delta 1>&2 2>/dev/null; then
     git --no-pager diff | delta --paging=never --keep-plus-minus-markers
-    printf '─%.0s' {1..$COLUMNS}
-    printf '─%.0s' {1..$COLUMNS}
-    git status
-  }
-else
-  gdifs() {
+  else
     git --no-pager diff --color
-    printf '─%.0s' {1..$COLUMNS}
-    printf '─%.0s' {1..$COLUMNS}
-    git status
-  }
-fi
+  fi
+  printf '─%.0s' {1..$COLUMNS} && echo
+  printf '─%.0s' {1..$COLUMNS} && echo
+  git status
+}
 
 gclonorg() {
   local org=$1 tfa=$2 
@@ -146,11 +141,6 @@ poll() {
     eval $@
     sleep $sleepTime
   done
-}
-
-# Nix
-nxf() {
-  nix-env -qaP ".*$@.*"
 }
 
 tmuxa() {
@@ -240,14 +230,6 @@ video2gif() {
          | convert -delay 10 - -loop 0 -layers optimize "$out"
 }
 
-co() {
-  if [[ -z "$2" ]]; then
-    awk "{print \$$1}"
-  else
-    awk -F "$2" "{print \$$1}"
-  fi
-}
-
 unalias d
 d() {
   local dir
@@ -271,8 +253,19 @@ fixdotssh() {
   chmod 644 ~/.ssh/*.pub
 }
 
-
 dokku() {
   ssh dokkudk "$@"
+}
+
+# Avoids clashes between sd (search and replace) and sd (script manager)
+sdr() {
+  local sd_path bin_name
+  bin_name="sd"
+  sd_path=$(whence -p "$bin_name")
+  if [[ -z "$sd_path" ]]; then
+    echo "zsh: command not found: $bin_name"
+  else
+    "$sd_path" "$@"
+  fi
 }
 

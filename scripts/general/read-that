@@ -1,4 +1,6 @@
 #!/usr/bin/env bb
+
+
 (require '[babashka.curl :as curl]
          '[clojure.tools.cli :refer [parse-opts]]
          '[babashka.tasks :as tasks]
@@ -68,6 +70,10 @@
         (println)
         (println "ARGS:")
         (println "  <feed name>: hn | nyt")
+        (println)
+        (println "DEPENDENCIES:")
+        (println "  readable (npm install -g readability-cli)")
+        (println "  w3m")
         (System/exit 0)))
 
     (when (< 0 (count errors))

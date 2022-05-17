@@ -1,7 +1,6 @@
 # Shorter editors
 alias v='nvim'
 alias vi='nvim -u ~/.dotfiles/nvim/bare.nvimrc'
-alias s='subl'
 alias c='code'
 
 # Quick Exit
@@ -87,9 +86,6 @@ alias tmuxaa="tmux attach"
 alias tmuxad="tmux attach-session -t Default || tmux new-session -s Default"
 alias tmuxav="tmux attach-session -t Vim || tmux new-session -s Vim"
 
-# ix.io (pastebin like)
-alias toixio="curl -F 'f:1=<-' ix.io"
-
 # Speed Test
 alias sptest='speedtest-cli --bytes --simple'
 
@@ -102,17 +98,11 @@ alias cpv="rsync -poghb --backup-dir=/tmp/rsync -e /dev/null --progress --"
 # List Globally installed npm packages
 alias npmlist="npm list -g --depth=0"
 
-# Because you can't remember your aliases
-alias whalias="ag '^alias' ~/.dotfiles/zsh --no-numbers -B 1"
-
 # Update dot files
-alias downdot="cd ~/.dotfiles && git pull"
+alias downdot="(cd ~/.dotfiles && git pull)"
 
 # Pip Upgrade All Outdated
 alias pipupgrade="pip list --outdated | cut -d ' ' -f1 | xargs -n1 pip install -U"
-
-# K with readable file size
-alias k="k -h"
 
 # Quick touch
 alias t="touch"
@@ -121,17 +111,13 @@ alias t="touch"
 alias md="mkdir"
 alias mdc="mkcd"
 
-# Reload zshrc
-alias zreload="source ~/.zshrc"
-
 # Simple Python Server
 alias pyserv="python -m SimpleHTTPServer"
 
 # Peerflix
 alias pf="peerflix -k"
 
-# Livestreamer
-alias lst="livestreamer -p mpv"
+alias strm="streamlink -p mpv --default-stream best"
 
 # Docker
 alias dk="docker"
@@ -182,13 +168,6 @@ alias pnt="pnpm test"
 # Notes
 alias nn="not"
 alias ns="not -s"
-
-# Nix
-alias nxe="nix-env"
-alias nxi="nix-env -i"
-alias nxr="nix-env -e"
-alias nxu="nix-env -u"
-alias nxs="nix-channel --update"
 
 alias epoch="date +'%s'"
 
