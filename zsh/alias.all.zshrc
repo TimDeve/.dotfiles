@@ -47,6 +47,7 @@ alias grebac="git rebase --continue"
 alias gaddupstream="git remote add upstream"
 
 alias ghpush="gh repo create && gpushf"
+alias ghclone="gh repo clone \$(gh repo list --limit 9999 | awk '{print \$1}' | fzf)"
 
 if [[ -f $(which delta) ]]; then
   # Git diff
