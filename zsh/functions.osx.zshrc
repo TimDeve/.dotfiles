@@ -1,15 +1,14 @@
 # Find everything
-function finda () {
+finda () {
   find . -iname *$1*
 }
 
 # Convert Markdown to Word
-function md2word () {
+md2word () {
   pandoc -o $2 -f markdown -t docx $1
 }
 
-function timer() {
-
+timer() {
   case $2 in
     "h"*)
       time=time*3600
@@ -36,6 +35,23 @@ function timer() {
   done
 
   sleep $time && say "$beep" -v "bells"
-
 }
 
+notif() {
+  osascript -e "display notification \"$*\" with title \"Terminal\""
+}
+
+with-notif() {
+  local exit_code escaped result
+  $*
+  exit_code="$?"
+  escaped="$(echo "$@" | sed 's/"/\\"/')"
+  if [[ "$exit_code" = 0 ]]; then
+    result="SUCCESS"
+  else
+    result="FAILURE"
+  fi
+
+  osascript -e "display notification \"$escaped\" with title \"$result\""
+  return "$exit_code"
+}

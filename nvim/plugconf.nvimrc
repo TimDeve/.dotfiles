@@ -129,10 +129,20 @@ let g:LanguageClient_hideVirtualTextsOnInsert = 1
 
 function g:LanguageClientRestart()
   LanguageClientStop
-  sleep 100m
+  sleep 500m
   LanguageClientStart
 endfunction
 command LanguageClientRestart call g:LanguageClientRestart()
+
+function g:LanguageClientRustFeatures(...)
+  let g:LanguageClient_serverCommands
+    \.rust
+    \.initializationOptions
+    \.cargo
+    \.features = a:000
+  call g:LanguageClientRestart()
+endfunction
+command -nargs=* LanguageClientRustFeatures call g:LanguageClientRustFeatures(<f-args>)
 
 function g:LanguageClientDebug()
   let $LANGUAGECLIENT_DEBUG=1
@@ -148,10 +158,16 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
     \ 'typescript':     ['typescript-language-server', '--stdio'],
     \ 'typescript.tsx': ['typescript-language-server', '--stdio'],
-    \ 'rust':           ['rust-analyzer'],
     \ 'python':         ['pylsp'],
     \ 'go':             ['gopls'],
-    \ }
+    \ 'rust': {
+    \     'name': 'rust-analyzer',
+    \     'command': ['rust-analyzer'],
+    \     'initializationOptions': {
+    \       'cargo': { 'features': 'all' }
+    \     }
+    \ },
+\ }
 
 " Todo
 let g:VimTodoListsMoveItems = 0

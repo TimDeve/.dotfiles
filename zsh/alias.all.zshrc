@@ -124,6 +124,8 @@ alias strm="streamlink -p mpv --default-stream best"
 alias dk="docker"
 alias dkc="docker compose"
 
+alias dkrt="dk run -it --rm"
+
 # Trash
 alias th="trash"
 

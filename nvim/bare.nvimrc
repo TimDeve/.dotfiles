@@ -85,13 +85,16 @@ endif
 silent colorscheme pablo
 
 " space is my leader
-map     <space> <leader>
+map <space> <leader>
 
 " in case you forgot to sudo
 cnoremap w!! %!sudo tee > /dev/null %
 
 " Don't copy the contents of an overwritten selection.
 vnoremap p "_dP
+
+" Enter key copies in visual to match tmux behaviour
+vnoremap <CR> y
 
 " Split navigation
 nnoremap <C-J> <C-W><C-J>
