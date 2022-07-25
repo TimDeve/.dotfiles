@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
+CHILL_URL="https://www.youtube.com/watch?v=jfKfPfyJRdk"
+
 if [[ "${1-}" == "--hd" ]]; then
   IN_HD=1
 fi
@@ -33,14 +35,13 @@ play() {
   local streamer player
   streamer="$(get_streamer)"
   if [[ -n "${IN_HD-}" ]]; then
-    "$streamer" 'https://www.youtube.com/watch?v=5qap5aO4i9A' 1080p
+    "$streamer" "$CHILL_URL" 1080p
   else
     player="$(get_player)"
     if [[ -n "$player" ]]; then
-      "$streamer" 'https://www.youtube.com/watch?v=5qap5aO4i9A' \
-                        360p --player="$player" --quiet
+      "$streamer" "$CHILL_URL" 360p --player="$player" --quiet
     else
-      "$streamer" 'https://www.youtube.com/watch?v=5qap5aO4i9A' 360p
+      "$streamer" "$CHILL_URL" 360p
     fi
   fi
 }
