@@ -176,6 +176,8 @@ let g:VimTodoListsMoveItems = 0
 let g:syntastic_carp_checkers = ['carp']
 
 let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_frontmatter = 1
 
 " Extra shebang detection
 AddShebangPattern! clojure ^#!.*/bin/env\s\+bb\>
