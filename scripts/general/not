@@ -32,10 +32,10 @@ if [ $# -eq 0 ]; then
 
   cd "$HOME/notes"
 
-  noteToOpen="$(find . -type f | \
-                cut -c 3- | \
-                sort -r | \
-                fzf --height 30% --reverse --preview "$previewer {}")"
+  noteToOpen="$(find . -name '.git' -prune -o -type f -print \
+                | cut -c 3- \
+                | sort -r \
+                | fzf --height 30% --reverse --preview "$previewer {}")"
   v "$noteToOpen"
   exit
 fi
