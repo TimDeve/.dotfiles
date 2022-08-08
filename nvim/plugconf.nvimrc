@@ -76,10 +76,15 @@ function! s:goyo_enter()
     silent !tmux set status off
     silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
 
-    " Wait until tmux has finish zooming in
-    call system("sh -c while [ \"$(tmux list-panes -F '#{E:window_zoomed_flag}' | head -c 1)\" -ne 1 ]; do ; done")
-    " Sleep needed otherwise Goyo won't see new dimensions
-    sleep 1m
+    let l:timeout = reltimefloat(reltime()) + 0.5
+    while reltimefloat(reltime()) < l:timeout
+      let l:res = system("sh -c \"tmux list-panes -F '#{E:window_zoomed_flag}' | head -c 1\"")
+      sleep 1m
+      if l:res == '1'
+        break
+      endif
+    endwhile
+
     " Need to pass default width (80) to Goyo to tell
     " it to turn on rather than toggle.
     execute 'Goyo 80'
