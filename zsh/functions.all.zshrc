@@ -90,13 +90,18 @@ grebai() {
 }
 
 n() {
+  if [[ "${NNNLVL:-0}" -ge 1 ]]; then
+    echo "nnn is already running"
+    return
+  fi
+
   local lastDir=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd
 
-  nnn "$@"
+  \nnn -de "$@"
 
-  if [ -f $lastDir ]; then
-    . $lastDir
-    rm -f $lastDir
+  if [ -f "$lastDir" ]; then
+    . "$lastDir"
+    rm -f "$lastDir"
   fi
 }
 

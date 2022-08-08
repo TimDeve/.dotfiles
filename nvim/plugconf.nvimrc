@@ -75,6 +75,10 @@ function! s:goyo_enter()
   if g:is_in_tmux
     silent !tmux set status off
     silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+    " Lame sleep to wait for tmux to resize
+    sleep 400m
+    " 80x85% is the default Goyo config
+    execute 'Goyo 80x85%'
   endif
 
   set noshowmode
