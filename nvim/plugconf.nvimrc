@@ -75,10 +75,14 @@ function! s:goyo_enter()
   if g:is_in_tmux
     silent !tmux set status off
     silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-    " Lame sleep to wait for tmux to resize
-    sleep 400m
-    " 80x85% is the default Goyo config
-    execute 'Goyo 80x85%'
+
+    " Wait until tmux has finish zooming in
+    call system("sh -c while [ \"$(tmux list-panes -F '#{E:window_zoomed_flag}' | head -c 1)\" -ne 1 ]; do ; done")
+    " Sleep needed otherwise Goyo won't see new dimensions
+    sleep 1m
+    " Need to pass default width (80) to Goyo to tell
+    " it to turn on rather than toggle.
+    execute 'Goyo 80'
   endif
 
   set noshowmode
