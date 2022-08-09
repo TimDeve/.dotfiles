@@ -215,5 +215,3 @@ alias fkt="frawk -i tsv -o tsv"
 
 alias rt="read-that"
 
-alias dot="cd ~/.dotfiles"
-

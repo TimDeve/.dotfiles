@@ -274,3 +274,47 @@ sdr() {
   fi
 }
 
+dot() {
+  local print_usage=false
+  local exit_code=0
+
+  case "${1-}" in
+    "")
+      cd ~/.dotfiles
+      ;;
+    "up")
+      (cd ~/.dotfiles \
+        && git add -u \
+        && git commit --verbose \
+        && git push)
+      exit_code=$?
+      ;;
+    "down")
+      (cd ~/.dotfiles && git pull --rebase)
+      exit_code=$?
+      ;;
+    "-h")
+      print_usage=true
+      ;;
+    *)
+      errcho "Unknow command '$@'"
+      errcho
+      print_usage=true
+      exit_code=1
+      ;;
+  esac
+
+  if [ $print_usage = true ]; then
+      errcho "USAGE:"
+      errcho "    \"\""
+      errcho "        cd to dotfiles folder"
+      errcho "    up"
+      errcho "        commit and push existing files in dotfiles folder"
+      errcho "    down"
+      errcho "        pull dotfiles from remote"
+      errcho "    -h"
+      errcho "        prints this message"
+  fi
+
+  return exit_code
+}
