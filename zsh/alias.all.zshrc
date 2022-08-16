@@ -167,6 +167,7 @@ alias pndg="pnpm remove -g"
 alias pnr="pnpm run"
 alias pns="pnpm start"
 alias pnt="pnpm test"
+alias pnx="pnpx"
 
 # Notes
 alias nn="not"
@@ -190,7 +191,7 @@ alias rsy="rsync -Paz"
 
 alias bbrepl="rlwrap bb"
 
-alias lal="la -t"
+alias lal="la -tr"
 
 alias each="xargs -n 1"
 alias each-line="xargs -n 1 -d $'\n'"
@@ -214,4 +215,8 @@ alias fks="frawk -i csv -o csv"
 alias fkt="frawk -i tsv -o tsv"
 
 alias rt="read-that"
+
+alias xhc="xh --session /tmp/xh-cookie-jar"
+alias xhsc="xhs --session /tmp/xh-cookie-jar"
+alias xhc-clear="rm -f /tmp/xh-cookie-jar"
 
