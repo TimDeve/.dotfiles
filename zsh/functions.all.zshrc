@@ -318,3 +318,10 @@ dot() {
 
   return exit_code
 }
+
+cstrm() {
+  local streamUrl
+  streamUrl=$(hltv)
+  strm $streamUrl
+}
+

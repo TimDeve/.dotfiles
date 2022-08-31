@@ -1,0 +1,180 @@
+#!/usr/bin/env bb
+
+(require '[babashka.curl :as curl])
+(require '[cheshire.core :as json])
+(require '[babashka.pods :as pods])
+
+(pods/load-pod 'retrogradeorbit/bootleg "0.1.9")
+(require '[pod.retrogradeorbit.bootleg.utils :as utils])
+(require '[pod.retrogradeorbit.hickory.select :as s])
+(require '[pod.retrogradeorbit.hickory.zip :as hickory-zip])
+
+(use 'clojure.string)
+
+(defmacro dbg [body]
+  `(let [x# ~body]
+     (println "dbg:" '~body "=" x#)
+     x#))
+
+(defn site-as-hickory []
+  (-> (:body (curl/get "https://www.hltv.org/matches"))
+      (utils/convert-to :hickory-seq)))
+
+(defn select-seq [selector seqs]
+  (reduce (fn [acc x] (concat acc (s/select selector x)))
+          seqs))
+
+(defn text-content [s el]
+  (cond
+        (sequential? el) (join "" (map #(text-content s %) el))
+        (not (nil? (:content el))) (text-content s (:content el))
+        (string? el) (trim el)
+        :else s))
+
+(defn event [match]
+  (->> match
+       (s/select (s/class "matchEventName"))
+       (first)
+       (:content)
+       (join " ")
+       (trim)))
+
+(defn team [match i]
+  (->> match
+       (s/select (s/class "matchTeam"))
+       (#(nth % i))))
+
+(defn team-name [team]
+  (->> team
+       (s/select (s/class "matchTeamName"))
+       (first)
+       (:content)
+       (join " ")
+       (trim)))
+
+(defn match-meta [match]
+  (->> match
+       (s/select (s/class "matchMeta"))
+       (first)
+       (:content)
+       (join " ")
+       (trim)))
+
+(defn gen-id-string [current-num max-num]
+  (let [max-id (str "[" (dec max-num) "]")
+        max-id-length (count max-id)]
+    (format (str "%-" (inc max-id-length) "s") (str "[" (inc current-num) "]"))))
+
+(defn display-menu [items]
+  (join "\n" (map-indexed #(str (gen-id-string %1 (count items)) %2) items)))
+
+; (defn team-score [team]
+;   (->> team
+;        (s/select (s/class "matchTeamScore"))
+;        (text-content "")))
+;        ; (first)
+;        ; (:content)
+;        ; (join " ")
+;        ; (trim)))
+
+(defn team-display [team]
+  (team-name team))
+
+(defn live-matches [data]
+  (->> data
+       (select-seq (s/class "liveMatch"))
+       (filter #(= (:type %) :element))))
+
+(defn red [& s]
+  (str "\033[31m" (join "" s) "\033[39m"))
+
+(defn cyan [& s]
+  (str "\033[36m" (join "" s) "\033[39m"))
+
+(defn display [match]
+  (let [t-one (team-display (team match 0))
+        t-two (team-display (team match 1))]
+    (str (red "LIVE ") (match-meta match) " " (cyan t-one " | " t-two) " (" (event match) ")")))
+
+(defn match-url [match]
+  (->> match
+       (s/select (s/class "match"))
+       (first)
+       (:attrs)
+       (:href)))
+
+(defn gather-match-data [match]
+  {:display (display match) :url (str "https://www.hltv.org" (match-url match))})
+
+(defn gather-matches-data []
+  (->> (site-as-hickory)
+       (live-matches)
+       (map gather-match-data)))
+
+(defn fetch-match [url]
+  (as-> url v
+      (:body (curl/get v))
+      (utils/convert-to v :hickory-seq)
+      (select-seq (s/tag "body") v)
+      (filter #(= (:type %) :element) v)))
+
+(defn stream-language [stream]
+  (->> stream
+       (s/select (s/descendant
+                   (s/class "stream-box-embed")
+                   (s/tag :img)))
+       (first)
+       (:attrs)
+       (:alt)))
+
+(defn stream-title [stream]
+  (->> stream
+       (s/select (s/class "stream-box-embed"))
+       (first)
+       (:content)
+       (filter string?)
+       (first)))
+
+(defn stream-url [stream]
+  (->> stream
+       (s/select (s/descendant
+                   (s/class "external-stream")
+                   (s/tag :a)))
+       (first)
+       (:attrs)
+       (:href)))
+
+(defn extract-stream-data [stream]
+  {:title (stream-title stream) 
+   :lang (stream-language stream)
+   :url (stream-url stream)})
+
+(defn streams [match]
+  (->> match
+       (first)
+       (s/select (s/class "stream-box"))
+       (map extract-stream-data)
+       (filter #(not (nil? (:url %))))))
+
+(defn pick-menu-item []
+  (Integer/parseInt (trim (read-line))))
+
+(defn display-streams [ss]
+  (map #(str (:lang %) " - " (:title %)) ss))
+
+(let [matches (gather-matches-data)]
+  (do
+    (.println *err* (display-menu (map :display matches)))
+    (let [i (pick-menu-item)
+          match-url (:url (nth matches (dec i)))
+          m (fetch-match match-url)
+          ss (streams m)
+          ssl (count ss)]
+     (cond (= ssl 0) (do (.println *err* "No streams found")
+                         (System/exit 1))
+           (= ssl 1) (println (:url (first ss)))
+           :rest     (do
+                       (.println *err* "Streams:")
+                       (.println *err* (display-menu (display-streams ss)))
+                       (println (:url (nth ss (dec (pick-menu-item))))))))))
+
