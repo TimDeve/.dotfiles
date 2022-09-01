@@ -321,7 +321,9 @@ dot() {
 
 cstrm() {
   local streamUrl
-  streamUrl=$(hltv)
-  strm $streamUrl
+  streamUrl=$(hltv) || return $?
+  if ! [[ -z "$streamUrl" ]]; then
+    strm $streamUrl
+  fi
 }
 
