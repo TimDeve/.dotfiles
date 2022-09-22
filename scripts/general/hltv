@@ -152,22 +152,26 @@
 (defn eprintln [& args]
   (.println *err* (join "" (map str args))))
 
-(let [matches (gather-matches-data)]
-  (do
-    (when (= (count matches) 0)
-          (do (eprintln "No matches are live right now")
-              (System/exit 0)))
-    (.println *err* (display-menu (map :display matches)))
-    (let [i (pick-menu-item)
-          match-url (:url (nth matches (dec i)))
-          m (fetch-match match-url)
-          ss (streams m)
-          ssl (count ss)]
-     (cond (= ssl 0) (do (eprintln "No streams found")
-                         (System/exit 1))
-           (= ssl 1) (println (:url (first ss)))
-           :rest     (do
-                       (eprintln (purple "\nStreams:"))
-                       (eprintln (display-menu (display-streams ss)))
-                       (println (:url (nth ss (dec (pick-menu-item))))))))))
+(defn -main [& args]
+  (let [matches (gather-matches-data)]
+    (do
+      (when (= (count matches) 0)
+            (do (eprintln "No matches are live right now")
+                (System/exit 0)))
+      (.println *err* (display-menu (map :display matches)))
+      (let [i (pick-menu-item)
+            match-url (:url (nth matches (dec i)))
+            m (fetch-match match-url)
+            ss (streams m)
+            ssl (count ss)]
+       (cond (= ssl 0) (do (eprintln "No streams found")
+                           (System/exit 1))
+             (= ssl 1) (println (:url (first ss)))
+             :rest     (do
+                         (eprintln (purple "\nStreams:"))
+                         (eprintln (display-menu (display-streams ss)))
+                         (println (:url (nth ss (dec (pick-menu-item)))))))))))
+
+(when (= *file* (System/getProperty "babashka.file"))
+  (apply -main *command-line-args*))
 
