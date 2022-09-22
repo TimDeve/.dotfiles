@@ -191,7 +191,23 @@ alias rsy="rsync -Paz"
 
 alias bbrepl="rlwrap bb"
 
-alias lal="la -tr"
+if hash exa 2>&1 1>/dev/null; then
+  exa_grey="38;5;241"
+  exa_filesize_numbers="sn=$exa_grey"
+  exa_filesize_unit="sb=$exa_grey"
+  exa_my_user="uu=$exa_grey"
+  exa_date="da=$exa_grey"
+  export EXA_COLORS="${exa_filesize_numbers}:${exa_filesize_unit}:${exa_my_user}:${exa_date}:${exa_exec_file}"
+
+  alias l="exa -1a"
+  alias ll="exa -l --git"
+  alias la="ll -a"
+  alias lal="la -snew"
+  alias lll="ll -snew"
+else
+  alias lal="la -tr"
+  alias lll="ll -tr"
+fi
 
 alias each="xargs -n 1"
 alias each-line="xargs -n 1 -d $'\n'"

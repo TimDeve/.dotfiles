@@ -69,12 +69,14 @@
        (filter #(= (:type %) :element))))
 
 (defn reset  [] "\033[39m")
-(defn red    [& s] (str "\033[31m" (join "" s) (reset)))
-(defn green  [& s] (str "\033[32m" (join "" s) (reset)))
-(defn yellow [& s] (str "\033[33m" (join "" s) (reset)))
-(defn blue   [& s] (str "\033[34m" (join "" s) (reset)))
-(defn purple [& s] (str "\033[35m" (join "" s) (reset)))
-(defn cyan   [& s] (str "\033[36m" (join "" s) (reset)))
+(defn color  [strs color-code]
+  (str "\033[" color-code "m" (join "" strs) (reset)))
+(defn red    [& s] (color s "31"))
+(defn green  [& s] (color s "32"))
+(defn yellow [& s] (color s "33"))
+(defn blue   [& s] (color s "34"))
+(defn purple [& s] (color s "35"))
+(defn cyan   [& s] (color s "36"))
 
 (defn display [match]
   (let [t-one (team-display (team match 0))
