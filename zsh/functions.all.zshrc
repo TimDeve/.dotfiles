@@ -165,7 +165,7 @@ carpwb() {
 }
 
 carpwsan() {
-  npx nodemon -e carp,h -x "carp -x --log-memory --eval-preload '(Debug.sanitize-addresses)' $@ || exit 1"
+  npx nodemon -e carp,h -x "carp -x --log-memory --eval-postload '(Debug.sanitize-addresses)' $@ || exit 1"
 }
 
 newsh() {
