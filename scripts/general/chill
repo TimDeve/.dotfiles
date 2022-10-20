@@ -89,6 +89,7 @@ if hash tput; then
   if [[ "$columns" -ge "$ART_WIDTH" ]] && [[ "$lines" -ge "$ART_HEIGHT" ]]; then
     padding=$(echo "($columns - $ART_WIDTH) / 2" | bc)
 
+    clear
     printf "%s\n" "$ART" | awk "{print sprintf(\"% ${padding}s\", \"\") \$0}"
   else
     just_chillin

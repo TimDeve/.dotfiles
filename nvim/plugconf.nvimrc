@@ -216,8 +216,10 @@ if system('uname -a | egrep [Mm]icrosoft') != ''
   endif
 endif
 
-" Bufferline
+" Leap
+lua require('leap').set_default_keymaps()
 
+" Bufferline
 function s:setup_bufferline()
 lua << EOF
 require("bufferline").setup{

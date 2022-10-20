@@ -153,19 +153,19 @@ tmuxa() {
 }
 
 carpw() {
-  npx nodemon -e carp,h -x "carp -x $@ || exit 1"
+  npx nodemon -e carp,h -x "carp -x $* || exit 1"
 }
 
 carpwc() {
-  npx nodemon -e carp,h -x "carp --check $@ || exit 1"
+  npx nodemon -e carp,h -x "carp --check $* || exit 1"
 }
 
 carpwb() {
-  npx nodemon -e carp,h -x "carp -b $@ || exit 1"
+  npx nodemon -e carp,h -x "carp -b $* || exit 1"
 }
 
 carpwsan() {
-  npx nodemon -e carp,h -x "carp -x --log-memory --eval-postload '(Debug.sanitize-addresses)' $@ || exit 1"
+  npx nodemon -e carp,h -x "carp -x --log-memory --eval-postload '(Debug.sanitize-addresses)' $* || exit 1"
 }
 
 newsh() {
