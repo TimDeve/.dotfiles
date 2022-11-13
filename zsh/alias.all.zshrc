@@ -191,7 +191,7 @@ alias rsy="rsync -Paz"
 
 alias bbrepl="rlwrap bb"
 
-if hash exa 2>&1 1>/dev/null; then
+if hash exa 1>/dev/null 2>/dev/null; then
   exa_grey="38;5;241"
   exa_filesize_numbers="sn=$exa_grey"
   exa_filesize_unit="sb=$exa_grey"

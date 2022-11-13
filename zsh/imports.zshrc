@@ -46,6 +46,10 @@ case $uname in
     ;;
 esac
 
+if uname -a | egrep '[Mm]icrosoft' 1>/dev/null 2>/dev/null; then
+  PATH="$PATH:$HOME/.dotfiles/scripts/wsl"
+fi
+
 source ~/.dotfiles/zsh/localpost.zshrc
 
 # Cleanup uname variable

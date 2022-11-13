@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+# Poor fake xcopy follow
+if [ "${1-}" == "-o" ] || [ -t 0 ]; then
+  win32yank.exe -o --lf
+else
+  win32yank.exe -i --crlf
+fi
+
