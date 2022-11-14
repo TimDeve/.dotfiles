@@ -45,13 +45,13 @@ Plug 'vim-syntastic/syntastic'
 Plug 'vitalk/vim-shebang'
 
 " Languages
+" Plug 'rhysd/vim-crystal'
+" Plug 'ziglang/zig.vim'
 Plug 'TimDeve/vim-todo-lists'
 Plug 'cespare/vim-toml'
 Plug 'hellerve/carp-vim'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'preservim/vim-markdown'
-Plug 'rhysd/vim-crystal'
 Plug 'stephpy/vim-yaml'
-Plug 'ziglang/zig.vim'
 
 call plug#end()
