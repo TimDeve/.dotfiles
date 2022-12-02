@@ -277,6 +277,25 @@ require('nvim-tree').setup {
 LUA
 
 lua << LUA
+require('telescope').setup{
+  defaults = {
+    mappings = {
+      n = {
+        ["k"] = require('telescope.actions').cycle_history_prev,
+        ["j"] = require('telescope.actions').cycle_history_next,
+      }
+    },
+--     history = {
+--      path = '~/.local/share/nvim/databases/telescope_history.sqlite3',
+--      limit = 100,
+--    },
+  },
+}
+
+-- require('telescope').load_extension('smart_history')
+LUA
+
+lua << LUA
 require("which-key").setup {
   popup_mappings = {
     scroll_up = '<c-p>',

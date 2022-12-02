@@ -15,6 +15,8 @@ Plug 'Lokaltog/vim-monotone'
 " Plug 'janko-m/vim-test'
 " Plug 'sakhnik/nvim-gdb', { 'do': ':!./install.sh' }
 " Plug 'sebdah/vim-delve'
+" Plug 'kkharji/sqlite.lua'
+" Plug 'nvim-telescope/telescope-smart-history.nvim'
 Plug 'Raimondi/delimitMate'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'TimDeve/vim-test', { 'branch': 'vimux-exit-copy-mode' }

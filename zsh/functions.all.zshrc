@@ -259,7 +259,7 @@ fixdotssh() {
 }
 
 dokku() {
-  ssh dokkudk "$@"
+  ssh dokkudk "dokku $@"
 }
 
 # Avoids clashes between sd (search and replace) and sd (script manager)
