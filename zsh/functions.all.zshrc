@@ -149,7 +149,7 @@ poll() {
 }
 
 tmuxa() {
-  tmux attach-session -t $@ || tmux new-session -s $@
+  tmux attach-session -d -t $@ || tmux new-session -s $@
 }
 
 carpw() {
