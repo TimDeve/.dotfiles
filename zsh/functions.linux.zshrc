@@ -29,3 +29,22 @@ whichwin() {
   winpath=$(powershell.exe -Command "Get-Command $@ | Select-Object -First 1 | foreach { \$_.Source }")
   wslpath $winpath
 }
+
+nxs() {
+  local packages blue reset
+  if [ -t 1 ]; then
+    blue="\\\\x1b[34m"
+    reset="\\\\x1b[39m"
+  fi
+
+  packages=$(nix --experimental-features 'nix-command flakes' search nixpkgs "$@" --json \
+    | jq "to_entries[]
+          | .value
+          | \"$blue\\(.pname)$reset | \\(.version) | \\(.description)\"" -r)
+
+  if hash tput && [[ "$(tput cols)" -ge 200 ]];  then
+    echo "$packages" | column -t -s "|"
+  else
+    echo "$packages"
+  fi
+}

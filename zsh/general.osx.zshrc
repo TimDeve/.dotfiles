@@ -13,3 +13,5 @@ cdpath=(~/dev ~)
 # C Header location for homebrew
 export CPATH="/usr/local/include:$CPATH"
 
+# Deactivate brew telemetry
+export HOMEBREW_NO_ANALYTICS=1

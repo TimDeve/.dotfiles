@@ -1,6 +1,0 @@
-source ~/.dotfiles/nvim/plug.nvimrc
-
-source ~/.dotfiles/nvim/bare.nvimrc
-
-source ~/.dotfiles/nvim/plugconf.nvimrc
-

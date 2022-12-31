@@ -84,8 +84,7 @@ alias cg='cd "$(git rev-parse --show-toplevel)"'
 alias tmuxn="tmux new-session -s"
 alias tmuxl="tmux list-sessions"
 alias tmuxaa="tmux attach"
-alias tmuxad="tmux attach-session -t Default || tmux new-session -s Default"
-alias tmuxav="tmux attach-session -t Vim || tmux new-session -s Vim"
+alias tmuxad="tmux attach-session -d -t Default || tmux new-session -s Default"
 
 # Speed Test
 alias sptest='speedtest-cli --bytes --simple'
@@ -217,6 +216,7 @@ alias caddy-serve="caddy file-server --listen :2015 --browse"
 # k8s
 alias k="kubectl"
 alias kuse='k config use-context $(k config get-contexts -o name | fzf)'
+alias kns="k config set-context --current --namespace=\"\$(k get namespace | tail \+2 | fzf | awk '{print \$1}')\" && kubectl config view -o=json | jq '.contexts[].context.namespace' -r"
 alias h="helm"
 
 # Signal

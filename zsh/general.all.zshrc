@@ -23,15 +23,16 @@ PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 
 # Golang paths
-export GOPATH="$HOME/dev/go"
-export GOBIN="$GOPATH/bin"
-export PATH="$PATH:$GOBIN"
+if [[ -z "$GOPATH" ]]; then
+  export GOPATH="$HOME/dev/go"
+fi
+
+for gpath in "${(@s/:/)GOPATH}"; do
+  PATH="$PATH:${gpath}/bin"
+done
 
 # Deactivate dotnet telemetry
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
-
-# Deactivate brew telemetry
-export HOMEBREW_NO_ANALYTICS=1
 
 # Allow to exit vi input mode with kj
 bindkey -M viins 'kj' vi-cmd-mode
