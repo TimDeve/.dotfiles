@@ -10,11 +10,13 @@ function setup()
 
   -- Normal mode mappings
   wk.register({
-    U      = { "<C-R>",       "Redo" },
-    j      = { "gj",          "Next Line"},
-    k      = { "gk",          "Previous Line"},
-    gj     = { "j",           "Next Line (Skip Wrap)"},
-    gk     = { "k",           "Previous Line (Skip Wrap)"},
+    U      = { "<C-R>",              "Redo" },
+    J      = { "<Plug>MoveLineDown", "Move line down"},
+    K      = { "<Plug>MoveLineUp",   "Move line up"},
+    j      = { "gj",                 "Next Line"},
+    k      = { "gk",                 "Previous Line"},
+    gj     = { "j",                  "Next Line (Skip Wrap)"},
+    gk     = { "k",                  "Previous Line (Skip Wrap)"},
     ["!!"] = { "<Cmd>!!<CR>", "Replay Last Shell Command" },
     ["[d"] = { vim.diagnostic.goto_prev, "Previous diagnostic" },
     ["]d"] = { vim.diagnostic.goto_next, "Next diagnostic" },
@@ -74,6 +76,8 @@ function setup()
   -- Visual mode mappings
   wk.register(
     {
+      J      = { "<Plug>MoveBlockDown", "Move block down"},
+      K      = { "<Plug>MoveBlockUp",   "Move block up"},
       ["<leader>cc"] = { "<Plug>NERDCommenterToggle", "Toggle comment" },
       ["<CR>"]       = { "y",                         "Yank" },
     },

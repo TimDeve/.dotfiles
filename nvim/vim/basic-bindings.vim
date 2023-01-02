@@ -1,6 +1,3 @@
-" in case you forgot to sudo
-cnoremap w!! %!sudo tee > /dev/null %
-
 " Don't copy the contents of an overwritten selection.
 vnoremap p "_dP
 

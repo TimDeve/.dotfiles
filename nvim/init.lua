@@ -1,5 +1,6 @@
 -- Makes dotfiles modules available
-vim.o.runtimepath = vim.o.runtimepath .. ",~/.dotfiles/nvim"
+custom_runtimepath = vim.fn.expand("~/.dotfiles/nvim")
+vim.opt.rtp:prepend(custom_runtimepath)
 
 local IS_WORK_MACHINE = os.getenv("IS_WORK_MACHINE") ~= nil
 vim.g.IS_WORK_MACHINE = IS_WORK_MACHINE
@@ -64,13 +65,19 @@ autocmd({"BufRead", "BufNewFile"}, "*.tsx", "setlocal filetype=typescript.tsx")
 -- bats is bash
 autocmd({"BufRead", "BufNewFile"}, "*.bats", "setlocal filetype=bash")
 
+-- todo is todo
+autocmd({"BufRead", "BufNewFile"}, "*.todo", "setlocal filetype=todo")
+
+-- carp is carp
+autocmd({"BufRead", "BufNewFile"}, "*.carp", "setlocal filetype=carp")
+
 -- Use tabs with go, gitconfig
 autocmd("FileType", {"go", "gitconfig"}, "set noexpandtab")
 
 -- Automatically rebalance windows on vim resize
 autocmd("VimResized", "*", "wincmd =")
 
--- Default colorscheme
+-- Fallback colorscheme
 cmd "silent colorscheme pablo"
 
 -- Check if we're running in tmux
@@ -106,24 +113,30 @@ if vim.fn.system('uname -a | egrep [Mm]icrosoft') ~= "" then
   end
 end
 
--- Load plugins
-cmd [[ source ~/.dotfiles/nvim/vim/plug.vim ]]
+-- Setup lazy
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- Load basic bindings
+cmd "source ~/.dotfiles/nvim/vim/basic-bindings.vim"
+
+-- Load plugins lazily
+require("plugins").setup({ runtimepath = custom_runtimepath })
 
 -- [Plug Conf] --
 
--- Check plugins are accessible
-if not pcall(function() require("which-key") end) then
-  print("Plugins are not installed, run :PlugInstall")
-
-  -- Load backup bindings and exit early
-  cmd "source ~/.dotfiles/nvim/vim/basic-bindings.vim"
-  return
-end
-
 -- Source other config files
 utils.setup_all({"bindings", "lsp", "line"})
-
-cmd "silent colorscheme gruvbox8_hard"
 
 -- NerdCommenter
 vim.g.NERDDefaultAlign = 'left'
@@ -156,15 +169,11 @@ inoremap <expr><S-tab> pumvisible() ? "\<c-p>" : "\<S-tab>"
 inoremap <expr><CR> pumvisible() ? "\<c-y>" : "\<CR>"
 ]]
 
--- Activate Rainbow parens only for Lisps
-vim.g.rainbow_active = 0
-cmd [[autocmd FileType clojure,carp :RainbowToggleOn]]
-
 -- Vim-Go
 vim.g.go_fmt_command = "goimports"
 
--- vim-move
-vim.g.move_key_modifier = 'S'
+-- vim-move (Disable default bindings)
+vim.g.move_map_keys = 0
 
 -- Goyo
 cmd [[
@@ -194,6 +203,8 @@ function! s:goyo_enter()
   silent colorscheme monotone
   Monotone 0 0 70 0 0 0 0.785
   Limelight
+
+  lua require("lualine").hide()
 endfunction
 
 function! s:goyo_leave()
@@ -209,7 +220,9 @@ function! s:goyo_leave()
   silent colorscheme gruvbox8_hard
   Limelight!
 
-  call s:setup_bufferline()
+  lua setup_bufferline()
+
+  lua require("lualine").hide { unhide = true }
 endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
@@ -252,20 +265,23 @@ AddShebangPattern! typescript ^#!.*/bin/env\s-S\sdeno.*\>
 require('leap').set_default_keymaps()
 
 -- Bufferline
-require("bufferline").setup{
-  options = {
-    buffer_close_icon = '×',
-    show_close_icon = false,
-    show_buffer_icons = false,
-    diagnostics = false,
-    numbers = "ordinal",
-    left_trunc_marker = '<',
-    right_trunc_marker = '>',
-    tab_size = 16,
-    max_name_length = 26,
-    enforce_regular_tabs = false,
+function setup_bufferline()
+  require("bufferline").setup{
+    options = {
+      buffer_close_icon = '×',
+      show_close_icon = false,
+      show_buffer_icons = false,
+      diagnostics = false,
+      numbers = "ordinal",
+      left_trunc_marker = '<',
+      right_trunc_marker = '>',
+      tab_size = 16,
+      max_name_length = 26,
+      enforce_regular_tabs = false,
+    }
   }
-}
+end
+setup_bufferline()
 
 -- nvim-tree
 require('nvim-tree').setup {
@@ -344,9 +360,6 @@ require('treesitter-context').setup({
     },
   },
 })
-
--- dressing.nvim (Nicer inputs)
-require("dressing").setup{}
 
 -- trouble (Diagnostic window)
 require("trouble").setup {
