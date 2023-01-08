@@ -1,6 +1,6 @@
-local wk = require("which-key")
-
 function setup()
+  local wk = require("which-key")
+
   wk.setup {
     popup_mappings = {
       scroll_up = '<c-p>',
@@ -35,6 +35,7 @@ function setup()
       },
       f = {
         name = "Telescope",
+        ["'"] = { "<Cmd>Telescope marks<CR>",              "marks" },
         a = { "<Cmd>Telescope builtin<CR>",                "Builtins" },
         b = { "<Cmd>Telescope buffers<CR>",                "Buffers" },
         f = { "<Cmd>Telescope live_grep<CR>",              "Grep" },
@@ -42,6 +43,11 @@ function setup()
         p = { "<Cmd>Telescope find_files<CR>",             "Find files" },
         P = { "<Cmd>Telescope find_files hidden=true<CR>", "Find all files" },
         t = { "<Cmd>Telescope file_browser<CR>",           "File browser" },
+      },
+      g = {
+        name = "Git",
+        b = { "<Cmd>Git blame<CR>",       "Show git blame" },
+        g = { "<Cmd>GitGutterToggle<CR>", "Toggle GitGutter" },
       },
       s = {
         name = "File Browser",
@@ -57,19 +63,18 @@ function setup()
         s = { "<Cmd>TestSuite<CR>",   "Suite" },
         g = { "<Cmd>TestVisit<CR>",   "Go to test file" },
       },
-      Q  = { "<Cmd>qa!<CR>",                 "Force quit all" },
-      W  = { "<Cmd>wa<CR>",                  "Save all" },
-      cc = { "<Plug>NERDCommenterToggle",    "Toggle comment" },
-      ll = { "<Cmd>TroubleToggle<CR>",       "Open Trouble" },
-      e  = { vim.diagnostic.open_float,      "Show diagnostic for this line" },
-      g  = { "<Cmd>GitGutterToggle<CR>",     "Toggle GitGutter" },
-      j  = { "<Cmd>BufferLineCycleNext<CR>", "Next buffer" },
-      k  = { "<Cmd>BufferLineCyclePrev<CR>", "Previous buffer" },
-      q  = { "<Cmd>q<CR>",                   "Quit" },
-      r  = { "<Cmd>set wrap!<CR>",           "Toggle wrap" },
-      u  = { "<CMd>MundoToggle<CR>",         "Toggle undo tree" },
-      w  = { "<Cmd>w<CR>",                   "Save" },
-      z  = { "<Cmd>Goyo<CR>",                "Zen mode" },
+      Q  = { "<Cmd>qa!<CR>",                                 "Force quit all" },
+      W  = { "<Cmd>wa<CR>",                                 "Save all" },
+      cc = { "<Plug>NERDCommenterToggle",                   "Toggle comment" },
+      ll = { "<Cmd>TroubleToggle document_diagnostics<CR>", "Open Trouble" },
+      e  = { vim.diagnostic.open_float,                     "Show diagnostic for this line" },
+      j  = { "<Cmd>BufferLineCycleNext<CR>",                "Next buffer" },
+      k  = { "<Cmd>BufferLineCyclePrev<CR>",                "Previous buffer" },
+      q  = { "<Cmd>q<CR>",                                  "Quit" },
+      r  = { "<Cmd>set wrap!<CR>",                          "Toggle wrap" },
+      u  = { "<CMd>MundoToggle<CR>",                        "Toggle undo tree" },
+      w  = { "<Cmd>w<CR>",                                  "Save" },
+      z  = { "<Cmd>Goyo<CR>",                               "Zen mode" },
     }
   })
 

@@ -1,5 +1,8 @@
 local M = {}
 
+M.IS_WORK_MACHINE = os.getenv("IS_WORK_MACHINE") ~= nil
+vim.g.IS_WORK_MACHINE = M.IS_WORK_MACHINE
+
 function M.has_exe(exe)
   return vim.fn.executable(exe) == 1
 end
@@ -12,6 +15,10 @@ end
 
 function M.VimEnter_cb(cmd)
   return function() M.autocmd("VimEnter", "*", cmd) end
+end
+
+function M.setup_config_cb(module, opts)
+  return function() require(module).setup(opts) end
 end
 
 function M.merge(t1, t2)
@@ -57,6 +64,24 @@ function M.truthy(v)
   return false
 end
 
-M.diag_signs = { Error = "✖", Warn = "◼", Hint = "●", Info = "✱" }
+function M.cmd_cb(c)
+  local cb = function() vim.cmd(c) end
+  return cb
+end
+
+function M.match_filetype(matches)
+  for _, match in ipairs(matches) do
+    M.autocmd({"BufRead", "BufNewFile"}, match[1], "setlocal filetype=" .. match[2])
+  end
+end
+
+M.diag_signs = { Error = "✖", Warn = "▼", Hint = "●", Info = "◼", Other = "◆" }
+M.diag_signs.error       = M.diag_signs.Error
+M.diag_signs.warn        = M.diag_signs.Warn
+M.diag_signs.warning     = M.diag_signs.Warn
+M.diag_signs.hint        = M.diag_signs.Hint
+M.diag_signs.info        = M.diag_signs.Info
+M.diag_signs.information = M.diag_signs.Info
+M.diag_signs.other       = M.diag_signs.Other
 
 return M

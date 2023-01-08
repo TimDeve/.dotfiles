@@ -35,7 +35,7 @@ local function visual_multi_status()
   local patterns = "['" .. table.concat(vm.patterns, "', '") .. "']"
 
   return string.format(
-    "%s%s %s%s %s%s %s",
+    "%s%s  %s%s %s%s %s",
     color, mode, "%#VM_Insert#", vm.ratio, single, "%#TabLine#", patterns
   )
 end
@@ -51,7 +51,7 @@ local config = {
     section_separators = { left = '', right = ''},
     component_separators = { left = '', right = ''},
   },
-  extensions = {"nvim-tree", "mundo"},
+  extensions = {"nvim-tree", "mundo", "fugitive"},
   sections = {
     lualine_a = {mode},
     lualine_b = {
@@ -72,7 +72,7 @@ local config = {
     },
     lualine_c = {'filename', "lsp_progress"},
     lualine_x = {
-      'encoding', 
+      'encoding',
       {
         'fileformat',
         symbols = {

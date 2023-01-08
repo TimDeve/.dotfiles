@@ -55,6 +55,15 @@ gdelcom() {
   fi
 }
 
+gdelbi() {
+  setopt local_options UNSET ERR_RETURN
+  local branches
+  branches=$(git branch | awk '/.* master$/{next} /\* .*/{next} {print $1}' | fzf --multi)
+  if yorn "Are you sure you want to delete these branches?" "$branches"; then
+    <<< "$branches" xargs git branch -D
+  fi
+}
+
 gdifs() {
   if hash delta 1>&2 2>/dev/null; then
     git --no-pager diff | delta --paging=never --keep-plus-minus-markers
@@ -125,9 +134,13 @@ countln() {
 }
 
 yorn() {
-  local question="$1" answer
+  local question="$1" answer extra
 
-  echo "$question (y/N)"
+  if ! [[ -z "$2" ]]; then
+    extra="\n$2"
+  fi
+
+  echo "$question (y/N)$extra"
 
   read -sk answer
   if [ $answer = y ]; then
