@@ -70,7 +70,7 @@ local config = {
         },
       },
     },
-    lualine_c = {'filename', "lsp_progress"},
+    lualine_c = {{ 'filename', path = 1}, 'lsp_progress'},
     lualine_x = {
       'encoding',
       {

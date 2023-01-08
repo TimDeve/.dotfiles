@@ -18,7 +18,6 @@ local settings =  {
 
   -- Extra
   { 'Shougo/deoplete.nvim', build = utils.VimEnter_cb("UpdateRemotePlugins"), config = cmd_cb("call deoplete#enable()") },
-  { 'cohama/lexima.vim' },
   { 'folke/which-key.nvim', config = setup_config_cb("config-which-key") },
   { 'ggandor/leap.nvim', config = config.leap },
   { 'junegunn/fzf.vim', dependencies = {{ 'junegunn/fzf', build = ':call fzf#install()' }}},

@@ -35,7 +35,14 @@ local function lsp_progress_callback()
     end
 end
 
+local attached_lsp = {}
+
 local function on_lsp_attach(client, bufno)
+  if attached_lsp[client.name] ~= nil then
+    return -- Exit early if already attached
+  end
+  attached_lsp[client.name] = true
+
   local capabilities = client.server_capabilities
   lsp_capbilities = capabilities
 
