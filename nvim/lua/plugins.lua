@@ -14,14 +14,13 @@ local settings =  {
   { 'Lokaltog/vim-monotone', keys = "<space>z" },
 
   -- Extra
-  { 'Shougo/deoplete.nvim', build = ':UpdateRemotePlugins' },
+  { 'Shougo/deoplete.nvim', build = ':UpdateRemotePlugins',  config = function() cmd ":call deoplete#enable()" end},
   { 'cohama/lexima.vim' },
   { 'folke/which-key.nvim' },
   { 'ggandor/leap.nvim' },
   { 'junegunn/fzf', build = ':call fzf#install()' },
   { 'junegunn/fzf.vim' },
   { 'matze/vim-move' },
-  { 'neovim/node-host', build = 'npm install' },
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-telescope/telescope.nvim' },
   { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
@@ -54,7 +53,6 @@ local settings =  {
   { 'stevearc/dressing.nvim', event = "VeryLazy", config = true },
   { 'tpope/vim-fugitive', event = "VeryLazy" },
 
-  { 'brooth/far.vim', cmd = "Far" },
   { 'folke/trouble.nvim', cmd = "TroubleToggle" },
   { 'kyazdani42/nvim-tree.lua', cmd = {"NvimTreeToggle", "NvimTreeFindFile"} },
   { 'simnalamburt/vim-mundo', cmd = "MundoToggle" },

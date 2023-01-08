@@ -159,7 +159,6 @@ vim.opt.updatetime = 250
 
 -- Deoplete
 cmd [[
-let g:deoplete#enable_at_startup = 1
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 autocmd FileType TelescopePrompt call deoplete#custom#buffer_option('auto_complete', v:false)
 
