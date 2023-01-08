@@ -14,7 +14,7 @@ local settings =  {
   { 'Lokaltog/vim-monotone', keys = "<space>z" },
 
   -- Extra
-  { 'Shougo/deoplete.nvim', build = ':UpdateRemotePlugins',  config = function() cmd ":call deoplete#enable()" end},
+  { 'Shougo/deoplete.nvim', build = utils.VimEnter_cb("UpdateRemotePlugins"),  config = function() cmd "call deoplete#enable()" end},
   { 'cohama/lexima.vim' },
   { 'folke/which-key.nvim' },
   { 'ggandor/leap.nvim' },
@@ -23,7 +23,7 @@ local settings =  {
   { 'matze/vim-move' },
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-telescope/telescope.nvim' },
-  { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+  { 'nvim-treesitter/nvim-treesitter', build = utils.VimEnter_cb("TSUpdate") },
   { 'nvim-treesitter/nvim-treesitter-context' },
   { 'tpope/vim-surround' },
   { 'vitalk/vim-shebang' },

@@ -10,6 +10,10 @@ function M.setup_all(modules)
   end
 end
 
+function M.VimEnter_cb(cmd)
+  return function() M.autocmd("VimEnter", "*", cmd) end
+end
+
 function M.merge(t1, t2)
   local new_table = {}
   for k,v in pairs(t1) do new_table[k] = v end
