@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 function setup()
   local wk = require("which-key")
 
@@ -39,9 +41,8 @@ function setup()
         a = { "<Cmd>Telescope builtin<CR>",                "Builtins" },
         b = { "<Cmd>Telescope buffers<CR>",                "Buffers" },
         f = { "<Cmd>Telescope live_grep<CR>",              "Grep" },
-        g = { "<Cmd>Telescope git_files<CR>",              "Git files" },
-        p = { "<Cmd>Telescope find_files<CR>",             "Find files" },
-        P = { "<Cmd>Telescope find_files hidden=true<CR>", "Find all files" },
+        p = { utils.project_files,                         "Find files" },
+        P = { function() utils.project_files({ hidden = true }) end, "Find all files" },
         t = { "<Cmd>Telescope file_browser<CR>",           "File browser" },
       },
       g = {

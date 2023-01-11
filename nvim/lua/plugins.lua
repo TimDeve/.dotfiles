@@ -25,7 +25,7 @@ local settings =  {
   { 'nvim-lua/plenary.nvim', lazy = true },
   { 'nvim-telescope/telescope.nvim', config = config.telescope },
   { 'nvim-treesitter/nvim-treesitter', build = utils.VimEnter_cb("TSUpdate"), config = config.treesitter },
-  { 'nvim-treesitter/nvim-treesitter-context' },
+  { 'nvim-treesitter/nvim-treesitter-context', config = config["treesitter-context"] },
   { 'tpope/vim-surround' },
   { 'vitalk/vim-shebang' },
 
@@ -36,6 +36,7 @@ local settings =  {
       'folke/lsp-colors.nvim',
       'deoplete-plugins/deoplete-lsp',
       'simrat39/rust-tools.nvim',
+      'jose-elias-alvarez/null-ls.nvim',
     }
   },
 

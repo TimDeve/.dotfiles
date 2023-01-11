@@ -1,5 +1,6 @@
 local cmd = vim.cmd
 local lsp_config = require("lspconfig")
+local null_ls = require("null-ls")
 local wk = require("which-key")
 local utils = require("utils")
 local rust_tools = require("rust-tools")
@@ -162,6 +163,15 @@ function M.setup()
   setup_servers(shared_options, servers_options)
 
   rust_tools.setup({ server = { on_attach = on_lsp_attach }})
+
+
+  null_ls.setup({
+    sources = {
+      null_ls.builtins.diagnostics.shellcheck,
+      null_ls.builtins.code_actions.shellcheck,
+    },
+    on_attach = on_lsp_attach,
+  })
 end
 
 return M

@@ -1,3 +1,5 @@
+local utils = require("utils")
+
 local M = {}
 
 M.ft = {"go", "gosum", "gowork", "gohtmltmpl"}
@@ -14,8 +16,8 @@ function M.setup()
   vim.g.go_fmt_command            = "goimports"
 
   require("which-key").register({
-    ["<leader>li"] = { cmd_cb("call go#implements#Implements(-1)"), "Go to implementation [Go] " },
-    ["<leader>lf"] = { cmd_cb("call go#fmt#Format(1)"), "Format [Go] " },
+    ["<leader>li"] = { utils.cmd_cb("call go#implements#Implements(-1)"), "Go to implementation [Go] " },
+    ["<leader>lf"] = { utils.cmd_cb("call go#fmt#Format(1)"), "Format [Go] " },
     ["<leader>lb"] = { "<Plug>(go-referrers)", "Find references [Go] " },
   })
 end

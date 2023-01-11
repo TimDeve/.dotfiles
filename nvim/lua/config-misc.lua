@@ -99,14 +99,15 @@ function M.treesitter()
 
   require('nvim-treesitter.configs').setup(treesitter_settings)
 
-  require('treesitter-context').setup({
-    patterns = {
-      go = {
-        'function_declaration',
-      },
-    },
-  })
 end
+
+M["treesitter-context"] = {
+  patterns = {
+    go = {
+      'function_declaration',
+    },
+  },
+}
 
 function M.rainbow()
   autocmd("FileType", {"clojure", "carp"}, ":RainbowToggleOn")
