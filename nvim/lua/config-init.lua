@@ -90,9 +90,6 @@ function M.setup()
   autocmd! User GoyoLeave nested call <SID>goyo_leave()
   ]]
 
-  -- Rust
-  vim.g.syntastic_rust_checkers = {}
-
   -- vim-todo
   vim.g.VimTodoListsMoveItems = 0
 

@@ -142,5 +142,3 @@ nnoremap <leader>bo :%bd\|e#\|bd#<CR>
 
 nnoremap !! :!!<CR>
 
-command GitLastMessage r ! git log -1 --pretty=format:\%B
-

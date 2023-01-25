@@ -29,7 +29,10 @@ local function lsp_progress_callback()
         local message = type(payload.message) == "string" and ": " .. payload.message or ""
         local full_message = "[" .. payload.name .. "] " .. title .. message
         if full_message ~= last_lsp_printed then
-          vim.api.nvim_echo({{full_message, "Comment"}}, true, {})
+          -- Don't print go list failures at work
+          if not utils.IS_WORK_MACHINE or not string.find(full_message, "internal error: go list") then
+            vim.api.nvim_echo({{full_message, "Comment"}}, true, {})
+          end
           last_lsp_printed = full_message
         end
       end
@@ -37,7 +40,6 @@ local function lsp_progress_callback()
 end
 
 local attached_lsp = {}
-
 local function on_lsp_attach(client, bufno)
   if attached_lsp[client.name] ~= nil then
     return -- Exit early if already attached
@@ -114,7 +116,7 @@ local function on_lsp_attach(client, bufno)
 
   if capabilities.documentHighlightProvider ~= nil then
     autocmd({"CursorHold", "CursorHoldI"}, "<buffer>", function() vim.lsp.buf.document_highlight() end)
-    autocmd("CursorMoved", "<buffer>", function() vim.lsp.buf.clear_references() end)
+    autocmd({"CursorMoved", "CursorMovedI"}, "<buffer>", function() vim.lsp.buf.clear_references() end)
   end
 
   if capabilities.codeLensProvider ~= nil then
@@ -132,6 +134,7 @@ function M.setup()
 
   local servers_options = {
     pylsp = {},
+    bufls = {},
     tsserver = {},
     gopls = {},
     rust_analyzer = {
@@ -164,14 +167,7 @@ function M.setup()
 
   rust_tools.setup({ server = { on_attach = on_lsp_attach }})
 
-
-  null_ls.setup({
-    sources = {
-      null_ls.builtins.diagnostics.shellcheck,
-      null_ls.builtins.code_actions.shellcheck,
-    },
-    on_attach = on_lsp_attach,
-  })
+  require("config-null-ls").setup()
 end
 
 return M

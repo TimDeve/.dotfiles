@@ -1,5 +1,5 @@
 -- Makes dotfiles modules available
-custom_runtimepath = vim.fn.expand("~/.dotfiles/nvim")
+local custom_runtimepath = vim.fn.expand("~/.dotfiles/nvim")
 vim.opt.rtp:prepend(custom_runtimepath)
 
 local utils = require("utils")
@@ -10,7 +10,7 @@ vim.opt.autoindent = true
 vim.opt.autoread  = true
 vim.opt.backspace = "indent,eol,start"
 vim.opt.backupcopy = "yes"
-vim.opt.clipboard = "unnamed"
+vim.opt.clipboard = {"unnamed", "unnamedplus"}
 vim.opt.cursorline = true
 vim.opt.encoding = "utf-8"
 vim.opt.expandtab = true
@@ -126,6 +126,8 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Load basic bindings
 vim.cmd "source ~/.dotfiles/nvim/vim/basic-bindings.vim"
+
+require("commands")
 
 -- Load plugins lazily
 require("plugins").setup({ runtimepath = custom_runtimepath })

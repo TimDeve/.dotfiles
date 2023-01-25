@@ -7,10 +7,12 @@ local setup_config_cb = utils.setup_config_cb
 
 local config = require("config-misc")
 
-local settings =  {
+local pkgs =  {
   -- UI
   { 'akinsho/bufferline.nvim', config = config.bufferline },
   { 'nvim-lualine/lualine.nvim', config = setup_config_cb("config-lualine") },
+  { 'nvim-neo-tree/neo-tree.nvim', config = setup_config_cb("config-neo-tree"), cmd = "Neotree", dependencies = {"MunifTanjim/nui.nvim"} },
+  { 'Pocco81/true-zen.nvim', config = config["true-zen"], cmd = config._cmd["true-zen"] },
 
   -- Color themes
   { 'lifepillar/vim-gruvbox8', priority = 999, config = cmd_cb("silent colorscheme gruvbox8_hard") },
@@ -44,6 +46,7 @@ local settings =  {
   { 'marcuscaisey/please.nvim', ft = "please", enabled = utils.IS_WORK_MACHINE },
   { 'mfussenegger/nvim-dap', lazy = true, enabled = utils.IS_WORK_MACHINE },
   { dir = '~/dev/other/vim-go', ft = require("config-vim-go").ft, config = setup_config_cb("config-vim-go"), enabled = utils.IS_WORK_MACHINE },
+  --{ 'nvim-telescope/telescope-frecency.nvim', enabled = utils.IS_WORK_MACHINE, config = config["telescope-frecency"], lazy = true, dependencies = {"kkharji/sqlite.lua"} }, -- Needs to be forked to use rg/fd
 
   -- Not at work
   { 'eraserhd/parinfer-rust', enabled = not utils.IS_WORK_MACHINE, ft = {"clojure", "carp"}, build = 'cargo build --release' },
@@ -57,10 +60,10 @@ local settings =  {
   { 'stevearc/dressing.nvim', event = "VeryLazy", config = true },
   { 'tpope/vim-fugitive', event = "VeryLazy" },
 
-  { 'TimDeve/vim-test', cmd = config._cmd["vim-test"], config = config["vim-test"], dependencies = "benmills/vimux", branch = 'vimux-exit-copy-mode' },
+  { 'TimDeve/vim-test', cmd = config._cmd["vim-test"], config = config["vim-test"], dependencies = "preservim/vimux", branch = 'vimux-exit-copy-mode' },
   { 'folke/trouble.nvim', cmd = {"Trouble", "TroubleToggle"}, config = config.trouble },
-  { 'kyazdani42/nvim-tree.lua', cmd = {"NvimTreeToggle", "NvimTreeFindFile"}, config = config["nvim-tree"] },
   { 'simnalamburt/vim-mundo', cmd = "MundoToggle" },
+  { 'preservim/vimux', cmd = config._cmd["vimux"] },
 
   { 'TimDeve/vim-todo-lists', ft = "todo" },
   { 'cespare/vim-toml', ft = 'toml' },
@@ -74,7 +77,7 @@ local settings =  {
 }
 
 function M.setup(opts)
-  require("lazy").setup(settings, {
+  require("lazy").setup(pkgs, {
     performance = {
       rtp = { paths = {opts.runtimepath} }
     },

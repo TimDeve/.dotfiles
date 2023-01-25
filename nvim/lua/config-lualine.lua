@@ -51,7 +51,7 @@ local config = {
     section_separators = { left = '', right = ''},
     component_separators = { left = '', right = ''},
   },
-  extensions = {"nvim-tree", "mundo", "fugitive"},
+  extensions = {"neo-tree", "mundo", "fugitive"},
   sections = {
     lualine_a = {mode},
     lualine_b = {
@@ -60,6 +60,9 @@ local config = {
         icon = "Y",
       },
       'diff',
+    },
+    lualine_c = {{ 'filename', path = 1}, 'lsp_progress'},
+    lualine_x = {
       {
         'diagnostics',
         symbols = {
@@ -69,9 +72,6 @@ local config = {
           hint  = utils.diag_signs.Hint,
         },
       },
-    },
-    lualine_c = {{ 'filename', path = 1}, 'lsp_progress'},
-    lualine_x = {
       'encoding',
       {
         'fileformat',
@@ -84,7 +84,7 @@ local config = {
       'filetype'
     },
     lualine_y = {'progress'},
-    lualine_z = {'location'}
+    lualine_z = {'location'},
   },
 }
 
