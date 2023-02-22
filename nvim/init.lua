@@ -10,7 +10,6 @@ vim.opt.autoindent = true
 vim.opt.autoread  = true
 vim.opt.backspace = "indent,eol,start"
 vim.opt.backupcopy = "yes"
-vim.opt.clipboard = {"unnamed", "unnamedplus"}
 vim.opt.cursorline = true
 vim.opt.encoding = "utf-8"
 vim.opt.expandtab = true
@@ -46,6 +45,9 @@ vim.opt.wildignore = "log/**,node_modules/**,target/**,tmp/**,*.rbc"
 vim.opt.wildmenu = true
 vim.opt.wildmode = "full"
 
+-- Load basic bindings
+vim.cmd "source ~/.dotfiles/nvim/vim/basic-bindings.vim"
+
 highlight("StatusLine", { ctermfg = 234,     ctermbg = 238 })
 highlight("WildMenu",   { ctermfg = "white", ctermbg = 27 })
 
@@ -80,6 +82,11 @@ vim.cmd "silent colorscheme pablo"
 -- Check if we're running in tmux
 vim.g.is_in_tmux = utils.has_exe("tmux") and os.getenv("TMUX") ~= nil
 
+if vim.g.is_in_tmux then
+  -- copies yank to tmux clipboard
+  vim.cmd [[ autocmd TextYankPost * silent! call system('tmux loadb -w -',join("\n", v:event["regcontents"],"\n")) ]]
+end
+
 -- Use space as leader
 vim.cmd "map <space> <leader>"
 
@@ -92,7 +99,8 @@ if utils.IS_WORK_MACHINE then
 end
 
 -- Use cross platform clipboard if on WSL
-if vim.fn.system('uname -a | egrep [Mm]icrosoft') ~= "" then
+local uname = vim.fn.system('uname')
+if vim.regex('[Mm]icrosoft'):match_str(uname) then
   if utils.has_exe('win32yank.exe') then
     table.insert(vim.opt.clipboard, "unnamedplus")
     vim.g.clipboard = {
@@ -108,7 +116,14 @@ if vim.fn.system('uname -a | egrep [Mm]icrosoft') ~= "" then
       cache_enabled = 0,
     }
   end
+elseif (vim.regex('Linux'):match_str(uname) and os.getenv("DISPLAY") ~= "")
+    or vim.regex('Darwin'):match_str(uname) then
+  vim.opt.clipboard = {"unnamed", "unnamedplus"}
 end
+
+-- Create empty tabline for bufferline to fill when it starts
+-- avoids jumping on load
+vim.o.showtabline = 2
 
 -- Setup lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -123,9 +138,6 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
-
--- Load basic bindings
-vim.cmd "source ~/.dotfiles/nvim/vim/basic-bindings.vim"
 
 require("commands")
 

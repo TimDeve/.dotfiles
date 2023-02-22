@@ -5,6 +5,33 @@ M._keys = {}
 M._cmd = {}
 M._ft = {}
 
+M["telescope-live-grep-args"] = function()
+  require("telescope").load_extension("live_grep_args")
+end
+
+function M.fterm()
+  vim.cmd [[ :tnoremap <Esc> <C-\><C-n>:q<CR> ]]
+end
+
+function M.gruvbox()
+  local palette = require("gruvbox.palette").colors
+  require("gruvbox").setup({
+    contrast = "hard",
+    overrides = {
+        SignColumn     = { bg = palette.dark0_hard },
+        GitSignsChange = { fg = palette.bright_aqua,  bg = nil },
+        GitSignsAdd    = { fg = palette.bright_green, bg = nil },
+        GitSignsDelete = { fg = palette.bright_red,   bg = nil },
+    },
+  })
+  vim.cmd("colorscheme gruvbox")
+  vim.cmd [[
+    hi! link GitGutterAdd    GitSignsAdd
+    hi! link GitGutterChange GitSignsChange
+    hi! link GitGutterDelete GitSignsDelete
+  ]]
+end
+
 M._cmd["vimux"] = {
   "VimuxRunCommand",
   "VimuxSendText",
@@ -52,7 +79,7 @@ M["vim-test"] = function()
           end
 
           local choice = vim.fn.inputlist(test_targets)
-          if choice < 1 or choice > #items then
+          if choice < 1 or choice > #test_targets then
             return "echo 'No valid targets'"
           end
           test_target = test_targets[choice]
@@ -103,8 +130,8 @@ M.bufferline = {
     show_buffer_icons = false,
     diagnostics = false,
     numbers = "ordinal",
-    left_trunc_marker = '<',
-    right_trunc_marker = '>',
+    left_trunc_marker = '◀',
+    right_trunc_marker = '▶',
     tab_size = 16,
     max_name_length = 26,
     enforce_regular_tabs = false,
@@ -113,8 +140,8 @@ M.bufferline = {
 
 M.trouble = {
   icons = false,
-  fold_open = "v",
-  fold_closed = ">",
+  fold_open = "▼",
+  fold_closed = "▶",
   indent_lines = false,
   use_diagnostic_signs = true,
   signs = utils.diag_signs,
@@ -152,7 +179,7 @@ M["treesitter-context"] = {
 }
 
 function M.rainbow()
-  autocmd("FileType", {"clojure", "carp"}, ":RainbowToggleOn")
+  utils.autocmd("FileType", {"clojure", "carp"}, "call rainbow_main#load()")
 end
 
 function M.leap()
@@ -160,9 +187,50 @@ function M.leap()
 end
 
 function M.telescope()
+  local palette = require("gruvbox.palette").colors
+  local groups = {
+    TelescopePromptNormal  = { bg = palette.dark0_soft },
+    TelescopeResultsNormal = { bg = palette.dark0 },
+    TelescopePreviewNormal = { bg = palette.dark0 },
+
+    TelescopeSelection      = { bg = palette.dark0_soft, fg = palette.light0_hard, bold = true },
+    TelescopeSelectionCaret = { fg = palette.bright_red, bg = palette.dark0_soft, bold = true },
+    TelescopePreviewTitle   = { bg = palette.bright_red, fg = palette.dark0, bold = true },
+    TelescopeResultsTitle   = { bg = palette.bright_red, fg = palette.dark0, bold = true },
+    TelescopePromptTitle    = { bg = palette.bright_red, fg = palette.dark0, bold = true },
+    TelescopeTitle          = { bg = palette.bright_red, fg = palette.dark0, bold = true },
+    TelescopeBorder         = { fg = palette.dark0_soft, bg = palette.dark0_soft },
+
+    TelescopePromptBorder  = { bg = palette.dark0_soft, fg = palette.dark0_soft },
+    TelescopeResultsBorder = { bg = palette.dark0,      fg = palette.dark0 },
+    TelescopePreviewBorder = { bg = palette.dark0,      fg = palette.dark0 },
+
+    TelescopePromptPrefix = { bg = palette.dark0_soft, fg = palette.bright_red }
+  }
+
+  for group, config in pairs(groups) do
+    vim.api.nvim_set_hl(0, group, config)
+  end
+
+  local lga_actions = require("telescope-live-grep-args.actions")
+  local open_with_trouble = function(arg) require("trouble.providers.telescope").open_with_trouble(arg) end
+
   require('telescope').setup{
     defaults = {
+      layout_strategy = "horizontal",
+      layout_config = {
+        horizontal = {
+          prompt_position = "top",
+        },
+      },
+      sorting_strategy = "ascending",
       mappings = {
+        i = {
+          ["<C-j>"] = lga_actions.quote_prompt(),
+          ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob *." }),
+          ["<C-h>"] = lga_actions.quote_prompt({ postfix = " --no-ignore" }),
+          ["<C-t>"] = open_with_trouble,
+        },
         n = {
           ["k"] = require('telescope.actions').cycle_history_prev,
           ["j"] = require('telescope.actions').cycle_history_next,

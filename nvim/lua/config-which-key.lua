@@ -26,10 +26,6 @@ function setup()
     },
     plugins = {
       marks = false, -- Disable because it doesn't respect timeout
-      spelling = {
-        enabled = true,
-        suggestions = 20,
-      },
     },
   }
 
@@ -42,9 +38,10 @@ function setup()
     k      = { "gk",                     "Previous Line"},
     gj     = { "j",                      "Next Line (Skip Wrap)"},
     gk     = { "k",                      "Previous Line (Skip Wrap)"},
-    ["!!"] = { "<Cmd>!!<CR>",            "Replay Last Shell Command" },
-    ["[d"] = { vim.diagnostic.goto_prev, "Previous diagnostic" },
-    ["]d"] = { vim.diagnostic.goto_next, "Next diagnostic" },
+    ["z="] = { "<Cmd>Telescope spell_suggest<CR>", "Spelling suggestions" },
+    ["!!"] = { "<Cmd>!!<CR>",                      "Replay Last Shell Command" },
+    ["[d"] = { vim.diagnostic.goto_prev,           "Previous diagnostic" },
+    ["]d"] = { vim.diagnostic.goto_next,           "Next diagnostic" },
     ["<C-p>"] = { file_search(), "Find files" },
     ["<leader>"] = {
       ["<tab>"] = { "<C-^>",                     "Switch to previous buffer" },
@@ -59,15 +56,29 @@ function setup()
         f = { open_buf_folder,           "Open buffer's folder" },
         o = { "<Cmd>%bd|e#|bd#<CR>",     "Close other buffers" },
       },
+      d = {
+        name = "Debugging",
+        b = { "<Cmd>lua require'dap'.toggle_breakpoint()<CR>", "Toggle breakpoint" },
+        B = { "<Cmd>lua require'dap'.clear_breakpoints()<CR>", "Clear breakpoints" },
+        d = { "<Cmd>lua require'dap'.step_over()<CR>",         "Step over" },
+        i = { "<Cmd>lua require'dap'.step_into()<CR>",         "Step into" },
+        o = { "<Cmd>lua require'dap'.step_out()<CR>",          "Step out" },
+        h = { "<Cmd>lua require'dap'.run_to_cursor()<CR>",     "Run until here" },
+        r = { "<Cmd>lua require'dap'.run_last()<CR>",          "Restart session" },
+        T = { "<Cmd>lua require'dap'.terminate()<CR>",         "Terminate session" },
+        u = { "<Cmd>lua require'dapui'.toggle()<CR>",          "Toggle UI" },
+        p = { "<Cmd>lua require'please'.debug()<CR>",          "Plz debug target" },
+      },
       f = {
         name = "Telescope",
-        ["'"] = { "<Cmd>Telescope marks<CR>",    "Marks" },
-        a = { "<Cmd>Telescope builtin<CR>",      "Builtins" },
-        b = { "<Cmd>Telescope buffers<CR>",      "Buffers" },
-        f = { "<Cmd>Telescope live_grep<CR>",    "Grep" },
-        p = { file_search(),                     "Find files" },
-        P = { file_search({ hidden = true }),    "Find all files" },
-        t = { "<Cmd>Telescope file_browser<CR>", "File browser" },
+        ["'"] = { "<Cmd>Telescope marks<CR>",              "Marks" },
+        a = { "<Cmd>Telescope builtin<CR>",                "Builtins" },
+        b = { "<Cmd>Telescope buffers<CR>",                "Buffers" },
+        f = { "<Cmd>Telescope live_grep_args<CR>",         "Grep" },
+        w = { "<Cmd>Telescope grep_string<CR>",            "Grep word" },
+        p = { file_search(),                               "Find files" },
+        P = { file_search({ hidden = true }),              "Find all files" },
+        o = { "<Cmd>Telescope oldfiles cwd_only=true<CR>", "Oldfiles" },
       },
       g = {
         name = "Git",
@@ -101,7 +112,8 @@ function setup()
         z = { "<Cmd>TZFocus<CR>", "Zoom current window" },
         c = { "<Cmd>Goyo<CR>",    "Zen mode" },
       },
-      Q  = { "<Cmd>qa!<CR>",                                 "Force quit all" },
+      [";"] = { "<Cmd>lua require'FTerm'.toggle()<CR>",     "Open floating term" },
+      Q  = { "<Cmd>qa!<CR>",                                "Force quit all" },
       W  = { "<Cmd>wa<CR>",                                 "Save all" },
       cc = { "<Plug>NERDCommenterToggle",                   "Toggle comment" },
       ll = { "<Cmd>TroubleToggle document_diagnostics<CR>", "Open Trouble" },
@@ -125,6 +137,9 @@ function setup()
     },
     { mode = "v" }
   )
+
+
+  utils.autocmd({"BufRead", "BufNewFile"}, {"*.go"}, require("config-vim-go").bindings)
 end
 
 return { setup = setup }

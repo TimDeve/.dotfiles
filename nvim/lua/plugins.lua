@@ -9,51 +9,60 @@ local config = require("config-misc")
 
 local pkgs =  {
   -- UI
-  { 'akinsho/bufferline.nvim', config = config.bufferline },
-  { 'nvim-lualine/lualine.nvim', config = setup_config_cb("config-lualine") },
-  { 'nvim-neo-tree/neo-tree.nvim', config = setup_config_cb("config-neo-tree"), cmd = "Neotree", dependencies = {"MunifTanjim/nui.nvim"} },
   { 'Pocco81/true-zen.nvim', config = config["true-zen"], cmd = config._cmd["true-zen"] },
+  { 'akinsho/bufferline.nvim', config = config.bufferline, event = "VeryLazy" },
+  { 'goolord/alpha-nvim', lazy = false, config = setup_config_cb("config-alpha") },
+  { 'nvim-lualine/lualine.nvim', config = setup_config_cb("config-lualine"), event = "VeryLazy" },
+  { 'nvim-neo-tree/neo-tree.nvim', config = setup_config_cb("config-neo-tree"), cmd = "Neotree", dependencies = {"MunifTanjim/nui.nvim"} },
 
   -- Color themes
-  { 'lifepillar/vim-gruvbox8', priority = 999, config = cmd_cb("silent colorscheme gruvbox8_hard") },
+  { 'ellisonleao/gruvbox.nvim', priority = 999, config = config.gruvbox, lazy = false },
   { 'Lokaltog/vim-monotone', keys = "<space>z" },
 
   -- Extra
-  { 'Shougo/deoplete.nvim', build = utils.VimEnter_cb("UpdateRemotePlugins"), config = cmd_cb("call deoplete#enable()") },
-  { 'folke/which-key.nvim', config = setup_config_cb("config-which-key") },
-  { 'ggandor/leap.nvim', config = config.leap },
-  { 'junegunn/fzf.vim', dependencies = {{ 'junegunn/fzf', build = ':call fzf#install()' }}},
-  { 'matze/vim-move' },
-  { 'nvim-lua/plenary.nvim', lazy = true },
-  { 'nvim-telescope/telescope.nvim', config = config.telescope },
+  { 'Shougo/deoplete.nvim', event = "VeryLazy", build = utils.VimEnter_cb("UpdateRemotePlugins"), config = cmd_cb("call deoplete#enable()") },
+  { 'folke/which-key.nvim', lazy = false, config = setup_config_cb("config-which-key") },
+  { 'ggandor/leap.nvim', event = "VeryLazy", config = config.leap },
+  { 'matze/vim-move', event = "VeryLazy" },
+  { 'nvim-lua/plenary.nvim' },
+  { 'nvim-telescope/telescope.nvim', cmd = "Telescope", config = config.telescope },
+  { 'nvim-telescope/telescope-live-grep-args.nvim', config = config["telescope-live-grep-args"] },
   { 'nvim-treesitter/nvim-treesitter', build = utils.VimEnter_cb("TSUpdate"), config = config.treesitter },
-  { 'nvim-treesitter/nvim-treesitter-context', config = config["treesitter-context"] },
-  { 'tpope/vim-surround' },
-  { 'vitalk/vim-shebang' },
+  { 'nvim-treesitter/nvim-treesitter-context', event = "VeryLazy", config = config["treesitter-context"] },
+  { 'tpope/vim-surround', event = "VeryLazy" },
+  { 'vitalk/vim-shebang', lazy = false },
+  { 'numtostr/FTerm.nvim', config = config["fterm"] },
 
   -- LSP
   { 'neovim/nvim-lspconfig',
+    lazy = false,
     config = setup_config_cb("config-lsp"),
     dependencies = {
       'folke/lsp-colors.nvim',
       'deoplete-plugins/deoplete-lsp',
-      'simrat39/rust-tools.nvim',
       'jose-elias-alvarez/null-ls.nvim',
     }
+  },
+  { 'simrat39/rust-tools.nvim', ft = "rust", config = require("config-lsp").setup_rust_tools },
+
+  -- Debugging
+  { "rcarriga/nvim-dap-ui",
+    config = require("config-dap").dapui,
+    dependencies = {
+      { 'mfussenegger/nvim-dap', config = setup_config_cb("config-dap") },
+      { 'theHamsta/nvim-dap-virtual-text' },
+    },
   },
 
   -- Only at work
   { 'marcuscaisey/please.nvim', ft = "please", enabled = utils.IS_WORK_MACHINE },
-  { 'mfussenegger/nvim-dap', lazy = true, enabled = utils.IS_WORK_MACHINE },
-  { dir = '~/dev/other/vim-go', ft = require("config-vim-go").ft, config = setup_config_cb("config-vim-go"), enabled = utils.IS_WORK_MACHINE },
-  --{ 'nvim-telescope/telescope-frecency.nvim', enabled = utils.IS_WORK_MACHINE, config = config["telescope-frecency"], lazy = true, dependencies = {"kkharji/sqlite.lua"} }, -- Needs to be forked to use rg/fd
+  { dir = '~/dev/other/vim-go', config = setup_config_cb("config-vim-go"), enabled = utils.IS_WORK_MACHINE },
 
   -- Not at work
   { 'eraserhd/parinfer-rust', enabled = not utils.IS_WORK_MACHINE, ft = {"clojure", "carp"}, build = 'cargo build --release' },
   { 'hellerve/carp-vim', enabled = not utils.IS_WORK_MACHINE, ft = 'carp', dependencies = {'vim-syntastic/syntastic'} },
   { 'luochen1990/rainbow', enabled = not utils.IS_WORK_MACHINE, ft = {"clojure", "carp"}, config = config.rainbow },
   { 'neovimhaskell/haskell-vim', enabled = not utils.IS_WORK_MACHINE, ft = 'haskell' },
-  { 'tpope/vim-rhubarb', enabled = not utils.IS_WORK_MACHINE },
 
   -- Lazy
   { 'airblade/vim-gitgutter', event = "VeryLazy" },
@@ -78,6 +87,7 @@ local pkgs =  {
 
 function M.setup(opts)
   require("lazy").setup(pkgs, {
+    defaults = { lazy = true },
     performance = {
       rtp = { paths = {opts.runtimepath} }
     },

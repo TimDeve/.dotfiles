@@ -50,6 +50,8 @@ alias gaddupstream="git remote add upstream"
 alias ghpush="gh repo create && gpushf"
 alias ghclone="gh repo clone \$(gh repo list --limit 9999 | awk '{print \$1}' | fzf)"
 
+alias lg="lazygit"
+
 if [[ -f $(which delta) ]]; then
   # Git diff
   alias gdiff="git diff | delta --paging=never --keep-plus-minus-markers"
@@ -99,9 +101,6 @@ alias cpv="rsync -poghb --backup-dir=/tmp/rsync -e /dev/null --progress --"
 # List Globally installed npm packages
 alias npmlist="npm list -g --depth=0"
 
-# Update dot files
-alias downdot="(cd ~/.dotfiles && git pull)"
-
 # Pip Upgrade All Outdated
 alias pipupgrade="pip list --outdated | cut -d ' ' -f1 | xargs -n1 pip install -U"
 
@@ -126,24 +125,8 @@ alias dkc="docker compose"
 
 alias dkrt="dk run -it --rm"
 
-# Trash
-alias th="trash"
-
 # Whats my IP
 alias whatsmyip="dig +short myip.opendns.com @resolver1.opendns.com"
-
-# Folder size
-alias wh="du -sh"
-
-# Forgot sudo
-alias pls='sudo $(\fc -ln -1)'
-
-# AWS S3
-alias ss="aws s3"
-alias sscp="aws s3 cp"
-alias ssmv="aws s3 mv"
-alias ssrm="aws s3 rm"
-alias ssls="aws s3 ls"
 
 # NPM
 alias npi="npm install"

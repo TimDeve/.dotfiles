@@ -7,10 +7,12 @@ function M.setup()
 
   -- Set colours
   vim.cmd [[
-    hi! link NeoTreeDirectoryName Comment
-    hi! link NeoTreeDirectoryIcon Comment
-    hi! link NeoTreeFileName      Comment
-    hi! link NeoTreeFileIcon      Comment
+    hi Subdued ctermfg=102 guifg=#928374
+
+    hi! link NeoTreeDirectoryName Subdued
+    hi! link NeoTreeDirectoryIcon Subdued
+    hi! link NeoTreeFileName      Subdued
+    hi! link NeoTreeFileIcon      Subdued
   ]]
 
   require("neo-tree").setup({

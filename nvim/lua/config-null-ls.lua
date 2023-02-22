@@ -15,7 +15,7 @@ function M.setup_arc_lint()
 
   local arc_lint = {
       name = "arc-lint",
-      method = methods.internal.DIAGNOSTICS_ON_SAVE,
+      method = null_ls.methods.DIAGNOSTICS,
       filetypes = { "go" },
       generator = null_ls.generator({
           command = "arc",
@@ -23,20 +23,21 @@ function M.setup_arc_lint()
             "lint",
             "--output",
             "json",
+            "$FILENAME",
           },
           to_stdin = false,
           from_stderr = false,
           ignore_stderr = false,
           format = "json_raw",
-          multiple_files = true,
+          timeout = 3000, -- 3 seconds, arc lint is real slow
+          multiple_files = false,
           check_exit_code = function(code) return true end,
           on_output = function(params)
               local diags = {}
 
-              -- Clear diags if linter fails
-              -- remove when arc lint stops randomly failing
+              -- Clear diagnostics if arc lint fails to send any
               if params.err ~= nil then
-                return diags
+                return {}
               end
 
               for filename, diag_list in pairs(params.output) do

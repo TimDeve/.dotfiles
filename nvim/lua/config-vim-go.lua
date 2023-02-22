@@ -2,7 +2,16 @@ local utils = require("utils")
 
 local M = {}
 
-M.ft = {"go", "gosum", "gowork", "gohtmltmpl"}
+function M.bindings()
+  require("which-key").register({
+    ["<leader>lg"] = {
+      name = "Go Guru",
+      i = { "<Cmd>Lazy load vim-go | call go#implements#Implements(-1)<CR>", "Go to implementation"  },
+      f = { "<Cmd>Lazy load vim-go | call go#fmt#Format(1)<CR>",             "Format" },
+      b = { "<Cmd>Lazy load vim-go | call go#referrers#Referrers(-1)<CR>",   "Find references" },
+    }
+  })
+end
 
 function M.setup()
   vim.g.go_def_mapping_enabled    = false
@@ -14,12 +23,6 @@ function M.setup()
   vim.g.go_referrers_mode         = "guru"
   vim.g.go_implements_mode        = "guru"
   vim.g.go_fmt_command            = "goimports"
-
-  require("which-key").register({
-    ["<leader>li"] = { utils.cmd_cb("call go#implements#Implements(-1)"), "Go to implementation [Go] " },
-    ["<leader>lf"] = { utils.cmd_cb("call go#fmt#Format(1)"), "Format [Go] " },
-    ["<leader>lb"] = { "<Plug>(go-referrers)", "Find references [Go] " },
-  })
 end
 
 return M

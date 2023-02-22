@@ -65,6 +65,7 @@ local config = {
     lualine_x = {
       {
         'diagnostics',
+        on_click = function() vim.cmd [[ TroubleToggle document_diagnostics ]] end,
         symbols = {
           error = utils.diag_signs.Error,
           warn  = utils.diag_signs.Warn,

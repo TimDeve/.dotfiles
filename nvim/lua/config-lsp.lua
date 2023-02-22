@@ -1,15 +1,11 @@
-local cmd = vim.cmd
-local lsp_config = require("lspconfig")
-local null_ls = require("null-ls")
-local wk = require("which-key")
 local utils = require("utils")
-local rust_tools = require("rust-tools")
 local autocmd = utils.autocmd
 local highlight = utils.highlight
 
 local M = {}
 
 local function setup_servers(shared, lsps)
+  local lsp_config = require("lspconfig")
   for server, options in pairs(lsps) do
     local new_options = utils.merge(shared, options)
     lsp_config[server].setup(new_options)
@@ -41,13 +37,7 @@ end
 
 local attached_lsp = {}
 local function on_lsp_attach(client, bufno)
-  if attached_lsp[client.name] ~= nil then
-    return -- Exit early if already attached
-  end
-  attached_lsp[client.name] = true
-
   local capabilities = client.server_capabilities
-  lsp_capbilities = capabilities
 
   for type, icon in pairs(utils.diag_signs) do
     local hl = "DiagnosticSign" .. type
@@ -74,23 +64,16 @@ local function on_lsp_attach(client, bufno)
    },
   }
 
-  if client.name == "gopls" then
-    if utils.IS_WORK_MACHINE then
-      -- Don't bind functionality using vim-go
-      keybinds["<leader>"].l.i = nil
-      keybinds["<leader>"].l.f = nil
-      keybinds["<leader>"].l.b = nil
-    else
-      local function format_and_organize()
-          vim.lsp.buf.format()
-          utils.trigger_code_action("Organize Imports")
-      end
-      keybinds["<leader>"].l.f = { format_and_organize, "Format and Organize" }
-      autocmd("BufWritePre", {"*.go"}, format_and_organize)
+  if client.name == "gopls" and not utils.IS_WORK_MACHINE then
+    local function format_and_organize()
+        vim.lsp.buf.format()
+        utils.trigger_code_action("Organize Imports")
     end
+    keybinds["<leader>"].l.f = { format_and_organize, "Format and Organize" }
+    autocmd("BufWritePre", {"*.go"}, format_and_organize)
   end
 
-  wk.register(keybinds)
+  require("which-key").register(keybinds, {buffer = bufno})
 
   autocmd("BufWritePre", {"*.rs", "BUILD"}, function() vim.lsp.buf.format() end)
 
@@ -146,11 +129,11 @@ function M.setup()
     }
   }
 
-  if vim.g.IS_WORK_MACHINE then
+  if utils.IS_WORK_MACHINE then
     servers_options.please = {
       filetypes = {"please"}
     }
-    --servers_options.gopls = nil
+
     servers_options.gopls.settings = {
        gopls = {
          ["directoryFilters"] = {
@@ -159,15 +142,32 @@ function M.setup()
          },
        }
     }
+
+    servers_options.gopls.root_dir = function(fname)
+      local go_mod = vim.fs.find('go.mod', { upward = true, path = vim.fs.dirname(fname) })[1]
+      if go_mod then
+        return vim.fs.dirname(go_mod)
+      end
+      local plzconfig = vim.fs.find('.plzconfig', { upward = true, path = vim.fs.dirname(fname) })[1]
+      local src = vim.fs.find('src', { upward = true, path = plzconfig })[1]
+      if plzconfig and src then
+        local plz_out = vim.fs.dirname(plzconfig) .. "/plz-out"
+        vim.env.GOPATH = string.format('%s:%s/go:%s/gen/third_party/go', vim.fs.dirname(src), plz_out, plz_out)
+        vim.env.GO111MODULE = 'off'
+      end
+      return vim.fn.getcwd()
+    end
   else
-    lsp_config.hls = {}
+    servers_options.hls = {}
   end
 
   setup_servers(shared_options, servers_options)
 
-  rust_tools.setup({ server = { on_attach = on_lsp_attach }})
-
   require("config-null-ls").setup()
+end
+
+function M.setup_rust_tools()
+  require("rust-tools").setup({ server = { on_attach = on_lsp_attach }})
 end
 
 return M
