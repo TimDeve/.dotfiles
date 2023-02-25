@@ -14,15 +14,22 @@ function M.bindings()
 end
 
 function M.setup()
-  vim.g.go_def_mapping_enabled    = false
-  vim.g.go_doc_keywordprg_enabled = false
-  vim.g.go_textobj_enabled        = false
-  vim.g.go_gopls_enabled          = false
-  vim.g.go_info_mode              = "guru"
-  vim.g.go_def_mode               = "godef"
-  vim.g.go_referrers_mode         = "guru"
-  vim.g.go_implements_mode        = "guru"
-  vim.g.go_fmt_command            = "goimports"
+  vim.g.go_info_mode       = "guru"
+  vim.g.go_def_mode        = "godef"
+  vim.g.go_referrers_mode  = "guru"
+  vim.g.go_implements_mode = "guru"
+  vim.g.go_fmt_command     = "goimports"
+
+  -- Disable everything else
+  vim.g.go_code_completion_enabled = false
+  vim.g.go_fmt_autosave            = false
+  vim.g.go_imports_autosave        = false
+  vim.g.go_def_mapping_enabled     = false
+  vim.g.go_doc_keywordprg_enabled  = false
+  vim.g.go_textobj_enabled         = false
+  vim.g.go_gopls_enabled           = false
+  vim.g.go_template_autocreate     = false
+  vim.g.go_list_type_commands      = { GoBuild = "" }
 end
 
 return M

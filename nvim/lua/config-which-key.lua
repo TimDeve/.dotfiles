@@ -16,6 +16,12 @@ local function open_buf_folder()
   vim.cmd 'VimuxRunCommand "cd " . expand("%:p:h")'
 end
 
+local function close_other_buffers()
+  local bufferline = require("bufferline")
+  bufferline.close_in_direction("right")
+  bufferline.close_in_direction("left")
+end
+
 function setup()
   local wk = require("which-key")
 
@@ -54,7 +60,7 @@ function setup()
         c = { "<Cmd>bp <BAR> bd #<CR>",  "Close buffer" },
         C = { "<Cmd>bp <BAR> bd! #<CR>", "Force close buffer" },
         f = { open_buf_folder,           "Open buffer's folder" },
-        o = { "<Cmd>%bd|e#|bd#<CR>",     "Close other buffers" },
+        o = { close_other_buffers,       "Close other buffers" },
       },
       d = {
         name = "Debugging",
