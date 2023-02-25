@@ -7,8 +7,7 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH}"
 # Lazy load nvm so it does not slow down everything
 export NVM_LAZY_LOAD=true
 
-# Check platform
-uname=$(uname)
+ZGEN_RESET_ON_CHANGE=(${HOME}/.dotfiles/zsh/zshrc.zgen)
 
 # Load zgen
 source "${HOME}/.zgen/zgen/zgen.zsh"
@@ -16,56 +15,92 @@ source "${HOME}/.zgen/zgen/zgen.zsh"
 # Check if there's no init script
 if ! zgen saved; then
     echo "Creating a zgen save"
-
-    # prezto options
-    zgen prezto prompt theme 'sorin'
-    zgen prezto terminal auto-title 'yes'
-    zgen prezto '*:*' color 'yes'
-    zgen prezto 'module:ruby:chruby' auto-switch 'yes'
-    zgen prezto editor key-bindings 'vi'
-
-    # prezto plugins
-    zgen prezto
-    zgen prezto environment
-    zgen prezto terminal
-    zgen prezto editor
-    zgen prezto history
-    zgen prezto directory
-    zgen prezto spectrum
-    zgen prezto utility
-    zgen prezto completion
-    zgen prezto git
-
-    # Platform Specific prezto plungins
-    case $uname in
-      "Darwin"*)
-        zgen prezto osx
-        zgen prezto homebrew
-        ;;
-      "Linux"*)
-        zgen prezto pacman
-        ;;
-    esac
-
-    zgen prezto syntax-highlighting
-    zgen prezto history-substring-search
-    zgen prezto prompt
-
-    # other plugins
-    zgen load Tarrasch/zsh-bd
-    zgen load felixr/docker-zsh-completion
-    zgen load lukechilds/zsh-nvm
     zgen load ianthehenry/sd
+
+    zgen load zimfw/git-info "functions"
+    zgen load zimfw/prompt-pwd "functions"
+    zgen load TimDeve/sorin
+
+    zgen load zsh-users/zsh-syntax-highlighting      "" "0.7.1"
+    zgen load zsh-users/zsh-history-substring-search "" "v1.0.2"
+    zgen load zsh-users/zsh-autosuggestions
 
     # save all to init script
     zgen save
 fi
 
-#
-## Imports ------------------------------------------------------------
-#
+autoload -Uz add-zle-hook-widget                        # Needed for history substring
+autoload _sd && _comps[sd]=_sd                          # Register sd completion
+autoload git-info git-action coalesce                   # Load git-info
+autoload prompt-pwd                                     # Load prompt-pwd
+source $HOME/.zgen/TimDeve/sorin-master/sorin.zsh-theme # Load prompt theme
 
+bindkey -v # Start in vi insert mode
+
+# Edit command in $EDITOR using Ctrl-E
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey -M viins '\C-E' edit-command-line
+
+# HISTORY
+function {
+  zmodload zsh/terminfo
+  local up="$terminfo[kcuu1]"
+  local down="$terminfo[kcud1]"
+
+  bindkey -M vicmd "k"     history-substring-search-up
+  bindkey -M vicmd "j"     history-substring-search-down
+  bindkey -M viins "$up"   history-substring-search-up
+  bindkey -M viins '^[[A'  history-substring-search-up
+  bindkey -M viins "$down" history-substring-search-down
+  bindkey -M viins '^[[B'  history-substring-search-down
+  bindkey -M viins '\C-P'  history-substring-search-up
+  bindkey -M viins '\C-N'  history-substring-search-down
+}
+
+setopt bang_hist
+setopt extended_history
+setopt share_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
+setopt hist_find_no_dups
+setopt hist_ignore_space
+setopt hist_save_no_dups
+setopt hist_verify
+setopt hist_beep
+
+HISTFILE="${HISTFILE:-${ZDOTDIR:-$HOME}/.zsh_history}"
+HISTSIZE="10000"
+SAVEHIST="$HISTSIZE"
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white,bold'
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white,bold'
+HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS='i'
+
+# COMPLETION
+setopt   complete_in_word
+setopt   always_to_end
+setopt   path_dirs
+setopt   auto_menu
+setopt   auto_list
+setopt   auto_param_slash
+setopt   extended_glob
+unsetopt menu_complete
+unsetopt flow_control
+
+zstyle ':completion:*:*:*:*:*'      menu select
+zstyle ':completion:*:matches'      group 'yes'
+zstyle ':completion:*:options'      description 'yes'
+zstyle ':completion:*:options'      auto-description '%d'
+zstyle ':completion:*:corrections'  format ' %F{green}-- %d (errors: %e) --%f'
+zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*:messages'     format ' %F{purple} -- %d --%f'
+zstyle ':completion:*:warnings'     format ' %F{red}-- no matches found --%f'
+zstyle ':completion:*'              format ' %F{yellow}-- %d --%f'
+zstyle ':completion:*'              group-name ''
+zstyle ':completion:*'              verbose yes
+
+
+# Imports
 source ~/.dotfiles/zsh/imports.zshrc
-
-compinit # Re-init completion to fix sd's completion
 

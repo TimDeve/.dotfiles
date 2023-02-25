@@ -248,7 +248,7 @@ video2gif() {
          | convert -delay 10 - -loop 0 -layers optimize "$out"
 }
 
-unalias d
+if alias d &>/dev/null; then unalias d; fi
 d() {
   local dir
   dir="$(dirs -v | fzf)"

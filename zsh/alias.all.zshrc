@@ -174,6 +174,7 @@ alias rsy="rsync -Paz"
 
 alias bbrepl="rlwrap bb"
 
+alias ls="ls --color=auto --group-directories-first --color=auto"
 if hash exa 1>/dev/null 2>/dev/null; then
   exa_grey="38;5;241"
   exa_filesize_numbers="sn=$exa_grey"
@@ -182,12 +183,14 @@ if hash exa 1>/dev/null 2>/dev/null; then
   exa_date="da=$exa_grey"
   export EXA_COLORS="${exa_filesize_numbers}:${exa_filesize_unit}:${exa_my_user}:${exa_date}:${exa_exec_file}"
 
-  alias l="exa -1a"
-  alias ll="exa -l --git"
+  alias l="exa -1a --group-directories-first"
+  alias ll="exa -l --git --group-directories-first"
   alias la="ll -a"
-  alias lal="la -snew"
-  alias lll="ll -snew"
+  alias lal="exa -l --git -snew -a "
+  alias lll="exa -l --git -snew"
 else
+  alias la="ll -A"
+  alias ll="ls -lh"
   alias lal="la -tr"
   alias lll="ll -tr"
 fi
