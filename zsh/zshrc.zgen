@@ -4,9 +4,6 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH}"
 
-# Lazy load nvm so it does not slow down everything
-export NVM_LAZY_LOAD=true
-
 ZGEN_RESET_ON_CHANGE=(${HOME}/.dotfiles/zsh/zshrc.zgen)
 
 # Load zgen
@@ -19,6 +16,7 @@ if ! zgen saved; then
 
     zgen load zimfw/git-info "functions"
     zgen load zimfw/prompt-pwd "functions"
+    zgen load mafredri/zsh-async "" "v1.8.6"
     zgen load TimDeve/sorin
 
     zgen load zsh-users/zsh-syntax-highlighting      "" "0.7.1"
