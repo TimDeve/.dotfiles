@@ -78,7 +78,7 @@ if [[ -n $labels ]]; then
   formattedLabels=" [${labels// /, }]"
 fi
 
-filename="$HOME/notes/[${DATE}] ${title}${formattedLabels}.md"
+filename="$HOME/notes/[${DATE}] ${title}${formattedLabels}.norg"
 
 if [[ -z $content ]]; then
   v "${filename}"

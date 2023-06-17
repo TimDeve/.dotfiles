@@ -4,8 +4,8 @@ set -Eeuo pipefail
 prezto_setup() {
   mv ~/.zshrc ~/.zshrc.bak
   ln -s ~/.dotfiles/zsh/zshrc.prezto ~/.zshrc
-  touch ~/.dotfiles/zsh/localpre.zshrc
-  touch ~/.dotfiles/zsh/localpost.zshrc
+  touch ~/.dotfiles/zsh/localpre.zsh
+  touch ~/.dotfiles/zsh/localpost.zsh
   git -C ~/.zprezto pull || git clone --recursive https://github.com/sorin-ionescu/prezto.git ~/.zprezto
   mkdir -p ~/.zgen
   git -C ~/.zgen/zgen pull || git clone https://github.com/tarjoilija/zgen ~/.zgen/zgen
@@ -15,13 +15,12 @@ prezto_setup() {
 zgen_setup() {
   mv ~/.zshrc ~/.zshrc.bak
   ln -s ~/.dotfiles/zsh/zshrc.zgen ~/.zshrc
-  touch ~/.dotfiles/zsh/localpre.zshrc
-  touch ~/.dotfiles/zsh/localpost.zshrc
+  touch ~/.dotfiles/zsh/localpre.zsh
+  touch ~/.dotfiles/zsh/localpost.zsh
   mkdir -p ~/.zgen
   git -C ~/.zgen/zgen pull || git clone https://github.com/tarjoilija/zgen ~/.zgen/zgen
   zsh -ilc "zgen reset"
 }
-
 
 target=${1-}
 

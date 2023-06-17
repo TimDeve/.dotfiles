@@ -5,12 +5,55 @@ M._keys = {}
 M._cmd = {}
 M._ft = {}
 
-M["telescope-live-grep-args"] = function()
-  require("telescope").load_extension("live_grep_args")
+M["todo-comments"] = function()
+  local todo = require("todo-comments")
+
+  todo.setup {
+    signs = false,
+    keywords = {
+      FIX =  { icon = utils.signs.inverted_triangle },
+      TODO = { icon = utils.signs.check },
+      HACK = { icon = utils.signs.inverted_triangle },
+      WARN = { icon = utils.signs.inverted_triangle },
+      PERF = { icon = utils.signs.diamond },
+      NOTE = { icon = utils.signs.circle },
+      TEST = { icon = utils.signs.circle },
+    },
+    highlight = {
+      keyword = "fg",
+      after = "fg",
+      pattern = [[.*<(KEYWORDS)(\([^\)]*\))?:]],
+    },
+    search = {
+      pattern = [[\b(KEYWORDS)(\([^\)]*\))?:]],
+    },
+  }
+
+  require("which-key").register({
+    ["]t"] = { todo.jump_next, "Next todo"},
+    ["[t"] = { todo.jump_prev, "Previous todo"},
+  })
+end
+
+function M.lens()
+  vim.cmd [[
+    let g:lens#disabled = 1
+    let g:lens#width_resize_min = 40
+    let g:lens#disabled_filetypes = ['neo-tree']
+    let g:animate#duration = 120.0
+  ]]
+end
+
+M["lua-snip"] = function()
+  require("luasnip.loaders.from_snipmate").lazy_load()
+  vim.cmd [[
+    snoremap <silent> <Tab> <cmd>lua require('luasnip').jump(1)<CR>
+    snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<CR>
+  ]]
 end
 
 function M.fterm()
-  vim.cmd [[ :tnoremap <Esc> <C-\><C-n>:q<CR> ]]
+  vim.cmd [[ :tnoremap <C-k> <C-\><C-n>:q<CR> ]]
 end
 
 function M.gruvbox()
@@ -22,14 +65,63 @@ function M.gruvbox()
         GitSignsChange = { fg = palette.bright_aqua,  bg = nil },
         GitSignsAdd    = { fg = palette.bright_green, bg = nil },
         GitSignsDelete = { fg = palette.bright_red,   bg = nil },
+
+        DiagnosticSignInfo  = { bg = palette.dark0_hard, fg = palette.bright_blue },
+        DiagnosticSignWarn  = { bg = palette.dark0_hard, fg = palette.bright_yellow },
+        DiagnosticSignHint  = { bg = palette.dark0_hard, fg = palette.bright_aqua },
+        DiagnosticSignError = { bg = palette.dark0_hard, fg = palette.bright_red },
     },
   })
   vim.cmd("colorscheme gruvbox")
-  vim.cmd [[
-    hi! link GitGutterAdd    GitSignsAdd
-    hi! link GitGutterChange GitSignsChange
-    hi! link GitGutterDelete GitSignsDelete
-  ]]
+end
+
+function M.gitsigns()
+  require('gitsigns').setup{
+    signs = {
+      add    = { text = '│' },
+      change = { text = '│' },
+    },
+    on_attach = function(bufno)
+      local wk = require('which-key')
+      local gs = package.loaded.gitsigns
+
+      local next_hunk = function()
+        if vim.wo.diff then return ']c' end
+        vim.schedule(function() gs.next_hunk() end)
+        return '<Ignore>'
+      end
+
+      local prev_hunk = function()
+        if vim.wo.diff then return '[c' end
+        vim.schedule(function() gs.prev_hunk() end)
+        return '<Ignore>'
+      end
+
+      wk.register({
+        ["<leader>g"] = {
+          name = "Git",
+          s = { "<Cmd>Gitsigns stage_hunk<CR>", "Stage hunk" },
+          r = { "<Cmd>Gitsigns reset_hunk<CR>", "Reset hunk" },
+        }
+      }, { buffer = bufno, mode = {"n", "v"} })
+
+      wk.register({
+        ["]c"] = { next_hunk, "Next hunk" },
+        ["[c"] = { prev_hunk, "Previous hunk" },
+        ["<leader>g"] = {
+          name = "Git",
+          S = { gs.stage_buffer,    "Stage buffer" },
+          R = { gs.reset_buffer,    "Reset buffer" },
+          u = { gs.undo_stage_hunk, "Undo stage hunk" },
+          p = { gs.preview_hunk,    "Preview hunk" },
+          b = { gs.blame_line,      "Blame line" },
+          d = { gs.blame_line,      "Diff buffer" },
+          D = { gs.toggle_deleted,  "Toggle deleted" },
+          g = { gs.toggle_signs,    "Toggle Gitsigns" },
+        }
+      }, { buffer = bufno })
+    end
+  }
 end
 
 M._cmd["vimux"] = {
@@ -50,6 +142,61 @@ M._cmd["vimux"] = {
 
 M._cmd["true-zen"] = {"TZNarrow", "TZFocus", "TZMinimalist", "TZAtaraxis"}
 M["true-zen"] = function()
+  require("true-zen").setup {
+    modes = {
+      ataraxis = {
+        shade = "dark", -- if `dark` then dim the padding windows, otherwise if it's `light` it'll brighten said windows
+        backdrop = 0, -- percentage by which padding windows should be dimmed/brightened. Must be a number between 0 and 1. Set to 0 to keep the same background color
+        minimum_writing_area = { -- minimum size of main window
+          width = 100,
+          height = 44,
+        },
+        quit_untoggles = true, -- type :q or :qa to quit Ataraxis mode
+        padding = { -- padding windows
+          left = 999,
+          right = 999,
+          top = 3,
+          bottom = 3,
+        },
+        callbacks = { -- run functions when opening/closing Ataraxis mode
+          open_pre = utils.cmd_cb [[
+            if g:is_in_tmux
+              silent !tmux set status off
+              silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+            endif
+
+            set noshowmode
+            set noshowcmd
+            set scrolloff=999
+
+            Lazy load vim-monotone
+            Lazy load limelight.vim
+            silent colorscheme monotone
+            Monotone 0 0 70 0 0 0 0.785
+            Limelight
+          ]],
+          open_pos = nil,
+          close_pre = utils.cmd_cb [[
+            if g:is_in_tmux
+              silent !tmux set status on
+              silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+            endif
+
+            set showmode
+            set showcmd
+            set scrolloff=3
+
+            silent colorscheme gruvbox
+            Limelight!
+          ]],
+          close_pos = M.gruvbox
+        },
+      },
+    },
+    integrations = {
+      lualine = true -- hide nvim-lualine (ataraxis)
+    },
+  }
 end
 
 M._cmd["vim-test"] = {"TestFile", "TestNearest", "TestLast", "TestFile", "TestVisit"}
@@ -119,10 +266,6 @@ M["vim-test"] = function()
   end
 end
 
-M["telescope-frecency"] = function()
-  require"telescope".load_extension("frecency")
-end
-
 M.bufferline = {
   options = {
     buffer_close_icon = '×',
@@ -149,8 +292,9 @@ M.trouble = {
 
 function M.treesitter()
   local treesitter_langs = {
-    "bash", "c", "cpp", "go", "hcl", "javascript", "json", "lua", "python",
-    "regex", "rust", "sql",  "toml", "tsx", "typescript", "vim", "yaml"
+    "bash", "c", "cpp", "go", "hcl", "javascript", "json", "lua",
+    "python","norg", "norg_meta", "regex", "rust", "sql",  "toml", "tsx",
+    "typescript", "vim", "yaml",
   }
   for _, lang in ipairs(treesitter_langs) do
     treesitter_langs[lang] = true
@@ -182,8 +326,16 @@ function M.rainbow()
   utils.autocmd("FileType", {"clojure", "carp"}, "call rainbow_main#load()")
 end
 
+M["vim-todo-lists"] = function()
+  utils.autocmd("FileType", {"todo"}, "call g:VimTodoListsInit()")
+end
+
 function M.leap()
   require('leap').set_default_keymaps()
+end
+
+M["telescope-live-grep-args"] = function()
+  require("telescope").load_extension("live_grep_args")
 end
 
 function M.telescope()
@@ -224,10 +376,12 @@ function M.telescope()
         },
       },
       sorting_strategy = "ascending",
+      path_display = { truncate = true, shorten = 4 },
       mappings = {
         i = {
           ["<C-j>"] = lga_actions.quote_prompt(),
-          ["<C-i>"] = lga_actions.quote_prompt({ postfix = " --iglob *." }),
+          ["<C-k>"] = lga_actions.quote_prompt({ postfix = " --iglob *." }),
+          ["<C-f>"] = lga_actions.quote_prompt({ postfix = " -F" }),
           ["<C-h>"] = lga_actions.quote_prompt({ postfix = " --no-ignore" }),
           ["<C-t>"] = open_with_trouble,
         },
@@ -237,7 +391,26 @@ function M.telescope()
         }
       },
     },
+    pickers = {
+      buffers = {
+        mappings = {
+          i = {
+            ["<c-d>"] = "delete_buffer",
+          }
+        }
+      }
+    },
+    extensions = {
+      fzf = {
+        fuzzy = true,                    -- false will only do exact matching
+        override_generic_sorter = true,  -- override the generic sorter
+        override_file_sorter = true,     -- override the file sorter
+        case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+      }
+    }
   }
+
+  require('telescope').load_extension('fzf')
 end
 
 return M

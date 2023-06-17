@@ -1,7 +1,8 @@
 # Shorter editors
 alias v='nvim'
-alias vi='nvim -u ~/.dotfiles/nvim/bare.nvimrc'
-alias c='code'
+alias vs="v +SessionLoad"
+alias vi='nvim -u ~/.dotfiles/nvim/bare.vim'
+alias suv='sudo "$(which nvim)" -u "$HOME/.dotfiles/nvim/bare.vim"'
 
 # Quick Exit
 alias ee='exit'
@@ -46,6 +47,7 @@ alias gstad="git stash drop"
 alias greba="git rebase"
 alias grebac="git rebase --continue"
 alias gaddupstream="git remote add upstream"
+alias glog="git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an %Creset%s' --date=iso"
 
 alias ghpush="gh repo create && gpushf"
 alias ghclone="gh repo clone \$(gh repo list --limit 9999 | awk '{print \$1}' | fzf)"
@@ -203,7 +205,8 @@ alias caddy-serve="caddy file-server --listen :2015 --browse"
 # k8s
 alias k="kubectl"
 alias kuse='k config use-context $(k config get-contexts -o name | fzf)'
-alias kns="k config set-context --current --namespace=\"\$(k get namespace | tail \+2 | fzf | awk '{print \$1}')\" && kubectl config view -o=json | jq '.contexts[].context.namespace' -r"
+alias kl="k logs"
+alias klf="kl -f"
 alias h="helm"
 
 # Signal
@@ -223,3 +226,6 @@ alias xhc="xh --session /tmp/xh-cookie-jar"
 alias xhsc="xhs --session /tmp/xh-cookie-jar"
 alias xhc-clear="rm -f /tmp/xh-cookie-jar"
 
+alias ru="ruplacer"
+
+alias teer="tee >(cat 1>&2)"

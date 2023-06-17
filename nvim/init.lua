@@ -44,6 +44,7 @@ vim.opt.visualbell = true
 vim.opt.wildignore = "log/**,node_modules/**,target/**,tmp/**,*.rbc"
 vim.opt.wildmenu = true
 vim.opt.wildmode = "full"
+vim.opt.foldlevel = 999
 
 -- Load basic bindings
 vim.cmd "source ~/.dotfiles/nvim/vim/basic-bindings.vim"
@@ -60,6 +61,7 @@ local match_filetype = {
   {"*.bats",  "bash"},
   {"*.todo",  "todo"},
   {"*.carp",  "carp"},
+  {"*.norg",  "norg"},
 
   -- Go stuff
   {"*.go",    "go"},
@@ -67,7 +69,7 @@ local match_filetype = {
   {"go.work", "gowork"},
   {{"go.sum", "go.work.sum"}, "gosum"},
 }
-if utils.IS_WORK_MACHINE then table.insert(match_filetype, {"BUILD", "please"}) end
+if utils.IS_WORK_MACHINE then table.insert(match_filetype, {{"BUILD", "*.build_defs"}, "please"}) end
 utils.match_filetype(match_filetype)
 
 -- Use tabs with go, gitconfig
@@ -98,6 +100,11 @@ if utils.IS_WORK_MACHINE then
   vim.g.python_host_prog = '/usr/bin/python'
 end
 
+-- Set work textwidth
+if utils.IS_WORK_MACHINE then
+  autocmd({"BufRead", "BufNewFile"}, {"*.go"}, "set textwidth=100")
+end
+
 -- Use cross platform clipboard if on WSL
 local uname = vim.fn.system('uname')
 if vim.regex('[Mm]icrosoft'):match_str(uname) then
@@ -120,6 +127,10 @@ elseif (vim.regex('Linux'):match_str(uname) and os.getenv("DISPLAY") ~= "")
     or vim.regex('Darwin'):match_str(uname) then
   vim.opt.clipboard = {"unnamed", "unnamedplus"}
 end
+
+
+-- For GitSigns and Debug
+vim.cmd [[ autocmd BufRead,BufNewFile * setlocal signcolumn=yes:1 ]]
 
 -- Create empty tabline for bufferline to fill when it starts
 -- avoids jumping on load
@@ -145,5 +156,5 @@ require("commands")
 require("plugins").setup({ runtimepath = custom_runtimepath })
 
 -- Setup startup plugins config
-require("config-init").setup()
+require("config.startup").setup()
 

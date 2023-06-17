@@ -53,19 +53,23 @@ local config = {
   },
   extensions = {"neo-tree", "mundo", "fugitive"},
   sections = {
-    lualine_a = {mode},
+    lualine_a = {{
+      mode,
+      on_click = utils.cmd_cb "Neotree show toggle",
+    }},
     lualine_b = {
       {
         'branch',
+        on_click = utils.cmd_cb "Neotree git_status",
         icon = "Y",
       },
       'diff',
     },
-    lualine_c = {{ 'filename', path = 1}, 'lsp_progress'},
+    lualine_c = {{ 'filename', path = 1 }},
     lualine_x = {
       {
         'diagnostics',
-        on_click = function() vim.cmd [[ TroubleToggle document_diagnostics ]] end,
+        on_click = utils.cmd_cb "TroubleToggle document_diagnostics",
         symbols = {
           error = utils.diag_signs.Error,
           warn  = utils.diag_signs.Warn,

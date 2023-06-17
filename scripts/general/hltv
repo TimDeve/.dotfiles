@@ -1,5 +1,7 @@
 #!/usr/bin/env bb
 
+; Stopped working when hltv added Cloudflare
+
 (require '[babashka.curl :as curl])
 (require '[cheshire.core :as json])
 (require '[babashka.pods :as pods])

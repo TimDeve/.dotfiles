@@ -94,7 +94,7 @@ cnoremap w!! %!sudo tee > /dev/null %
 vnoremap p "_dP
 
 " Enter key copies in visual to match tmux behaviour
-vnoremap <CR> y
+"vnoremap <CR> y
 
 " Split navigation
 nnoremap <C-J> <C-W><C-J>

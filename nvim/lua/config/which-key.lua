@@ -18,8 +18,8 @@ end
 
 local function close_other_buffers()
   local bufferline = require("bufferline")
-  bufferline.close_in_direction("right")
   bufferline.close_in_direction("left")
+  bufferline.close_in_direction("right")
 end
 
 function setup()
@@ -37,13 +37,13 @@ function setup()
 
   -- Normal mode mappings
   wk.register({
-    U      = { "<C-R>",                  "Redo" },
-    J      = { "<Plug>MoveLineDown",     "Move line down"},
-    K      = { "<Plug>MoveLineUp",       "Move line up"},
-    j      = { "gj",                     "Next Line"},
-    k      = { "gk",                     "Previous Line"},
-    gj     = { "j",                      "Next Line (Skip Wrap)"},
-    gk     = { "k",                      "Previous Line (Skip Wrap)"},
+    U      = { "<C-R>",              "Redo" },
+    J      = { "<Plug>MoveLineDown", "Move line down"},
+    K      = { "<Plug>MoveLineUp",   "Move line up"},
+    j      = { "gj",                 "Next Line"},
+    k      = { "gk",                 "Previous Line"},
+    gj     = { "j",                  "Next Line (Skip Wrap)"},
+    gk     = { "k",                  "Previous Line (Skip Wrap)"},
     ["z="] = { "<Cmd>Telescope spell_suggest<CR>", "Spelling suggestions" },
     ["!!"] = { "<Cmd>!!<CR>",                      "Replay Last Shell Command" },
     ["[d"] = { vim.diagnostic.goto_prev,           "Previous diagnostic" },
@@ -66,6 +66,7 @@ function setup()
         name = "Debugging",
         b = { "<Cmd>lua require'dap'.toggle_breakpoint()<CR>", "Toggle breakpoint" },
         B = { "<Cmd>lua require'dap'.clear_breakpoints()<CR>", "Clear breakpoints" },
+        c = { "<Cmd>lua require'dap'.continue()<CR>",          "Continue" },
         d = { "<Cmd>lua require'dap'.step_over()<CR>",         "Step over" },
         i = { "<Cmd>lua require'dap'.step_into()<CR>",         "Step into" },
         o = { "<Cmd>lua require'dap'.step_out()<CR>",          "Step out" },
@@ -79,17 +80,17 @@ function setup()
         name = "Telescope",
         ["'"] = { "<Cmd>Telescope marks<CR>",              "Marks" },
         a = { "<Cmd>Telescope builtin<CR>",                "Builtins" },
-        b = { "<Cmd>Telescope buffers<CR>",                "Buffers" },
+        b = { "<Cmd>Telescope buffers sort_mru=true<CR>",  "Buffers" },
         f = { "<Cmd>Telescope live_grep_args<CR>",         "Grep" },
         w = { "<Cmd>Telescope grep_string<CR>",            "Grep word" },
         p = { file_search(),                               "Find files" },
         P = { file_search({ hidden = true }),              "Find all files" },
         o = { "<Cmd>Telescope oldfiles cwd_only=true<CR>", "Oldfiles" },
+        t = { "<Cmd>TodoTelescope<CR>",                    "Todos" },
       },
       g = {
         name = "Git",
-        b = { "<Cmd>Git blame<CR>",       "Show git blame" },
-        g = { "<Cmd>GitGutterToggle<CR>", "Toggle GitGutter" },
+        B = { "<Cmd>Git blame<CR>",       "Show git blame" },
       },
       s = {
         name = "Sidebar",
@@ -116,7 +117,7 @@ function setup()
       z = {
         name = "Zoom",
         z = { "<Cmd>TZFocus<CR>", "Zoom current window" },
-        c = { "<Cmd>Goyo<CR>",    "Zen mode" },
+        c = { "<Cmd>TZAtaraxis<CR>",    "Zen mode" },
       },
       [";"] = { "<Cmd>lua require'FTerm'.toggle()<CR>",     "Open floating term" },
       Q  = { "<Cmd>qa!<CR>",                                "Force quit all" },
@@ -144,8 +145,7 @@ function setup()
     { mode = "v" }
   )
 
-
-  utils.autocmd({"BufRead", "BufNewFile"}, {"*.go"}, require("config-vim-go").bindings)
+  utils.autocmd({"BufRead", "BufNewFile"}, {"*.go"}, require("config.vim-go").bindings)
 end
 
 return { setup = setup }

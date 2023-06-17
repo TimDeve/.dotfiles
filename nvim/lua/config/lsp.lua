@@ -12,29 +12,6 @@ local function setup_servers(shared, lsps)
   end
 end
 
-local last_lsp_messages = ""
-local last_lsp_printed = ""
-local function lsp_progress_callback()
-    local messages = vim.lsp.util.get_progress_messages()
-    local str_messages = vim.inspect(messages)
-
-    if last_lsp_messages ~= str_messages then
-      last_lsp_messages = str_messages
-      for _, payload in ipairs(messages) do
-        local title = type(payload.title) == "string" and payload.title or ""
-        local message = type(payload.message) == "string" and ": " .. payload.message or ""
-        local full_message = "[" .. payload.name .. "] " .. title .. message
-        if full_message ~= last_lsp_printed then
-          -- Don't print go list failures at work
-          if not utils.IS_WORK_MACHINE or not string.find(full_message, "internal error: go list") then
-            vim.api.nvim_echo({{full_message, "Comment"}}, true, {})
-          end
-          last_lsp_printed = full_message
-        end
-      end
-    end
-end
-
 local attached_lsp = {}
 local function on_lsp_attach(client, bufno)
   local capabilities = client.server_capabilities
@@ -64,6 +41,9 @@ local function on_lsp_attach(client, bufno)
    },
   }
 
+  vim.cmd [[ nnoremap <silent> <buffer> <C-LeftMouse> <LeftMouse>:lua vim.lsp.buf.definition()<CR> ]]
+  vim.cmd [[ nnoremap <silent> <buffer> <RightMouse>  <LeftMouse>:lua vim.lsp.buf.definition()<CR> ]]
+
   if client.name == "gopls" and not utils.IS_WORK_MACHINE then
     local function format_and_organize()
         vim.lsp.buf.format()
@@ -73,7 +53,7 @@ local function on_lsp_attach(client, bufno)
     autocmd("BufWritePre", {"*.go"}, format_and_organize)
   end
 
-  require("which-key").register(keybinds, {buffer = bufno})
+  require("which-key").register(keybinds, { mode = {"n", "v"}, buffer = bufno})
 
   autocmd("BufWritePre", {"*.rs", "BUILD"}, function() vim.lsp.buf.format() end)
 
@@ -91,11 +71,12 @@ local function on_lsp_attach(client, bufno)
   highlight("LspCodeLens", { fg = "grey" })
   highlight("LspCodeLensSeparator", { fg = "grey" })
 
-  vim.lsp.handlers["textDocument/references"]     = require("telescope.builtin").lsp_references
-  vim.lsp.handlers["textDocument/implementation"] = require("telescope.builtin").lsp_implementations
-  vim.lsp.handlers["textDocument/typeDefinition"] = require("telescope.builtin").lsp_type_definitions
-  vim.lsp.handlers["textDocument/documentSymbol"] = require("telescope.builtin").lsp_document_symbols
-  vim.lsp.handlers["workspace/symbol"]            = require("telescope.builtin").lsp_dynamic_workspace_symbols
+  function fname_width(fn) return function() fn({fname_width = 60}) end end
+  vim.lsp.handlers["textDocument/references"]     = fname_width(require("telescope.builtin").lsp_references)
+  vim.lsp.handlers["textDocument/implementation"] = fname_width(require("telescope.builtin").lsp_implementations)
+  vim.lsp.handlers["textDocument/typeDefinition"] = fname_width(require("telescope.builtin").lsp_type_definitions)
+  vim.lsp.handlers["textDocument/documentSymbol"] = fname_width(require("telescope.builtin").lsp_document_symbols)
+  vim.lsp.handlers["workspace/symbol"]            = fname_width(require("telescope.builtin").lsp_dynamic_workspace_symbols)
 
   if capabilities.documentHighlightProvider ~= nil then
     autocmd({"CursorHold", "CursorHoldI"}, "<buffer>", function() vim.lsp.buf.document_highlight() end)
@@ -105,14 +86,17 @@ local function on_lsp_attach(client, bufno)
   if capabilities.codeLensProvider ~= nil then
     autocmd({"BufEnter","CursorHold","InsertLeave"}, "<buffer>", function() vim.lsp.codelens.refresh() end)
   end
-
-  autocmd("User", "LspProgressUpdate", lsp_progress_callback)
 end
 
 function M.setup()
+  --require("config.nvim-cmp").setup()
+  --local capabilities = require('cmp_nvim_lsp').default_capabilities() 
+  --capabilities.textDocument.completion.completionItem.snippetSupport = false
+
   local shared_options = {
     on_attach = on_lsp_attach,
     flags = {},
+    --capabilities = capabilities,
   }
 
   local servers_options = {
@@ -152,7 +136,7 @@ function M.setup()
       local src = vim.fs.find('src', { upward = true, path = plzconfig })[1]
       if plzconfig and src then
         local plz_out = vim.fs.dirname(plzconfig) .. "/plz-out"
-        vim.env.GOPATH = string.format('%s:%s/go:%s/gen/third_party/go', vim.fs.dirname(src), plz_out, plz_out)
+        vim.env.GOPATH = string.format('%s:%s/go:%s/gen/third_party/go:%s/gen', vim.fs.dirname(src), plz_out, plz_out, plz_out)
         vim.env.GO111MODULE = 'off'
       end
       return vim.fn.getcwd()
@@ -163,7 +147,7 @@ function M.setup()
 
   setup_servers(shared_options, servers_options)
 
-  require("config-null-ls").setup()
+  require("config.null-ls").setup(on_lsp_attach)
 end
 
 function M.setup_rust_tools()

@@ -98,6 +98,10 @@ grebai() {
   git rebase -i $(git log --pretty=oneline --color=always | fzf --ansi | cut -d ' ' -f1)
 }
 
+gswp() {
+  gswi "$(git branch --sort=-committerdate | fzf -1 -q "$*" | sed -Ee 's/^(\*|\s)\s//')"
+}
+
 n() {
   if [[ "${NNNLVL:-0}" -ge 1 ]]; then
     echo "nnn is already running"
@@ -159,6 +163,17 @@ poll() {
     eval $@
     sleep $sleepTime
   done
+}
+
+tillrg() {
+  local pattern=$1
+  shift
+
+  while true; do
+    eval $@ | rg "$pattern" && break
+    sleep 0.01
+  done
+  ntfy publish "$NTFY_DEFAULT" "'$1' is done!"
 }
 
 tmuxa() {
@@ -338,5 +353,35 @@ cstrm() {
   if ! [[ -z "$streamUrl" ]]; then
     strm $streamUrl
   fi
+}
+
+kns() {
+  k config set-context --current --namespace="$(k get namespace | tail +2 | fzf | awk '{print $1}')" \
+    && kubectl config view -o=json \
+    | jq '. as $root | .contexts[] | select(.name == $root["current-context"]) | "Cluster:   " + .context.cluster +  "\nNamespace: " + .context.namespace' -r
+}
+
+kset() {
+  kuse
+  kns
+}
+
+kls-deployment-pods() {
+  test $# -eq 0 && {
+    echo "Missing deployment name" && kubectl get deployments
+    return 1
+  }
+  deployment="$1"; shift
+  replicaSet="$(kubectl describe deployment $deployment \
+    | grep '^NewReplicaSet' \
+    | awk '{print $2}'
+  )"
+
+  podHashLabel="$(kubectl get rs $replicaSet \
+    -o jsonpath='{.metadata.labels.pod-template-hash}'
+  )"
+
+  kubectl get pods -l pod-template-hash=$podHashLabel --show-labels \
+    | tail -n +2 | awk '{print $1}'
 }
 

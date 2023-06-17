@@ -16,23 +16,18 @@ function M.setup()
   ]]
 
   require("neo-tree").setup({
-    sources = {
-      "filesystem",
-      "buffers",
-      "git_status",
-    },
     enable_diagnostics = false,
-    close_if_last_window = true,
+    close_if_last_window = false,
     source_selector = {
       winbar = true,
       content_layout = "center",
       separator = { left = " ", right= "" },
       show_separator_on_edge = true,
-      tab_labels = {
-        filesystem  = "Files",
-        buffers     = "Buffers",
-        git_status  = "Git",
-        diagnostics = "Diagnostics",
+      sources = {
+        { source = "filesystem",       display_name = "Files" },
+        { source = "buffers",          display_name = "Buffers" },
+        { source = "git_status",       display_name = "Git" },
+        { source = "document_symbols", display_name = "Symbols" },
       },
     },
     window = {
@@ -44,6 +39,24 @@ function M.setup()
     filesystem = {
       async_directory_scan = "always",
       use_libuv_file_watcher = true,
+      window = {
+        mappings = {
+          ["tf"] = "telescope_find",
+          ["g"] = "telescope_grep",
+        },
+      },
+      commands = {
+        telescope_find = function(state)
+          local node = state.tree:get_node()
+          local path = node:get_id()
+          require('telescope.builtin').find_files({ cwd = path, search_dirs = { path }})
+        end,
+        telescope_grep = function(state)
+          local node = state.tree:get_node()
+          local path = node:get_id()
+          require('telescope').extensions.live_grep_args.live_grep_args({ cwd = path, search_dirs = { path }})
+        end,
+      },
     },
     default_component_configs = {
       icon = {

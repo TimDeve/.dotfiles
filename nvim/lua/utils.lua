@@ -64,10 +64,7 @@ function M.truthy(v)
   return false
 end
 
-function M.cmd_cb(c)
-  local cb = function() vim.cmd(c) end
-  return cb
-end
+function M.cmd_cb(c) return function() vim.cmd(c) end end
 
 function M.project_files(opts)
   vim.fn.system('git rev-parse --is-inside-work-tree')
@@ -84,7 +81,22 @@ function M.match_filetype(matches)
   end
 end
 
-M.diag_signs = { Error = "✖", Warn = "▼", Hint = "●", Info = "◼", Other = "◆" }
+M.signs = {
+  cross             = "✖",
+  inverted_triangle = "▼",
+  circle            = "●",
+  square            = "◼",
+  diamond           = "◆",
+  check             = "✓",
+}
+
+M.diag_signs = {
+  Error = M.signs.cross,
+  Warn = M.signs.inverted_triangle,
+  Hint = M.signs.circle,
+  Info = M.signs.square,
+  Other = M.signs.diamond,
+}
 M.diag_signs.error       = M.diag_signs.Error
 M.diag_signs.warn        = M.diag_signs.Warn
 M.diag_signs.warning     = M.diag_signs.Warn
