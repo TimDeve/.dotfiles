@@ -17,7 +17,7 @@ function M.setup()
 
   require("neo-tree").setup({
     enable_diagnostics = false,
-    close_if_last_window = false,
+    close_if_last_window = true,
     source_selector = {
       winbar = true,
       content_layout = "center",
