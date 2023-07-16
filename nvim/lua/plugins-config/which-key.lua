@@ -145,7 +145,7 @@ function setup()
     { mode = "v" }
   )
 
-  utils.autocmd({"BufRead", "BufNewFile"}, {"*.go"}, require("config.vim-go").bindings)
+  utils.autocmd({"BufRead", "BufNewFile"}, {"*.go"}, require("plugins-config.vim-go").bindings)
 end
 
 return { setup = setup }

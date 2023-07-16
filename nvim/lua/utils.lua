@@ -17,8 +17,16 @@ function M.VimEnter_cb(cmd)
   return function() M.autocmd("VimEnter", "*", cmd) end
 end
 
-function M.setup_config_cb(module, opts)
-  return function() require(module).setup(opts) end
+function M.config_setup(module)
+  return function() require("plugins-config." .. module).setup() end
+end
+
+function M.config_cmd(module)
+  return require("plugins-config." .. module).cmd
+end
+
+function M.config_opts(module)
+  return require("plugins-config." .. module).opts
 end
 
 function M.merge(t1, t2)

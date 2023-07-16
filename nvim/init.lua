@@ -156,5 +156,5 @@ require("commands")
 require("plugins").setup({ runtimepath = custom_runtimepath })
 
 -- Setup startup plugins config
-require("config.startup").setup()
+require("plugins-config.startup").setup()
 
