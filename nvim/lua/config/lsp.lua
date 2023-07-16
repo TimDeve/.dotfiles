@@ -71,7 +71,7 @@ local function on_lsp_attach(client, bufno)
   highlight("LspCodeLens", { fg = "grey" })
   highlight("LspCodeLensSeparator", { fg = "grey" })
 
-  function fname_width(fn) return function() fn({fname_width = 60}) end end
+  function fname_width(fn) return function(opts) fn(utils.merge(opts, {fname_width = 60})) end end
   vim.lsp.handlers["textDocument/references"]     = fname_width(require("telescope.builtin").lsp_references)
   vim.lsp.handlers["textDocument/implementation"] = fname_width(require("telescope.builtin").lsp_implementations)
   vim.lsp.handlers["textDocument/typeDefinition"] = fname_width(require("telescope.builtin").lsp_type_definitions)

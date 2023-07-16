@@ -45,14 +45,18 @@ function M.setup()
       cmdline_popup = {
         position = {
           row = "30%",
-          col = "50%",
         },
       },
+      --cmdline_popupmenu = {
+      --  position = {
+      --    row = "23",
+      --  },
+      --},
     },
     -- you can enable a preset for easier configuration
     presets = {
       bottom_search = true, -- use a classic bottom cmdline for search
-      command_palette = false, -- don't use popup for command line
+      command_palette = false, -- use noice 
       long_message_to_split = true, -- long messages will be sent to a split
       inc_rename = false, -- disable custom dialog for inc_rename
       lsp_doc_border = false, -- add a border to hover docs and signature help

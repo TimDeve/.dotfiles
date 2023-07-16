@@ -116,8 +116,8 @@ function setup()
       },
       z = {
         name = "Zoom",
-        z = { "<Cmd>TZFocus<CR>", "Zoom current window" },
-        c = { "<Cmd>TZAtaraxis<CR>",    "Zen mode" },
+        z = { "<Cmd>TZFocus<CR>",    "Zoom current window" },
+        c = { "<Cmd>TZAtaraxis<CR>", "Zen mode" },
       },
       [";"] = { "<Cmd>lua require'FTerm'.toggle()<CR>",     "Open floating term" },
       Q  = { "<Cmd>qa!<CR>",                                "Force quit all" },

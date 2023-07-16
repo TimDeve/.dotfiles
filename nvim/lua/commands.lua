@@ -11,8 +11,6 @@ vim.cmd [[ command SessionLoad     lua require("persistence").load() ]]
 vim.cmd [[ command SessionLoadLast lua require("persistence").load({ last = true }) ]]
 vim.cmd [[ command SessionStop     lua require("persistence").stop() ]]
 
-vim.cmd [[ cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit! ]]
-
 vim.cmd [[ command LensToggle Lazy load lens.vim | call lens#toggle() ]]
 
 vim.cmd [[ command -range SgLink lua require("sourcegraph").open_location() ]]

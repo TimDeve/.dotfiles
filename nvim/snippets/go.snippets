@@ -1,5 +1,5 @@
 snippet dbg "Debug using Printf"
-	fmt.Printf("DEBUGDEBUG: %+v\n", ${1:var}) // TODO(timdeve): remove before commit
+	fmt.Printf("DBGDBG-${1}: %+v\n", ${1:var}) // TODO(timdeve): remove before commit
 
 snippet pf "fmt.Printf()"
 	fmt.Printf("%${1:s}\n", ${2:var})
@@ -43,7 +43,7 @@ snippet errwr "Error handling with fmt.Errorf"
 	}
 
 snippet set "Set-like map"
-	set := map[${1}]struct{}{}
+	${2:set} := map[${1}]struct{}{}
 
 snippet todo "Temporary todo"
 	// TODO(timdeve): $1

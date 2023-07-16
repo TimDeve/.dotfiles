@@ -23,7 +23,7 @@ function M.setup()
           end
         end,
         s = cmp.mapping.confirm({ select = true }),
-        c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+        c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
       }),
       ['<Tab>'] = function(fallback)
         if cmp.visible() then
@@ -67,15 +67,19 @@ function M.setup()
   --})
 
   -- Use cmdline & path source for ':'
-  --cmp.setup.cmdline(':', {
-  --  mapping = cmp.mapping.preset.cmdline(),
-  --  preselect = cmp.PreselectMode.None,
-  --  sources = cmp.config.sources({
-  --    { name = 'path' }
-  --  }, {
-  --    { name = 'cmdline' }
-  --  })
-  --})
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline({
+      ['<CR>'] = cmp.mapping({
+        c = function(fallback) fallback() end,
+      }),
+    }),
+    preselect = cmp.PreselectMode.None,
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
 end
 
 return M
