@@ -1,11 +1,45 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-CHILL_URL="https://www.youtube.com/watch?v=jfKfPfyJRdk"
+LOFI_URL="https://www.youtube.com/watch?v=jfKfPfyJRdk"
 
-if [[ "${1-}" == "--hd" ]]; then
-  IN_HD=1
-fi
+declare -A CHILL_URLS=(
+  [DJ Set - Japanese Funk & Soul]="https://www.youtube.com/watch?v=TEXZSzPpZqo"
+  [DJ Set - Salsa]="https://www.youtube.com/watch?v=Zi_nhhzzWKE"
+  [DJ Set - Colombian Salsa]="https://www.youtube.com/watch?v=E_b-Q0xiTmo"
+  [Erik Satie - Gnossiene]="https://www.youtube.com/watch?v=Qr4azoVLqL0"
+  [Minecraft - Lush Caves]="https://www.youtube.com/watch?v=ODLcDoM4qXs"
+  [Peaceful Piano]="https://www.youtube.com/watch?v=hj83cwfOF3Y"
+  [Valheim - Meadows]="https://www.youtube.com/watch?v=A3pu7gSHiKI"
+  [Valheim - Storm]="https://www.youtube.com/watch?v=4cISK5Seb34"
+  [Zelda - Calm]="https://www.youtube.com/watch?v=hhgpBiRHLGs"
+  [Zelda - Sky Islands]="https://www.youtube.com/watch?v=cTS3LfDFMEI"
+  [Zelda - The Depth]="https://www.youtube.com/watch?v=DJWKiTc9Z0E"
+)
+
+IN_HD=""
+PICK=""
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+  -v | --verbose)
+    set -x
+    ;;
+  --hd) # example flag
+    IN_HD=1
+    ;;
+  -p | --pick) # example named parameter
+    PICK=1
+    ;;
+  -?*)
+    echo "Unknown option: $1"
+    ;;
+  *)
+    break
+    ;;
+  esac
+  shift
+done
 
 errcho() {
   echo "$@" 1>&2
@@ -24,26 +58,40 @@ get_streamer() {
 }
 
 get_player() {
-  if hash mpv.exe 1>&2 2>/dev/null || hash mpv 1>&2 2>/dev/null; then
+  if hash mpv.exe 1>&2 2>/dev/null; then
+    echo "mpv.exe --vo=null --no-video"
+  elif hash mpv 1>&2 2>/dev/null; then
     echo "mpv --vo=null --no-video"
   elif hash vlc.exe 1>&2 2>/dev/null || hash vlc 1>&2 2>/dev/null; then
     echo "vlc --intf dummy"
   fi
 }
 
-play() {
+play_lofi() {
   local streamer player
   streamer="$(get_streamer)"
   if [[ -n "${IN_HD-}" ]]; then
-    "$streamer" "$CHILL_URL" 1080p
+    "$streamer" "$LOFI_URL" 1080p
   else
     player="$(get_player)"
     if [[ -n "$player" ]]; then
-      "$streamer" "$CHILL_URL" 360p --player="$player" --quiet
+      "$streamer" "$LOFI_URL" 360p --player="$player" --quiet
     else
-      "$streamer" "$CHILL_URL" 360p
+      "$streamer" "$LOFI_URL" 360p
     fi
   fi
+}
+
+print_urls() {
+  for i in "${!CHILL_URLS[@]}"; do
+    echo "$i"
+  done
+}
+
+play_pick() {
+  local pick
+  pick=$(print_urls | sort -r | fzf)
+  eval "$(get_player) ${CHILL_URLS[$pick]}"
 }
 
 just_chillin() {
@@ -83,20 +131,28 @@ GIRL
 ART_WIDTH=41
 ART_HEIGHT=24
 
-if hash tput; then
-  columns=$(tput cols)
-  lines=$(tput lines)
-  if [[ "$columns" -ge "$ART_WIDTH" ]] && [[ "$lines" -ge "$ART_HEIGHT" ]]; then
-    padding=$(echo "($columns - $ART_WIDTH) / 2" | bc)
+print_art() {
+  if hash tput; then
+    columns=$(tput cols)
+    lines=$(tput lines)
+    if [[ "$columns" -ge "$ART_WIDTH" ]] && [[ "$lines" -ge "$ART_HEIGHT" ]]; then
+      padding=$(echo "($columns - $ART_WIDTH) / 2" | bc)
 
-    clear
-    printf "%s\n" "$ART" | awk "{print sprintf(\"% ${padding}s\", \"\") \$0}"
+      clear
+      printf "%s\n" "$ART" | awk "{print sprintf(\"% ${padding}s\", \"\") \$0}"
+    else
+      just_chillin
+    fi
   else
     just_chillin
   fi
-else
-  just_chillin
-fi
+}
 
-play
+if [[ -n "$PICK" ]]; then
+  just_chillin
+  play_pick
+else
+  print_art
+  play_lofi
+fi
 
