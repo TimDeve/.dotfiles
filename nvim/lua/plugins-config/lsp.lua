@@ -16,11 +16,6 @@ local attached_lsp = {}
 local function on_lsp_attach(client, bufno)
   local capabilities = client.server_capabilities
 
-  for type, icon in pairs(utils.diag_signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-  end
-
   local keybinds = {
    ["<leader>"] = {
      l = {
@@ -162,8 +157,6 @@ function M.setup()
   end
 
   setup_servers(shared_options, servers_options)
-
-  require("plugins-config.null-ls").setup(on_lsp_attach)
 end
 
 function M.setup_rust_tools()

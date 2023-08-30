@@ -144,6 +144,12 @@ vim.cmd [[ autocmd BufRead,BufNewFile * setlocal signcolumn=yes:1 ]]
 -- avoids jumping on load
 vim.o.showtabline = 2
 
+-- Define diagnostic signs
+for type, icon in pairs(utils.diag_signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+
 -- Setup lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then

@@ -93,6 +93,14 @@ function M.match_filetype(matches)
   end
 end
 
+function M.lines(str)
+  local result = {}
+  for line in str:gmatch '[^\n]+' do
+    table.insert(result, line)
+  end
+  return result
+end
+
 M.signs = {
   cross             = "✖",
   inverted_triangle = "▼",

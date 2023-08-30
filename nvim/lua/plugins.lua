@@ -87,10 +87,10 @@ local pkgs =  {
     config = cfg("lsp"),
     dependencies = {
       'folke/lsp-colors.nvim',
-      'jose-elias-alvarez/null-ls.nvim',
     }
   },
   { 'simrat39/rust-tools.nvim', ft = "rust", config = require("plugins-config.lsp").setup_rust_tools },
+  { 'mfussenegger/nvim-lint', ft = {"go", "sh"}, config = cfg("nvim-lint") },
 
   -- Debugging
   { "rcarriga/nvim-dap-ui",
