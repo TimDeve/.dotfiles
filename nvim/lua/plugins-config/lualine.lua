@@ -44,6 +44,16 @@ local function mode()
   return visual_multi_status() or lualine_mode.get_mode()
 end
 
+local function is_buffer_pinned()
+  local cur_buf = vim.api.nvim_get_current_buf()
+  return require("hbac.state").is_pinned(cur_buf) and " ●" or " ○"
+end
+
+
+local function toggle_pinned()
+  require("hbac").toggle_pin()
+end
+
 local config = {
   options = {
     icons_enabled = true,
@@ -65,7 +75,10 @@ local config = {
       },
       'diff',
     },
-    lualine_c = {{ 'filename', path = 1 }},
+    lualine_c = {
+      { is_buffer_pinned, on_click = toggle_pinned },
+      { 'filename', path = 1 },
+    },
     lualine_x = {
       {
         'diagnostics',

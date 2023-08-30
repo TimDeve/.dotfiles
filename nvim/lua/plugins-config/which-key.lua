@@ -60,7 +60,7 @@ function setup()
         c = { "<Cmd>bp <BAR> bd #<CR>",  "Close buffer" },
         C = { "<Cmd>bp <BAR> bd! #<CR>", "Force close buffer" },
         f = { open_buf_folder,           "Open buffer's folder" },
-        o = { close_other_buffers,       "Close other buffers" },
+        O = { close_other_buffers,       "Close other buffers" },
       },
       d = {
         name = "Debugging",
@@ -82,6 +82,7 @@ function setup()
         a = { "<Cmd>Telescope builtin<CR>",                "Builtins" },
         b = { "<Cmd>Telescope buffers sort_mru=true<CR>",  "Buffers" },
         f = { "<Cmd>Telescope live_grep_args<CR>",         "Grep" },
+        F = { "<Cmd>Telescope live_grep<CR>",              "Grep fzf" },
         w = { "<Cmd>Telescope grep_string<CR>",            "Grep word" },
         p = { file_search(),                               "Find files" },
         P = { file_search({ hidden = true }),              "Find all files" },

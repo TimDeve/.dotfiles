@@ -36,10 +36,10 @@ function M.open_location()
   url = url .. "remote_url=" .. url_encode(remote_url)    .. "&"
   url = url .. "branch="     .. url_encode("master")      .. "&"
   url = url .. "file="       .. url_encode(relative_path) .. "&"
-  url = url .. "start_row="  .. tostring(row)             .. "&"
-  url = url .. "end_row="    .. tostring(row)             .. "&"
-  url = url .. "start_col="  .. tostring(col)             .. "&"
-  url = url .. "end_col="    .. tostring(col)
+  url = url .. "start_row="  .. tostring(row - 1)         .. "&"
+  url = url .. "end_row="    .. tostring(row - 1)         .. "&"
+  url = url .. "start_col="  .. tostring(col - 1)         .. "&"
+  url = url .. "end_col="    .. tostring(col - 1)
 
   print("Opening: " .. url)
   vim.fn.system("xdg-open '" .. url .. "'")

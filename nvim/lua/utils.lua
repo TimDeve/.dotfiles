@@ -63,7 +63,7 @@ end
 
 function M.trigger_code_action(title)
   vim.lsp.buf.code_action({
-    filter = function(action) return action.title == title end,
+    context = { only = { title } },
     apply = true
   })
 end
@@ -116,5 +116,7 @@ M.diag_signs.hint        = M.diag_signs.Hint
 M.diag_signs.info        = M.diag_signs.Info
 M.diag_signs.information = M.diag_signs.Info
 M.diag_signs.other       = M.diag_signs.Other
+
+M.lisp_ft = {"clojure", "scheme", "carp"}
 
 return M

@@ -1,7 +1,7 @@
 # Shorter editors
 alias v='nvim'
 alias vs="v +SessionLoad"
-alias vi='nvim -u ~/.dotfiles/nvim/bare.vim'
+alias vi='nvim -u $DOTFILES/nvim/bare.vim'
 alias suv='sudo "$(which nvim)" -u "$HOME/.dotfiles/nvim/bare.vim"'
 
 # Quick Exit
@@ -229,3 +229,10 @@ alias xhc-clear="rm -f /tmp/xh-cookie-jar"
 alias ru="ruplacer"
 
 alias teer="tee >(cat 1>&2)"
+
+alias trim-ws=$'awk \'{$1=$1; print}\''
+
+alias c2j="mlr --c2j cat"
+alias c2l="mlr --c2l cat"
+alias l2c="mlr --l2c cat"
+alias j2c="mlr --j2c cat"

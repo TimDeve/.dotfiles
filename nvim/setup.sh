@@ -14,8 +14,8 @@ fi
 LEVEL=${1-"full"}
 
 if [ "$LEVEL" = "bare" ]; then
-  ln -s ~/.dotfiles/nvim/bare.vim ~/.config/nvim/init.vim
+  ln -s $DOTFILES/nvim/bare.vim ~/.config/nvim/init.vim
 elif [ "$LEVEL" = "full" ]; then
-  ln -s ~/.dotfiles/nvim/init.lua ~/.config/nvim/init.lua
+  ln -s $DOTFILES/nvim/init.lua ~/.config/nvim/init.lua
 fi
 

@@ -1,4 +1,7 @@
-source ~/.dotfiles/zsh/localpre.zsh
+ZSHRC="$(readlink ${ZDOTDIR-$HOME}/.zshrc)"
+export DOTFILES="${ZSHRC/.dotfiles*/.dotfiles}"
+
+source $DOTFILES/zsh/localpre.zsh
 
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -108,5 +111,5 @@ zstyle ':completion:*'              list-colors "${(s.:.)LS_COLORS}"
 bindkey '^[[Z' reverse-menu-complete # Shift-tab goes back in completion menu
 
 # Imports
-source ~/.dotfiles/zsh/imports.zsh
+source $DOTFILES/zsh/imports.zsh
 

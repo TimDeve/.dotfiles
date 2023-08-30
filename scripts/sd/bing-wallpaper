@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Downloads wallpaper of the day from bing.com
+
+set -Eeuo pipefail
+
+BING_URL_ROOT="https://www.bing.com"
+
+escape-filename() {
+    printf '%s' "$@" | perl -pe 's/[:;,\?\[\]\/\\=<>''"&\$#*()|~`!{}%+]//g; s/[\s-]+/-/g;';
+}
+
+wallpaper_metadata=$(curl -L "$BING_URL_ROOT/HPImageArchive.aspx?format=js&idx=0&n=1")
+
+url=$(<<< "$wallpaper_metadata" jq '.images[0].url' -r)
+title=$(<<< "$wallpaper_metadata" jq '.images[0].copyright' -r)
+
+cd ~/Downloads
+
+curl -L -o "$(escape-filename "$title")" "$BING_URL_ROOT$url"
+

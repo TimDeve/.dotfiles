@@ -5,8 +5,8 @@ local M = {}
 function M.setup()
   local treesitter_langs = {
     "bash", "c", "cpp", "go", "hcl", "javascript", "json", "lua",
-    "python","norg", "norg_meta", "regex", "rust", "sql",  "toml", "tsx",
-    "typescript", "vim", "yaml",
+    "python","norg", "norg_meta", "regex", "rust", "scheme", "sql",  "toml",
+    "tsx", "typescript", "vim", "yaml",
   }
   for _, lang in ipairs(treesitter_langs) do
     treesitter_langs[lang] = true

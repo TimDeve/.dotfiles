@@ -49,7 +49,7 @@ function M.setup()
     },
   })
 
-  vim.cmd [[ autocmd FileType norg lua require("config.norg").keybinds() ]]
+  vim.cmd [[ autocmd FileType norg lua require("plugins-config.norg").keybinds() ]]
   vim.cmd [[ autocmd FileType norg setlocal conceallevel=2 ]]
 end
 

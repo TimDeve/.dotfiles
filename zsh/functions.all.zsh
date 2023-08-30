@@ -58,7 +58,7 @@ gdelcom() {
 gdelbi() {
   setopt local_options UNSET ERR_RETURN
   local branches
-  branches=$(git branch | awk '/.* master$/{next} /\* .*/{next} {print $1}' | fzf --multi)
+  branches=$(git branch | awk '/.* master$/{next} /\* .*/{next} {print $1}' | fzf --multi --reverse)
   if yorn "Are you sure you want to delete these branches?" "$branches"; then
     <<< "$branches" xargs git branch -D
   fi
@@ -201,7 +201,7 @@ newsh() {
 }
 
 newshf() {
-  cp ~/.dotfiles/template/bash.sh $1 && chmod +x $1
+  cp $DOTFILES/template/bash.sh $1 && chmod +x $1
 }
 
 rgff() {
@@ -308,17 +308,17 @@ dot() {
 
   case "${1-}" in
     "")
-      cd ~/.dotfiles
+      cd $DOTFILES
       ;;
     "up")
-      (cd ~/.dotfiles \
+      (cd $DOTFILES \
         && git add -u \
         && git commit --verbose \
         && git push)
       exit_code=$?
       ;;
     "down")
-      (cd ~/.dotfiles && git pull --rebase)
+      (cd $DOTFILES && git pull --rebase)
       exit_code=$?
       ;;
     "-h")

@@ -1,4 +1,4 @@
-source ~/.dotfiles/zsh/localpre.zsh
+source $DOTFILES/zsh/localpre.zsh
 
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -67,5 +67,5 @@ autoload _sd && _comps[sd]=_sd
 ## Imports ------------------------------------------------------------
 #
 
-source ~/.dotfiles/zsh/imports.zsh
+source $DOTFILES/zsh/imports.zsh
 
