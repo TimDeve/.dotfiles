@@ -125,6 +125,8 @@ local pkgs =  {
   { 'preservim/vim-markdown', ft = 'markdown' },
   { 'stephpy/vim-yaml', ft = 'yaml' },
 
+  { 'gsuuon/llm.nvim', config = cfg("llm"), cmd = cmd("llm"), enabled = utils.enabled_if_env("LLAMACPP_DIR") },
+
   { 'mg979/vim-visual-multi', keys = {{"<C-N>", mode = {"n", "v"}}}},
   { 'scrooloose/nerdcommenter', keys = {{"<space>cc", mode = {"n", "v"}}}},
 }

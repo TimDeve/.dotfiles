@@ -101,6 +101,12 @@ function M.lines(str)
   return result
 end
 
+function M.enabled_if_env(env)
+  return function()
+    return os.getenv(env) ~= nil
+  end
+end
+
 M.signs = {
   cross             = "✖",
   inverted_triangle = "▼",
