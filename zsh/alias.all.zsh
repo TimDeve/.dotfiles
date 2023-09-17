@@ -124,6 +124,7 @@ alias strm="streamlink -p mpv --default-stream best"
 # Docker
 alias dk="docker"
 alias dkc="docker compose"
+alias dkcl="docker compose --profile=local"
 
 alias dkrt="dk run -it --rm"
 
