@@ -80,6 +80,7 @@ local pkgs =  {
   { 'eraserhd/parinfer-rust', ft = utils.lisp_ft, build = 'cargo build --release' },
   { 'luochen1990/rainbow', ft = {"clojure", 'carp'}, config = cfg("rainbow") },
   { 'axkirillov/hbac.nvim', config = cfg("hbac") },
+  { 'direnv/direnv.vim', ft = "direnv", config = cfg("direnv") },
 
   -- LSP
   { 'neovim/nvim-lspconfig',

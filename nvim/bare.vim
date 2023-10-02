@@ -34,7 +34,6 @@ set t_Co=256
 set tabstop=2                                                " actual tabs occupy 8 characters
 set termguicolors
 set timeoutlen=500
-set undodir=$HOME/.config/nvim/undo                          " where to save undo histories
 set undofile                                                 " save undo's after file closes
 set undolevels=1000                                          " how many undos
 set undoreload=10000                                         " number of lines to save for undo

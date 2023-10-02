@@ -7,10 +7,22 @@ function M.setup()
     sh = {'shellcheck'}
   }
 
+  -- Allows shellcheck to follow source
+  table.insert(
+    require('lint').linters.shellcheck.args,
+    "-x"
+  )
+
   if utils.IS_WORK_MACHINE then
     M.arc_lint()
     M.errcheck()
-    linters.go = {"arc_lint", "errcheck"}
+    -- M.infinite()
+
+    linters.go = {
+      -- "arc_lint",
+      "errcheck",
+      -- "infinite",
+    }
   end
 
   require('lint').linters_by_ft = linters
@@ -25,6 +37,7 @@ end
 function M.arc_lint()
   local severities = {
     info = vim.lsp.protocol.DiagnosticSeverity.Info,
+    advice = vim.lsp.protocol.DiagnosticSeverity.Info,
     hint = vim.lsp.protocol.DiagnosticSeverity.Hint,
     error = vim.lsp.protocol.DiagnosticSeverity.Error,
     warning = vim.lsp.protocol.DiagnosticSeverity.Warning,
@@ -64,7 +77,7 @@ function M.arc_lint()
                   code = item.code,
                 },
               },
-              severity = assert(severities[item.severity], 'missing mapping for severity ' .. item.severity),
+              severity = severities[item.severity],
               message = "[" .. item.name .. "] " .. item.description,
             })
           end
@@ -111,6 +124,19 @@ function M.errcheck()
 
       return diagnostics
     end
+  }
+end
+
+-- For testing purposes
+function M.infinite()
+  require('lint').linters.infinite = {
+    cmd = 'bash',
+    stdin = false,
+    append_fname = false,
+    args = {"-c", "while true; do true; done"},
+    stream = "stdout",
+    ignore_exitcode = true,
+    parser = function(output, bufNo) return {} end
   }
 end
 

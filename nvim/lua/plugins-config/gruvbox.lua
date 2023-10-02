@@ -1,7 +1,10 @@
 local M = {}
 
+local contrast = "hard"
+
 function M.setup()
-  local palette = require("gruvbox.palette").colors
+  local palette = require("gruvbox").palette
+
   require("gruvbox").setup({
     contrast = "hard",
     overrides = {

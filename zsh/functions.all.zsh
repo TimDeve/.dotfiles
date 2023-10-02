@@ -98,6 +98,10 @@ grebai() {
   git rebase -i $(git log --pretty=oneline --color=always | fzf --ansi | cut -d ' ' -f1)
 }
 
+gtagi() {
+  git checkout $(git tag | fzf)
+}
+
 gswp() {
   gswi "$(git branch --sort=-committerdate | fzf -1 -q "$*" | sed -Ee 's/^(\*|\s)\s//')"
 }
@@ -383,5 +387,14 @@ kls-deployment-pods() {
 
   kubectl get pods -l pod-template-hash=$podHashLabel --show-labels \
     | tail -n +2 | awk '{print $1}'
+}
+
+k9() {
+  if [[ "${1-}" =~ "^-.*$" ]] || \
+     [[ "${1-}" =~ "completion|help|info|version" ]]; then
+    env k9s $*
+  else
+    env k9s -c $*
+  fi
 }
 

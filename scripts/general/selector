@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+cursor=0
+
+declare -a lines
+while IFS=$'\n' read -r l; do
+  lines+=("$l")
+done < /dev/stdin
+
+saved_tty_state=$(stty -g --file /dev/tty)
+trap 'stty --file /dev/tty $saved_tty_state' EXIT
+stty --file /dev/tty raw
+
+cursor_up() {
+  new_cursor=$((cursor - 1))
+  if [[ "$new_cursor" -lt 0 ]]; then
+    return 0
+  fi
+
+  cursor="$new_cursor"
+}
+
+cursor_down() {
+  new_cursor=$((cursor + 1))
+  if [[ "$new_cursor" -ge "${#lines[@]}" ]]; then
+    return 0
+  fi
+
+  cursor="$new_cursor"
+}
+
+print() {
+  local output=""
+  for index in "${!lines[@]}"; do
+    selector="   "
+    if [[ "$index" == "$cursor" ]]; then
+      selector="-> "
+    fi
+    output="${output}${selector}${lines[$index]}\n\r"
+  done
+  echo -en "$output" >&2
+
+  printf "\033[%sA" "${#lines[@]}" >&2
+}
+
+printf "\033[s" >&2
+print
+
+while true; do
+  read -rsn1 key < /dev/tty
+
+  case "$key" in
+
+    "k")
+      cursor_up
+      ;;
+
+    "j")
+      cursor_down
+      ;;
+
+    "")
+      printf "\033[9999D"
+      # printf "\033[1A"
+      printf "\033[2K"
+
+      # Print selected line
+      echo "${lines[$cursor]}"
+
+      exit 0
+      ;;
+
+    *)
+      # Do nothing
+      ;;
+  esac
+
+  print
+done

@@ -24,6 +24,7 @@ alias sudo='nocorrect sudo '
 # Git Stuff
 #
 
+alias g="git"
 alias gcom="git commit --verbose"
 alias gadd="git add"
 alias gaddcom="git add -u && git commit --verbose"
@@ -48,6 +49,7 @@ alias greba="git rebase"
 alias grebac="git rebase --continue"
 alias gaddupstream="git remote add upstream"
 alias glog="git log --pretty=format:'%C(yellow)%h %Cred%ad %Cblue%an %Creset%s' --date=iso"
+alias gtag="git tag"
 
 alias ghpush="gh repo create && gpushf"
 alias ghclone="gh repo clone \$(gh repo list --limit 9999 | awk '{print \$1}' | fzf)"
@@ -237,3 +239,6 @@ alias c2j="mlr --c2j cat"
 alias c2l="mlr --c2l cat"
 alias l2c="mlr --l2c cat"
 alias j2c="mlr --j2c cat"
+
+alias tmcopy="tmux load-buffer -w -"
+

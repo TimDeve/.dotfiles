@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-  local palette = require("gruvbox.palette").colors
+  local palette = require("gruvbox").palette
   local groups = {
     TelescopePromptNormal  = { bg = palette.dark0_soft },
     TelescopeResultsNormal = { bg = palette.dark0 },
