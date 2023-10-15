@@ -18,10 +18,15 @@ set -g automatic-rename on
 # window mode
 setw -g mode-style bg=colour6,fg=colour0
 
+set-window-option -g window-status-separator ''
+
 # colors
-setw -g window-status-format "#[fg=colour3] •#[fg=colour248] #W "
-setw -g window-status-current-format "#($DOTFILES/tmux/zoomIndicatorDots.sh) •#[fg=colour7] #W "
+setw -g window-status-format "#[fg=colour246]#[bg=colour236]    #W    "
+setw -g window-status-current-format "#{?#{==:#F,*Z},#[fg=colour0]#[bg=colour1],#[fg=colour249]#[bg=colour239]}    #W    "
 set -g status-position bottom
 set -g status-justify centre
-set -g status-left "  #[fg=colour3]• #[fg=colour2]• #[fg=colour4]•"
-set -g status-right " #[fg=colour4] •#[fg=colour7] #S  "
+set -g status-left-length 30
+set -g status-right-length 30
+set -g status-left "#[fg=colour242] ──── #{?#{SSH_TTY},#(hostname -s),Tmux}  "
+set -g status-right "  #[fg=colour242]#S ──── "
+

@@ -4,7 +4,7 @@ local M = {}
 
 function M.setup()
   local treesitter_langs = {
-    "bash", "c", "cpp", "go", "hcl", "javascript", "json", "lua",
+    "bash", "c", "cpp", "go", "hcl", "javascript", "json", "jq", "lua",
     "python","norg", "norg_meta", "regex", "rust", "scheme", "sql",  "toml",
     "tsx", "typescript", "vim", "yaml",
   }

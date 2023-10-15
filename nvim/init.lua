@@ -62,6 +62,7 @@ local match_filetype = {
   {"*.todo",  "todo"},
   {"*.carp",  "carp"},
   {"*.norg",  "norg"},
+  {"*.tmux",  "tmux"},
   {{".envrc*", ".direnvrc*", "direnvrc*"}, "direnv"},
 
   -- Go stuff
