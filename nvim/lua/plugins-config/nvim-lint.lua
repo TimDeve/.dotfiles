@@ -4,7 +4,8 @@ local M = {}
 
 function M.setup()
   local linters = {
-    sh = {'shellcheck'}
+    sh = {'shellcheck'},
+    go = {},
   }
 
   -- Allows shellcheck to follow source
@@ -13,25 +14,27 @@ function M.setup()
     "-x"
   )
 
-  if utils.IS_WORK_MACHINE then
-    M.arc_lint()
+  if utils.has_exe("errcheck") then
     M.errcheck()
-    -- M.infinite()
-
-    linters.go = {
-      -- "arc_lint",
-      "errcheck",
-      -- "infinite",
-    }
+    table.insert(linters.go, "errcheck")
   end
+
+  -- if utils.has_exe("arc") then
+  --   M.arc_lint()
+  --   table.insert(linters.go, "arc_lint")
+  -- end
+
+  -- For testing bug in nvim-lint
+  -- M.infinite()
+  -- table.insert(linters.go, "infinite")
 
   require('lint').linters_by_ft = linters
 
-  utils.autocmd("Filetype", "sh", function()
-    utils.autocmd({"BufEnter", "TextChanged", "InsertLeave"}, "*", function() require("lint").try_lint() end)
+  utils.augroup("shellcheck-lint-filetype", "Filetype", "sh", function()
+    utils.augroup("shellcheck-lint-on-change", {"TextChanged", "InsertLeave"}, "*", function() require("lint").try_lint() end)
   end)
 
-  utils.autocmd({"BufEnter", "BufWritePost"}, "*", function() require("lint").try_lint() end)
+  utils.augroup("lint-on-write", {"BufEnter", "BufWritePost"}, "*", function() require("lint").try_lint() end)
 end
 
 function M.arc_lint()
@@ -133,7 +136,7 @@ function M.infinite()
     cmd = 'bash',
     stdin = false,
     append_fname = false,
-    args = {"-c", "while true; do true; done"},
+    args = {"-c", "while true; do sleep 1; done"},
     stream = "stdout",
     ignore_exitcode = true,
     parser = function(output, bufNo) return {} end

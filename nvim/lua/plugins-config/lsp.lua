@@ -1,5 +1,5 @@
 local utils = require("utils")
-local autocmd = utils.autocmd
+local augroup = utils.augroup
 local highlight = utils.highlight
 
 local M = {}
@@ -48,12 +48,12 @@ local function on_lsp_attach(client, bufno)
         utils.trigger_code_action("source.organizeImports")
     end
     keybinds["<leader>"].l.f = { format_and_organize, "Format and Organize" }
-    autocmd("BufWritePre", {"*.go"}, format_and_organize)
+    augroup("lsp-go-fmt", "BufWritePre", {"*.go"}, format_and_organize)
   end
 
   require("which-key").register(keybinds, { mode = {"n", "v"}, buffer = bufno})
 
-  autocmd("BufWritePre", {"*.rs", "BUILD"}, function() vim.lsp.buf.format() end)
+  augroup("lsp-rust-fmt", "BufWritePre", {"*.rs", "BUILD"}, function() vim.lsp.buf.format() end)
 
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
     vim.lsp.diagnostic.on_publish_diagnostics,
@@ -77,12 +77,12 @@ local function on_lsp_attach(client, bufno)
   vim.lsp.handlers["workspace/symbol"]            = fname_width(require("telescope.builtin").lsp_dynamic_workspace_symbols)
 
   if capabilities.documentHighlightProvider ~= nil then
-    autocmd({"CursorHold", "CursorHoldI"}, "<buffer>", function() vim.lsp.buf.document_highlight() end)
-    autocmd({"CursorMoved", "CursorMovedI"}, "<buffer>", function() vim.lsp.buf.clear_references() end)
+    augroup("lsp-highlight", {"CursorHold", "CursorHoldI"}, "<buffer>", function() vim.lsp.buf.document_highlight() end)
+    augroup("lsp-references", {"CursorMoved", "CursorMovedI"}, "<buffer>", function() vim.lsp.buf.clear_references() end)
   end
 
   if capabilities.codeLensProvider ~= nil then
-    autocmd({"BufEnter","CursorHold","InsertLeave"}, "<buffer>", function() vim.lsp.codelens.refresh() end)
+    augroup("lsp-codelens", {"BufEnter","CursorHold","InsertLeave"}, "<buffer>", function() vim.lsp.codelens.refresh() end)
   end
 end
 

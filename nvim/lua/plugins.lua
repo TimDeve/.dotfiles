@@ -29,7 +29,7 @@ local pkgs =  {
   },
 
   -- Color themes
-  { 'ellisonleao/gruvbox.nvim', priority = 999, config = cfg("gruvbox"), lazy = false },
+  { 'ellisonleao/gruvbox.nvim', version = "2.0.0", priority = 999, config = cfg("gruvbox"), lazy = false },
   { 'Lokaltog/vim-monotone' },
 
   -- Completion
@@ -91,7 +91,8 @@ local pkgs =  {
     }
   },
   { 'simrat39/rust-tools.nvim', ft = "rust", config = require("plugins-config.lsp").setup_rust_tools },
-  { 'mfussenegger/nvim-lint', ft = {"go", "sh"}, config = cfg("nvim-lint") },
+  -- { 'mfussenegger/nvim-lint', ft = {"go", "sh"}, config = cfg("nvim-lint") },
+  { 'TimDeve/nvim-lint', branch = "sigterm-old-lints", ft = {"go", "sh"}, config = cfg("nvim-lint") },
 
   -- Debugging
   { "rcarriga/nvim-dap-ui",

@@ -41,7 +41,18 @@ function M.merge(t1, t2)
 end
 
 function M.autocmd(events, pattern, command)
-  local opts = { pattern = pattern }
+  M.augroup(nil, events, pattern, command)
+end
+
+function M.augroup(group, events, pattern, command)
+  if group ~= nil then
+    vim.api.nvim_create_augroup(group, { clear = true })
+  end
+
+  local opts = {
+    pattern = pattern,
+    group = group,
+  }
 
   if type(command) == "function" then
     opts.callback = command
@@ -89,7 +100,7 @@ end
 
 function M.match_filetype(matches)
   for _, match in ipairs(matches) do
-    M.autocmd({"BufRead", "BufNewFile"}, match[1], "setlocal filetype=" .. match[2])
+    M.augroup("filetype-" .. match[2], {"BufRead", "BufNewFile"}, match[1], "setlocal filetype=" .. match[2])
   end
 end
 

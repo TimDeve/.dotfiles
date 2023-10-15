@@ -3,7 +3,7 @@ local custom_runtimepath = vim.fn.expand("$DOTFILES/nvim")
 vim.opt.rtp:prepend(custom_runtimepath)
 
 local utils = require("utils")
-local autocmd = utils.autocmd
+local augroup = utils.augroup
 local highlight = utils.highlight
 
 vim.opt.autoindent = true
@@ -53,7 +53,7 @@ highlight("StatusLine", { ctermfg = 234,     ctermbg = 238 })
 highlight("WildMenu",   { ctermfg = "white", ctermbg = 27 })
 
 -- Turns on spellcheck for git commits and markdown
-autocmd("FileType", {"gitcommit", "markdown"}, "setlocal spell")
+augroup("spellcheck", "FileType", {"gitcommit", "markdown", "norg"}, "setlocal spell")
 
 local match_filetype = {
   {"*.zshrc", "zsh"},
@@ -74,10 +74,10 @@ if utils.IS_WORK_MACHINE then table.insert(match_filetype, {{"BUILD", "*.build_d
 utils.match_filetype(match_filetype)
 
 -- Use tabs with go, gitconfig
-autocmd("FileType", {"go", "gitconfig"}, "set noexpandtab")
+augroup("noexpandtab", "FileType", {"go", "gitconfig"}, "set noexpandtab")
 
 -- Automatically rebalance windows on vim resize
-autocmd("VimResized", "*", "wincmd =")
+augroup("balance-windows", "VimResized", "*", "wincmd =")
 
 -- Fallback colorscheme
 vim.cmd "silent colorscheme pablo"
@@ -98,7 +98,7 @@ end
 
 -- Set work textwidth
 if utils.IS_WORK_MACHINE then
-  autocmd({"BufRead", "BufNewFile"}, {"*.go"}, "set textwidth=100")
+  augroup("work-textwidth", {"BufRead", "BufNewFile"}, {"*.go"}, "set textwidth=100")
 end
 
 -- Use cross platform clipboard if on WSL
@@ -139,7 +139,7 @@ elseif (vim.regex('Linux'):match_str(uname) and os.getenv("DISPLAY") ~= "")
 end
 
 -- For GitSigns and Debug
-vim.cmd [[ autocmd BufRead,BufNewFile * setlocal signcolumn=yes:1 ]]
+augroup("signcolumn-default", {"BufRead","BufNewFile"}, "*", "setlocal signcolumn=yes:1")
 
 -- Create empty tabline for bufferline to fill when it starts
 -- avoids jumping on load
