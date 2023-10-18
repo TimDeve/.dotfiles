@@ -24,10 +24,6 @@ function M.setup()
   --   table.insert(linters.go, "arc_lint")
   -- end
 
-  -- For testing bug in nvim-lint
-  -- M.infinite()
-  -- table.insert(linters.go, "infinite")
-
   require('lint').linters_by_ft = linters
 
   utils.augroup("shellcheck-lint-filetype", "Filetype", "sh", function()
@@ -127,19 +123,6 @@ function M.errcheck()
 
       return diagnostics
     end
-  }
-end
-
--- For testing purposes
-function M.infinite()
-  require('lint').linters.infinite = {
-    cmd = 'bash',
-    stdin = false,
-    append_fname = false,
-    args = {"-c", "while true; do sleep 1; done"},
-    stream = "stdout",
-    ignore_exitcode = true,
-    parser = function(output, bufNo) return {} end
   }
 end
 

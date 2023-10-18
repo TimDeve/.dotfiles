@@ -91,8 +91,7 @@ local pkgs =  {
     }
   },
   { 'simrat39/rust-tools.nvim', ft = "rust", config = require("plugins-config.lsp").setup_rust_tools },
-  -- { 'mfussenegger/nvim-lint', ft = {"go", "sh"}, config = cfg("nvim-lint") },
-  { 'TimDeve/nvim-lint', branch = "sigterm-old-lints", ft = {"go", "sh"}, config = cfg("nvim-lint") },
+  { 'mfussenegger/nvim-lint', ft = {"go", "sh"}, config = cfg("nvim-lint") },
 
   -- Debugging
   { "rcarriga/nvim-dap-ui",
