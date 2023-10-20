@@ -1,4 +1,6 @@
 local utils = require("utils")
+local augroup = require("utils.vim").augroup
+local autocmd = require("utils.vim").autocmd
 
 local M = {}
 
@@ -19,18 +21,18 @@ function M.setup()
     table.insert(linters.go, "errcheck")
   end
 
-  -- if utils.has_exe("arc") then
-  --   M.arc_lint()
-  --   table.insert(linters.go, "arc_lint")
-  -- end
+  if utils.has_exe("arc") then
+    M.arc_lint()
+    table.insert(linters.go, "arc_lint")
+  end
 
   require('lint').linters_by_ft = linters
 
-  utils.augroup("shellcheck-lint-filetype", "Filetype", "sh", function()
-    utils.augroup("shellcheck-lint-on-change", {"TextChanged", "InsertLeave"}, "*", function() require("lint").try_lint() end)
-  end)
+ augroup("shellcheck-lint-filetype", "Filetype", "sh", function()
+   augroup("shellcheck-lint-on-change", {"TextChanged", "InsertLeave"}, "<buffer>", function() require("lint").try_lint() end)
+ end)
 
-  utils.augroup("lint-on-write", {"BufEnter", "BufWritePost"}, "*", function() require("lint").try_lint() end)
+ autocmd({"BufEnter", "BufWritePost"}, "*", function() require("lint").try_lint() end)
 end
 
 function M.arc_lint()
@@ -50,35 +52,38 @@ function M.arc_lint()
     stream = "stdout",
     ignore_exitcode = true,
     parser = function(output, bufNo)
-      if output == "" then return {} end
-
       -- Output is jsonl so we split on newlines
       local lines = utils.lines(output)
       if #lines < 1 then return {} end
 
-      -- We're just hoping that the first diag is the file we ask for.
-      -- Why arc lint returns files I didn't ask for is a mystery...
-      local decoded = vim.json.decode(lines[1])
+      local buf_filepath = vim.api.nvim_buf_get_name(bufNo)
       local diagnostics = {}
 
-      for filename, diag_list in pairs(decoded or {}) do
-        for _, item in ipairs(diag_list or {}) do
-          if item.severity ~= "autofix" then
-            table.insert(diagnostics, {
-              lnum = item.line - 1,
-              col = item.char - 1,
-              end_lnum = item.line - 1,
-              end_col = item.char - 1,
-              code = item.code,
-              source = "arc-lint",
-              user_data = {
-                lsp = {
+      for _, line in ipairs(lines) do
+        local decoded = vim.json.decode(line)
+        for filepath, diag_list in pairs(decoded or {}) do
+          if string.find(buf_filepath, filepath) then
+            for _, item in ipairs(diag_list or {}) do
+              if item.severity ~= "autofix" then
+                local char = utils.truthy(item.char) and item.char or 0
+                table.insert(diagnostics, {
+                  lnum = item.line - 1,
+                  col = char - 1,
+                  end_lnum = item.line - 1,
+                  end_col = char - 1,
                   code = item.code,
-                },
-              },
-              severity = severities[item.severity],
-              message = "[" .. item.name .. "] " .. item.description,
-            })
+                  source = "arc-lint",
+                  user_data = {
+                    lsp = {
+                      code = item.code,
+                    },
+                  },
+                  severity = severities[item.severity],
+                  message = "[" .. item.name .. "] " .. item.description,
+                })
+              end
+            end
+            return diagnostics
           end
         end
       end
@@ -104,11 +109,12 @@ function M.errcheck()
 
       if output == "" then return {} end
 
+      local buf_filepath = vim.api.nvim_buf_get_name(bufNo)
       local lines = utils.lines(output)
 
       for _, line in ipairs(lines or {}) do
-        local i, _, filename, row, end_col, indent, tail = string.find(line, "(.+):(%d+):(%d+):(%s*)(.*)")
-        if i ~= nil then
+        local i, _, filepath, row, end_col, indent, tail = string.find(line, "(.+):(%d+):(%d+):(%s*)(.*)")
+        if i ~= nil and filepath == buf_filepath then
           table.insert(diagnostics, {
             lnum     = row - 1,
             col      = 0,

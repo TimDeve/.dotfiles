@@ -1,6 +1,7 @@
 local utils = require("utils")
-local augroup = utils.augroup
-local highlight = utils.highlight
+local utils_vim = require("utils.vim")
+local augroup = utils_vim.augroup
+local highlight = utils_vim.highlight
 
 local M = {}
 
@@ -26,7 +27,6 @@ local function on_lsp_attach(client, bufno)
        c = { vim.lsp.codelens.run,         "Code lens" },
        d = { vim.lsp.buf.definition,       "Go to definition" },
        D = { M.peek_definition,            "Peek definition" },
-       f = { vim.lsp.buf.format,           "Format" },
        h = { vim.lsp.buf.hover,            "Hover" },
        i = { vim.lsp.buf.implementation,   "Go to implementation" },
        r = { vim.lsp.buf.rename,           "Rename" },

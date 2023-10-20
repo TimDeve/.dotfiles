@@ -3,8 +3,8 @@ local custom_runtimepath = vim.fn.expand("$DOTFILES/nvim")
 vim.opt.rtp:prepend(custom_runtimepath)
 
 local utils = require("utils")
-local augroup = utils.augroup
-local highlight = utils.highlight
+local augroup = require("utils.vim").augroup
+local highlight = require("utils.vim").highlight
 
 vim.opt.autoindent = true
 vim.opt.autoread  = true

@@ -1,3 +1,5 @@
+local utils_vim = require("utils.vim")
+
 local M = {}
 
 M.IS_WORK_MACHINE = os.getenv("IS_WORK_MACHINE") ~= nil
@@ -40,33 +42,6 @@ function M.merge(t1, t2)
   return new_table
 end
 
-function M.autocmd(events, pattern, command)
-  M.augroup(nil, events, pattern, command)
-end
-
-function M.augroup(group, events, pattern, command)
-  if group ~= nil then
-    vim.api.nvim_create_augroup(group, { clear = true })
-  end
-
-  local opts = {
-    pattern = pattern,
-    group = group,
-  }
-
-  if type(command) == "function" then
-    opts.callback = command
-  else
-    opts.command = command
-  end
-
-  vim.api.nvim_create_autocmd(events, opts)
-end
-
-function M.highlight(name, val)
-  vim.api.nvim_set_hl(0, name, val)
-end
-
 function M.flat_pretty_print(thing)
   local flat = string.gsub(vim.inspect(thing), "\n", "")
   print(flat)
@@ -100,7 +75,7 @@ end
 
 function M.match_filetype(matches)
   for _, match in ipairs(matches) do
-    M.augroup("filetype-" .. match[2], {"BufRead", "BufNewFile"}, match[1], "setlocal filetype=" .. match[2])
+    utils_vim.augroup("filetype-" .. match[2], {"BufRead", "BufNewFile"}, match[1], "setlocal filetype=" .. match[2])
   end
 end
 

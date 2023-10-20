@@ -1,4 +1,6 @@
 local utils = require("utils")
+local autocmd = require("utils.vim").autocmd
+local conform = require('plugins-config.conform')
 
 local function set_testing_strategy(strategy)
   return function() vim.g["test#strategy"] = strategy end
@@ -125,6 +127,7 @@ function setup()
       W  = { "<Cmd>wa<CR>",                                 "Save all" },
       cc = { "<Plug>NERDCommenterToggle",                   "Toggle comment" },
       ll = { "<Cmd>TroubleToggle document_diagnostics<CR>", "Open Trouble" },
+      lf = { conform.format,                                "Format" },
       e  = { vim.diagnostic.open_float,                     "Show diagnostic for this line" },
       j  = { "<Cmd>BufferLineCycleNext<CR>",                "Next buffer" },
       k  = { "<Cmd>BufferLineCyclePrev<CR>",                "Previous buffer" },
@@ -146,7 +149,7 @@ function setup()
     { mode = "v" }
   )
 
-  utils.autocmd({"BufRead", "BufNewFile"}, {"*.go"}, require("plugins-config.vim-go").bindings)
+  autocmd({"BufRead", "BufNewFile"}, {"*.go"}, require("plugins-config.vim-go").bindings)
 end
 
 return { setup = setup }
