@@ -65,6 +65,11 @@ function M.setup()
         folder_empty = "▽",
         default = " ",
       },
+      created        = { enabled = false },
+      file_size      = { enabled = false },
+      last_modified  = { enabled = false },
+      symlink_target = { enabled = false },
+      type           = { enabled = false },
       git_status = {
         symbols = {
           added     = "✚",

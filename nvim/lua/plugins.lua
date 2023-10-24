@@ -92,7 +92,7 @@ local pkgs =  {
   },
   { 'simrat39/rust-tools.nvim', ft = "rust", config = require("plugins-config.lsp").setup_rust_tools },
   { 'mfussenegger/nvim-lint', ft = {"go", "sh"}, config = cfg("nvim-lint") },
-  { 'stevearc/conform.nvim', event = "BufWritePre", config = cfg("conform") },
+  { 'stevearc/conform.nvim', config = cfg("conform") },
 
   -- Debugging
   { "rcarriga/nvim-dap-ui",

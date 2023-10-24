@@ -28,6 +28,10 @@ function M.command(cmd_name, cmd, attrs)
   vim.api.nvim_create_user_command(cmd_name, cmd, attrs or {})
 end
 
+function M.buf_command(buffer, cmd_name, cmd, attrs)
+  vim.api.nvim_buf_create_user_command(buffer, cmd_name, cmd, attrs or {})
+end
+
 function M.highlight(name, val)
   vim.api.nvim_set_hl(0, name, val)
 end

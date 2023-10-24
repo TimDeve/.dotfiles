@@ -64,6 +64,14 @@ end
 
 function M.cmd_cb(c) return function() vim.cmd(c) end end
 
+function M.capture_shell(command)
+  local cmd_out = vim.api.nvim_exec(":! " .. command, true)
+  local lines = M.lines(cmd_out)
+  table.remove(lines, 1)
+
+  return table.concat(lines, "\n")
+end
+
 function M.project_files(opts)
   vim.fn.system('git rev-parse --is-inside-work-tree')
   if vim.v.shell_error == 0 then

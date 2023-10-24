@@ -4,6 +4,8 @@ alias vs="v +SessionLoad"
 alias vi='nvim -u $DOTFILES/nvim/bare.vim'
 alias suv='sudo "$(which nvim)" -u "$HOME/.dotfiles/nvim/bare.vim"'
 
+alias erropts="setopt LOCAL_OPTIONS ERR_RETURN NO_UNSET PIPE_FAIL"
+
 # Quick Exit
 alias ee='exit'
 
