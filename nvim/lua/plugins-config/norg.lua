@@ -1,3 +1,4 @@
+local utils_vim = require("utils.vim")
 local M = {}
 
 local function norg(event)
@@ -6,6 +7,15 @@ end
 
 local function all(event)
   return "<Cmd>Neorg keybind all " .. event .. " <CR>"
+end
+
+function M.export_to_clipboard(opts)
+  vim.cmd [[ Neorg export to-file /tmp/neorg.md ]]
+  if #opts.fargs > 0 and opts.fargs[1] == "rich" then
+    vim.cmd [[ ! < /tmp/neorg.md pandoc -s -t html | xclip -t text/html -se c ]]
+  else
+    vim.cmd [[ ! tmux load-buffer -w /tmp/neorg.md ]]
+  end
 end
 
 function M.setup()
@@ -43,7 +53,12 @@ function M.setup()
       },
       ['core.keybinds'] = {
         config = {
-          keybind_preset = 'none',
+          default_keybinds = false,
+        },
+      },
+      ['core.esupports.indent'] = {
+        config = {
+          -- dedent_excess = false
         },
       },
     },
@@ -56,48 +71,35 @@ end
 function M.keybinds()
   local wk = require("which-key")
   local bufno = vim.api.nvim_get_current_buf()
-  wk.register(
+  wk.add({
+    buffer = bufno,
+    { "<<", "<Plug>(neorg.promo.demote.nested)", desc = "Unnest" },
+    { ">>", "<Plug>(neorg.promo.promote.nested)", desc = "Nest" },
+    { "<,", "<Plug>(neorg.promo.demote)", desc = "Unnest" },
+    { ">,", "<Plug>(neorg.promo.promote)", desc = "Nest" },
+    { "<leader><space>", "<Plug>(neorg.qol.todo-items.todo.task-cycle)", desc = "Task cycle" },
+    { "gd", "<Plug>(neorg.esupports.hop.hop-link)", desc = "Hop to link" },
+
+    { "<leader>n", group = "Neorg" },
+    { "<leader>nn", "<Plug>(neorg.dirman.new.note)", desc = "New note" },
+    { "<leader>nli", "<Plug>(neorg.pivot.invert-list-type)", desc = "List type invert" },
+    { "<leader>nlt", "<Plug>(neorg.pivot.toggle-list-type)", desc = "List type toggle" },
+    { "<leader>nt", "<Cmd>Neorg toc split<CR>", desc = "TOC split" },
+    { "<leader>nid", "<Plug>(neorg.tempus.insert-date)", desc = "Insert date" },
+
+    { "<leader>nc", "<Plug>(neorg.qol.todo-items.todo.task-cancelled)", desc = "Task cancelled" },
+    { "<leader>nd", "<Plug>(neorg.qol.todo-items.todo.task-done)", desc = "Task done" },
+    { "<leader>nh", "<Plug>(neorg.qol.todo-items.todo.task-on-hold)", desc = "Task on-hold" },
+    { "<leader>ni", "<Plug>(neorg.qol.todo-items.todo.task-important)", desc = "Task important" },
+    { "<leader>np", "<Plug>(neorg.qol.todo-items.todo.task-pending)", desc = "Task pending" },
+    { "<leader>nr", "<Plug>(neorg.qol.todo-items.todo.task-recurring)", desc = "Task recurring" },
+    { "<leader>nu", "<Plug>(neorg.qol.todo-items.todo.task-undone)", desc = "Task undone" },
     {
-      ["<leader>"] = {
-        ["<space>"] = { norg("core.qol.todo_items.todo.task_cycle"), "Task cycle" },
-        n = {
-          name = "Neorg",
-
-          lt = { norg("core.pivot.toggle-list-type"), "List type toggle" },
-          li = { norg("core.pivot.invert-list-type"), "List type invert" },
-          --t  = { norg("core.tempus.insert-date"),     "Date insert" }, -- Needs core.tempus
-
-          n = { norg("core.dirman.new.note"), "New note" },
-          t = { "<Cmd>Neorg toc split<CR>",   "TOC split" },
-
-          -- Task
-          u = { norg("core.qol.todo_items.todo.task_undone"),      "Task undone" },
-          p = { norg("core.qol.todo_items.todo.task_pending"),     "Task pending" },
-          d = { norg("core.qol.todo_items.todo.task_done"),        "Task done" },
-          h = { norg("core.qol.todo_items.todo.task_on_hold"),     "Task on-hold" },
-          c = { norg("core.qol.todo_items.todo.task_cancelled"),   "Task cancelled" },
-          r = { norg("core.qol.todo_items.todo.task_recurring"),   "Task recurring" },
-          i = { norg("core.qol.todo_items.todo.task_important"),   "Task important" },
-          --a = { norg("core.qol.todo_items.todo.task_ambiguous"), "Task ambiguous" }, -- Doesn't exists?
-       },
-      },
-
-      [">>"] = { norg("core.promo.promote"), "Nest" },
-      ["<<"] = { norg("core.promo.demote"),  "Unnest" },
-
-      --["<CR>"] = { norg("core.esupports.hop.hop-link"), "Hop to link" },
-      gd       = { norg("core.esupports.hop.hop-link"), "Hop to link" },
+      mode = { "v" },
+      { "<", "<Plug>(neorg.promo.demote.range)", desc = "Unnest" },
+      { ">", "<Plug>(neorg.promo.promote.range)", desc = "Nest" },
     },
-    { mode = { "n" }, buffer = bufno }
-  )
-
-  wk.register(
-    {
-      --[">>"] = { all("core.promo.promote_range"), "Nest" },   -- Doesn't work?
-      --["<<"] = { all("core.promo.demote_range"),  "Unnest" }, -- Doesn't work?
-    },
-    { mode = { "v" }, buffer = bufno }
-  )
+  })
 end
 
 return M

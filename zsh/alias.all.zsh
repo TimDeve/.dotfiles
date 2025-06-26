@@ -164,6 +164,7 @@ alias nn="not"
 alias ns="not -s"
 
 alias epoch="date +'%s'"
+alias epoch-nano="date +'%s%N'"
 
 # Select which package you want to update on npm
 alias ncus="ncu | fzf -m | awk '{ print $1 }' | xargs -0 -n1 ncu -u"
@@ -181,7 +182,7 @@ alias rsy="rsync -Paz"
 
 alias bbrepl="rlwrap bb"
 
-alias ls="ls --color=auto --group-directories-first --color=auto"
+alias ls="ls --group-directories-first --color=auto"
 if hash exa 1>/dev/null 2>/dev/null; then
   exa_grey="38;5;241"
   exa_filesize_numbers="sn=$exa_grey"
@@ -191,13 +192,13 @@ if hash exa 1>/dev/null 2>/dev/null; then
   export EXA_COLORS="${exa_filesize_numbers}:${exa_filesize_unit}:${exa_my_user}:${exa_date}:${exa_exec_file}"
 
   alias l="exa -1a --group-directories-first"
-  alias ll="exa -l --git --group-directories-first"
+  alias ll='exa -l ${EXA_NOGIT---git} --group-directories-first'
   alias la="ll -a"
-  alias lal="exa -l --git -snew -a "
-  alias lll="exa -l --git -snew"
+  alias lal='exa -l ${EXA_NOGIT---git} -snew -a'
+  alias lll='exa -l ${EXA_NOGIT---git} -snew'
 else
-  alias la="ll -A"
   alias ll="ls -lh"
+  alias la="ll -A"
   alias lal="la -tr"
   alias lll="ll -tr"
 fi
@@ -208,10 +209,10 @@ alias each-line="xargs -n 1 -d $'\n'"
 alias caddy-serve="caddy file-server --listen :2015 --browse"
 
 # k8s
-alias k="kubectl"
-alias kuse='k config use-context $(k config get-contexts -o name | fzf)'
+alias k='KUBECTL_CONTEXT="${KUBECTL_CONTEXT-}" KUBECTL_NAMESPACE="${KUBECTL_NAMESPACE-}" kubectl "${KUBECTL_CONTEXT/[[:alnum:]-]*/--context=${KUBECTL_CONTEXT}}" "${KUBECTL_NAMESPACE/[[:alnum:]-]*/--namespace=${KUBECTL_NAMESPACE}}"'
 alias kl="k logs"
 alias klf="kl -f"
+alias kg="k get"
 alias h="helm"
 
 # Signal
@@ -244,3 +245,12 @@ alias j2c="mlr --j2c cat"
 
 alias tmcopy="tmux load-buffer -w -"
 
+alias ntd='ntfy publish $NTFY_DEFAULT'
+alias ntping="ntd 'Ping!'"
+
+alias tcopy="tmux load-buffer -w -"
+
+alias down="cd ~/Downloads"
+
+alias whs="wormhole-rs send"
+alias whr="wormhole-rs receive"

@@ -31,17 +31,21 @@ local function visual_multi_status()
     end
   end
 
-  mode = vim.v.statusline_mode or mode
+  mode = vim.b.statusline_mode or mode
   local patterns = "['" .. table.concat(vm.patterns, "', '") .. "']"
 
   return string.format(
-    "%s%s  %s%s %s%s %s",
+    "%s%s %s %s %s%s %s",
     color, mode, "%#VM_Insert#", vm.ratio, single, "%#TabLine#", patterns
   )
 end
 
 local function mode()
-  return visual_multi_status() or lualine_mode.get_mode()
+  local table_sign = ""
+  if truthy(vim.b.table_mode_active) then
+    table_sign = "☷ "
+  end
+  return string.format("%s%s", table_sign,  visual_multi_status() or lualine_mode.get_mode())
 end
 
 local function is_buffer_pinned()
@@ -49,9 +53,53 @@ local function is_buffer_pinned()
   return require("hbac.state").is_pinned(cur_buf) and " ●" or " ○"
 end
 
-
 local function toggle_pinned()
   require("hbac").toggle_pin()
+end
+
+local function progress8()
+  local eight = os.time() % 8
+
+  if     eight < 1 then return '⡿'
+  elseif eight < 2 then return '⣟'
+  elseif eight < 3 then return '⣯'
+  elseif eight < 4 then return '⣷'
+  elseif eight < 5 then return '⣾'
+  elseif eight < 6 then return '⣽'
+  elseif eight < 7 then return '⣻'
+  else                  return '⢿'
+  end
+end
+
+local function progress6()
+  local sixth = os.time() % 6
+
+  if     sixth < 1 then return '⠟'
+  elseif sixth < 2 then return '⠯'
+  elseif sixth < 3 then return '⠷'
+  elseif sixth < 4 then return '⠾'
+  elseif sixth < 5 then return '⠽'
+  else                  return '⠻'
+  end
+end
+
+local function progress3()
+  local third = os.time() % 3
+
+  if     third < 1 then return ''
+  elseif third < 2 then return ''
+  else                  return ''
+  end
+end
+
+local function ollama()
+    local status = require("ollama").status()
+
+    if status == "IDLE" then
+      return " LLM"
+    elseif status == "WORKING" then
+      return progress3() .. " LLM"
+    end
 end
 
 local config = {
@@ -99,7 +147,14 @@ local config = {
           mac = 'CR',
         },
       },
-      'filetype'
+      'filetype',
+      {
+        ollama,
+        cond = function()
+          return package.loaded["ollama"] and require("ollama").status() ~= nil
+        end,
+        on_click = utils.cmd_cb "OllamaServeStop",
+      }
     },
     lualine_y = {'progress'},
     lualine_z = {'location'},

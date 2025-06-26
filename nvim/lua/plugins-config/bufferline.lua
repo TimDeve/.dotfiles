@@ -9,7 +9,7 @@ function M.setup()
       close_command = function(bufNo)
         local currentBufNo = vim.api.nvim_get_current_buf()
         if currentBufNo == bufNo then
-          require("bufferline").cycle(-1)
+          bufferline.cycle(-1)
         end
         vim.api.nvim_buf_delete(bufNo, { force = true })
         require("bufferline.ui").refresh()
@@ -32,4 +32,3 @@ function M.setup()
 end
 
 return M
-

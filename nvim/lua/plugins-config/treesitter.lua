@@ -5,17 +5,18 @@ local M = {}
 function M.setup()
   local treesitter_langs = {
     "bash", "c", "cpp", "go", "hcl", "javascript", "json", "jq", "lua",
-    "python","norg", "norg_meta", "regex", "rust", "scheme", "sql",  "toml",
-    "tsx", "typescript", "vim", "yaml",
+    "proto", "python", "regex", "rust", "scheme", "sql",  "toml", "tsx",
+    "typescript", "vim", "yaml"
   }
+  local treesitter_enabled = { norg = true, norg_meta = true }
   for _, lang in ipairs(treesitter_langs) do
-    treesitter_langs[lang] = true
+    treesitter_enabled[lang] = true
   end
 
   local treesitter_settings = {
     highlight = {
       enable = true,
-      disable = function(lang) return treesitter_langs[lang] ~= true end,
+      disable = function(lang) return treesitter_enabled[lang] ~= true end,
     },
   }
 
@@ -27,4 +28,3 @@ function M.setup()
 end
 
 return M
-

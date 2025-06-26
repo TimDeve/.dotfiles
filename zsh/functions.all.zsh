@@ -37,6 +37,16 @@ countstr() {
   echo "${#mystring}"
 }
 
+gfechm() { erropts
+  local default_branch; default_branch=$(basename $(git symbolic-ref --short refs/remotes/origin/HEAD))
+  git fetch origin "$default_branch:$default_branch"
+}
+
+grebam() { erropts
+  local default_branch; default_branch=$(basename $(git symbolic-ref --short refs/remotes/origin/HEAD))
+  git rebase "$default_branch"
+}
+
 gdrop() {
   if yorn "Discard all changes?"; then
     git add --all && git stash && git stash drop
@@ -50,7 +60,7 @@ guncom() {
 }
 
 gdelcom() {
-  if yorn "Delete latest commit?"; then
+  if yorn "\x1b[2;37m> $(git log --pretty=format:%s | head -n1)\n\x1b[0mDelete latest commit?"; then
     git reset HEAD~ --hard
   fi
 }
@@ -94,16 +104,34 @@ gcomsincet() {
   git log $1..HEAD --oneline
 }
 
-grebai() {
-  git rebase -i $(git log --pretty=oneline --color=always | fzf --ansi | cut -d ' ' -f1)
+grebai() { erropts
+  local commit="" fmt="%C(3)%h %C(4)%>(12)%ad %C(5)%<(8,trunc)%an %Creset%s"
+  commit=$(git log --pretty=format:"$fmt" --date=relative --color=always \
+    | fzf --ansi \
+    | cut -d ' ' -f1)
+  git rebase -i "$commit"
 }
 
 gtagi() {
   git checkout $(git tag | fzf)
 }
 
-gswp() {
-  gswi "$(git branch --sort=-committerdate | fzf -1 -q "$*" | sed -Ee 's/^(\*|\s)\s//')"
+hometotilde() {
+  sed -E "s|^$HOME|~|g"
+}
+
+gswp() { erropts
+  local is_worktree=0
+  local branch; branch="$(git branch --sort=-committerdate | fzf -1 -q "$*")"
+  [[ "$branch" =~ '^\+.*' ]] || is_worktree=$?
+  branch="$(<<< "$branch" sed -Ee 's/^(\*|\s|\+)\s//')"
+  if (exit $is_worktree); then
+    local wt_path; wt_path="$(git worktree list --porcelain | rg -B 2 "^branch refs/heads/$branch" | sed -En 's/worktree (.*)/\1/p')"
+    yorn "Switch to workspace at '$(<<< "$wt_path" hometotilde)'?"
+    cd "$wt_path"
+  else
+    gswi "$branch"
+  fi
 }
 
 n() {
@@ -144,7 +172,7 @@ countln() {
 yorn() {
   local question="$1" answer extra
 
-  if ! [[ -z "$2" ]]; then
+  if ! [[ -z "${2-}" ]]; then
     extra="\n$2"
   fi
 
@@ -160,11 +188,30 @@ yorn() {
 
 poll() {
   local sleepTime=$1
-
   shift
 
   while true; do
     eval $@
+    sleep $sleepTime
+  done
+}
+
+pollf() { erropts
+  local sleepTime=$1
+  shift
+
+  while true; do
+    eval $@
+    sleep $sleepTime
+  done
+}
+
+pollt() {
+  local sleepTime=$1
+  shift
+
+  while true; do
+    eval $@ && return
     sleep $sleepTime
   done
 }
@@ -200,13 +247,6 @@ carpwsan() {
   npx nodemon -e carp,h -x "carp -x --log-memory --eval-postload '(Debug.sanitize-addresses)' $* || exit 1"
 }
 
-newsh() {
-  echo "#!/usr/bin/env bash\nset -Eeuo pipefail\n" > $1 && chmod +x $1
-}
-
-newshf() {
-  cp $DOTFILES/template/bash.sh $1 && chmod +x $1
-}
 
 rgff() {
   rgf --no-heading --color=always -n $@ | fzf --ansi
@@ -359,8 +399,17 @@ cstrm() {
   fi
 }
 
-kns() {
-  k config set-context --current --namespace="$(k get namespace | tail +2 | fzf | awk '{print $1}')" \
+
+kuse() { erropts
+  local contexts; contexts=$(kubectl config get-contexts -o name)
+  local context; context=$(<<< "$contexts" fzf)
+  kubectl config use-context "$context"
+}
+
+kns() { erropts
+  local namespaces; namespaces=$(kubectl get namespace)
+  local namespace; namespace=$(<<< "$namespaces" tail +2 | fzf | awk '{print $1}')
+  kubectl config set-context --current --namespace="$namespace" \
     && kubectl config view -o=json \
     | jq '. as $root | .contexts[] | select(.name == $root["current-context"]) | "Cluster:   " + .context.cluster +  "\nNamespace: " + .context.namespace' -r
 }
@@ -398,3 +447,6 @@ k9() {
   fi
 }
 
+date-utc() {
+  date --iso-8601=seconds --utc $@ | sed 's/\+[[:digit:]][[:digit:]]\:[[:digit:]][[:digit:]]/Z/g'
+}

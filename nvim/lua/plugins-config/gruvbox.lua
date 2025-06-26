@@ -1,9 +1,12 @@
 local M = {}
 
-local contrast = "hard"
-
 function M.setup()
   local palette = require("gruvbox").palette
+
+  local diffDelete        = "#4c1610"
+  local diffDeleteChanged = "#6c1f17"
+  local diffAdd           = "#31320a"
+  local diffAddChanged    = "#494a0f"
 
   require("gruvbox").setup({
     contrast = "hard",
@@ -17,10 +20,17 @@ function M.setup()
         DiagnosticSignWarn  = { bg = palette.dark0_hard, fg = palette.bright_yellow },
         DiagnosticSignHint  = { bg = palette.dark0_hard, fg = palette.bright_aqua },
         DiagnosticSignError = { bg = palette.dark0_hard, fg = palette.bright_red },
+
+        DiffDelete     = { bg = diffDelete },
+        DiffTextDelete = { bg = diffDeleteChanged },
+        DiffAdd        = { bg = diffAdd },
+        DiffChange     = { bg = diffAdd },
+        DiffText       = { bg = diffAddChanged },
+
+        FloatBorder = { link = "WinSeparator" }, -- Add fallback to pre-v0.10.0
     },
   })
   vim.cmd("colorscheme gruvbox")
 end
 
 return M
-

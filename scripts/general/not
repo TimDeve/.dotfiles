@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -CEeuo pipefail
 
 mkdir -p "$HOME/notes"
 
 v() {
-  if hash nvim > /dev/null 2>&1; then
+  if hash nvim &> /dev/null; then
     nvim "$@"
-  elif hash vim > /dev/null 2>&1; then
+  elif hash vim &> /dev/null; then
     vim "$@"
   else
     vi "$@"
@@ -18,7 +18,7 @@ usage() {
   echo "I am trapped in a notes factory"
 }
 
-if [ $# -eq 0 ]; then
+if [[ $# == 0 ]]; then
   previewer="cat"
   if hash glow > /dev/null 2>&1; then
     previewer="glow -l --style=auto"
@@ -49,7 +49,7 @@ content=''
 labels=''
 formattedLabels=''
 
-while getopts "hl:t:q:" opt; do
+while getopts "hsl:t:q:" opt; do
    case $opt in
      h)
        usage
@@ -64,15 +64,14 @@ while getopts "hl:t:q:" opt; do
      t)
        title=$OPTARG
        ;;
+     s)
+       title="Scratch at ${TIME}"
+       ;;
      *)
        usage
        exit 1
    esac
 done
-
-if [[ -z $title ]]; then
-  title="Scratch at ${TIME}"
-fi
 
 if [[ -n $labels ]]; then
   formattedLabels=" [${labels// /, }]"
@@ -81,7 +80,14 @@ fi
 filename="$HOME/notes/[${DATE}] ${title}${formattedLabels}.norg"
 
 if [[ -z $content ]]; then
-  v "${filename}"
+  if ! [[ -f "$filename" ]]; then
+    escaped_filename=${filename//\[/[}
+    escaped_filename=${escaped_filename//\]/]}
+    cmd=":e $escaped_filename | exec appendbufline(0, 0, \"* $title\")"
+    v +"$cmd"
+  else
+    v "$filename"
+  fi
 else
   echo "$content" > "${filename}"
 fi

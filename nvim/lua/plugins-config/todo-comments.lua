@@ -26,9 +26,9 @@ function M.setup()
     },
   }
 
-  require("which-key").register({
-    ["]t"] = { todo.jump_next, "Next todo"},
-    ["[t"] = { todo.jump_prev, "Previous todo"},
+  require("which-key").add({
+    { "[t", todo.jump_prev, desc = "Previous todo" },
+    { "]t", todo.jump_next, desc = "Next todo" },
   })
 end
 

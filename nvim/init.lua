@@ -3,8 +3,9 @@ local custom_runtimepath = vim.fn.expand("$DOTFILES/nvim")
 vim.opt.rtp:prepend(custom_runtimepath)
 
 local utils = require("utils")
-local augroup = require("utils.vim").augroup
-local highlight = require("utils.vim").highlight
+local vim_utils = require("utils.vim")
+local augroup = vim_utils.augroup
+local highlight = vim_utils.highlight
 
 vim.opt.autoindent = true
 vim.opt.autoread  = true
@@ -92,11 +93,6 @@ vim.cmd "map <space> <leader>"
 -- Use kj as Escape
 vim.cmd "inoremap kj <esc>"
 
-if utils.IS_WORK_MACHINE then
-  vim.g.python3_host_prog = '/usr/bin/python3'
-  vim.g.python_host_prog = '/usr/bin/python'
-end
-
 -- Set work textwidth
 if utils.IS_WORK_MACHINE then
   augroup("work-textwidth", {"BufRead", "BufNewFile"}, {"*.go"}, "set textwidth=100")
@@ -146,11 +142,26 @@ augroup("signcolumn-default", {"BufRead","BufNewFile"}, "*", "setlocal signcolum
 -- avoids jumping on load
 vim.o.showtabline = 2
 
--- Define diagnostic signs
-for type, icon in pairs(utils.diag_signs) do
-  local hl = "DiagnosticSign" .. type
-  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-end
+-- Configure Diagnostic
+vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = utils.diag_signs.Error,
+      [vim.diagnostic.severity.WARN] = utils.diag_signs.Warn,
+      [vim.diagnostic.severity.INFO] = utils.diag_signs.Info,
+      [vim.diagnostic.severity.HINT] = utils.diag_signs.Hint,
+    }
+  },
+  severity_sort = true,
+  underline = true,
+  update_in_insert = false,
+  virtual_text = true,
+})
+
+-- Shows highlight on yank
+augroup("highlight-yank", {"TextYankPost"}, "*", function()
+  vim.highlight.on_yank({higroup = "IncSearch", timeout = 350})
+end)
 
 -- Setup lazy
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -174,3 +185,7 @@ require("plugins").setup({ runtimepath = custom_runtimepath })
 -- Setup startup plugins config
 require("plugins-config.startup").setup()
 
+-- Loading local config if exists
+pcall(function()
+  require("local")
+end)

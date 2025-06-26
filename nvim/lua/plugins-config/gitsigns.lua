@@ -22,32 +22,29 @@ function M.setup()
         return '<Ignore>'
       end
 
-      wk.register({
-        ["<leader>g"] = {
-          name = "Git",
-          s = { "<Cmd>Gitsigns stage_hunk<CR>", "Stage hunk" },
-          r = { "<Cmd>Gitsigns reset_hunk<CR>", "Reset hunk" },
-        }
-      }, { buffer = bufno, mode = {"n", "v"} })
+      wk.add({
+        mode = { "n", "v" },
+        buffer = bufno,
+        { "<leader>g", buffer = bufno, group = "Git" },
+        { "<leader>gr", "<Cmd>Gitsigns reset_hunk<CR>", desc = "Reset hunk" },
+        { "<leader>gs", "<Cmd>Gitsigns stage_hunk<CR>", desc = "Stage hunk" },
+      })
 
-      wk.register({
-        ["]c"] = { next_hunk, "Next hunk" },
-        ["[c"] = { prev_hunk, "Previous hunk" },
-        ["<leader>g"] = {
-          name = "Git",
-          S = { gs.stage_buffer,    "Stage buffer" },
-          R = { gs.reset_buffer,    "Reset buffer" },
-          u = { gs.undo_stage_hunk, "Undo stage hunk" },
-          p = { gs.preview_hunk,    "Preview hunk" },
-          b = { gs.blame_line,      "Blame line" },
-          d = { gs.blame_line,      "Diff buffer" },
-          D = { gs.toggle_deleted,  "Toggle deleted" },
-          g = { gs.toggle_signs,    "Toggle Gitsigns" },
-        }
-      }, { buffer = bufno })
+      wk.add({
+        buffer = bufno,
+        { "<leader>g", group = "Git" },
+        { "<leader>gS", gs.stage_buffer,   desc = "Stage buffer" },
+        { "<leader>gR", gs.reset_buffer,   desc = "Reset buffer" },
+        { "<leader>gu", gs.undo_stage_hunk,desc = "Undo stage hunk" },
+        { "<leader>gp", gs.preview_hunk,   desc = "Preview hunk" },
+        { "<leader>gb", gs.blame_line,     desc = "Blame line" },
+        { "<leader>gD", gs.toggle_deleted, desc = "Toggle deleted" },
+        { "<leader>gg", gs.toggle_signs,   desc = "Toggle Gitsigns" },
+        { "[c", prev_hunk, desc = "Previous hunk" },
+        { "]c", next_hunk, desc = "Next hunk" },
+      })
     end
   }
 end
 
 return M
-

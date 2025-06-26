@@ -31,6 +31,10 @@ function M.config_opts(module)
   return require("plugins-config." .. module).opts
 end
 
+function M.config_keys(module)
+  return require("plugins-config." .. module).keys
+end
+
 function M.merge(t1, t2)
   local new_table = {}
   if t1 ~= nil then
@@ -66,10 +70,12 @@ function M.cmd_cb(c) return function() vim.cmd(c) end end
 
 function M.capture_shell(command)
   local cmd_out = vim.api.nvim_exec(":! " .. command, true)
+  local exit_code = vim.v.shell_error
+
   local lines = M.lines(cmd_out)
   table.remove(lines, 1)
 
-  return table.concat(lines, "\n")
+  return table.concat(lines, "\n"), exit_code
 end
 
 function M.project_files(opts)
@@ -99,6 +105,18 @@ function M.enabled_if_env(env)
   return function()
     return os.getenv(env) ~= nil
   end
+end
+
+function M.enabled_if_exe(exe)
+  return function()
+    return M.has_exe(exe)
+  end
+end
+
+function M.repo_root()
+  local cwd = vim.fn.getcwd()
+  local git_folder = vim.fs.find('.git', { upward = true, path = cwd })[1]
+  return vim.fs.dirname(git_folder)
 end
 
 M.signs = {

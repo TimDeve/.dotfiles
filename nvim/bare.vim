@@ -81,7 +81,11 @@ else
   let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
-silent colorscheme pablo
+try
+  silent colorscheme habamax
+catch /^Vim\%((\a\+)\)\=:E185/
+    " Ignore
+endtry
 
 " space is my leader
 map <space> <leader>

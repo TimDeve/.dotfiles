@@ -18,6 +18,7 @@ function M.setup()
   require("neo-tree").setup({
     enable_diagnostics = false,
     close_if_last_window = true,
+    auto_clean_after_session_restore = true,
     source_selector = {
       winbar = true,
       content_layout = "center",
@@ -42,7 +43,9 @@ function M.setup()
       window = {
         mappings = {
           ["tf"] = "telescope_find",
-          ["g"] = "telescope_grep",
+          ["tg"] = "telescope_grep",
+          ["td"] = "fuzzy_finder",
+          ["/"]  = "none",
         },
       },
       commands = {
@@ -88,4 +91,3 @@ function M.setup()
 end
 
 return M
-

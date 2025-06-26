@@ -2,7 +2,7 @@ source $DOTFILES/zsh/localpre.zsh
 
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH}"
+export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 # Lazy load nvm so it does not slow down everything
 export NVM_LAZY_LOAD=true

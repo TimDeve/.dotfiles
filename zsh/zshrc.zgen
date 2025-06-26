@@ -5,9 +5,8 @@ source $DOTFILES/zsh/localpre.zsh
 
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:${PATH}"
+export PATH="$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 export LS_COLORS=${LS_COLORS:-'di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'}
-
 
 ZGEN_RESET_ON_CHANGE=(${HOME}/.dotfiles/zsh/zshrc.zgen)
 
@@ -23,14 +22,14 @@ if ! zgen saved; then
       zgen load lukechilds/zsh-nvm
     fi
 
-    zgen load zimfw/git-info "functions"
-    zgen load zimfw/prompt-pwd "functions"
-    zgen load mafredri/zsh-async "" "v1.8.6"
+    zgen load zimfw/git-info     "functions" ""
+    zgen load zimfw/prompt-pwd   "functions" ""
+    zgen load mafredri/zsh-async ""          "v1.8.6"
     zgen load TimDeve/sorin
 
     zgen load zsh-users/zsh-syntax-highlighting      "" "0.7.1"
     zgen load zsh-users/zsh-history-substring-search "" "v1.0.2"
-    zgen load zsh-users/zsh-autosuggestions
+    zgen load zsh-users/zsh-autosuggestions          "" "v0.7.0"
 
     # save all to init script
     zgen save
@@ -43,27 +42,44 @@ autoload prompt-pwd                                     # Load prompt-pwd
 source $HOME/.zgen/TimDeve/sorin-master/sorin.zsh-theme # Load prompt theme
 
 bindkey -v # Start in vi insert mode
+bindkey -M viins 'kj' vi-cmd-mode
+
+typeset -gA keys
+keys=(
+  'Ctrl'      '\C-'
+  'Backspace' "^?"
+  'Escape'    '\e'
+  'Up'        "$terminfo[kcuu1]"
+  'Left'      "$terminfo[kcub1]"
+  'Down'      "$terminfo[kcud1]"
+  'Right'     "$terminfo[kcuf1]"
+)
 
 # Edit command in $EDITOR using Ctrl-E
 autoload -Uz edit-command-line
 zle -N edit-command-line
-bindkey -M viins '\C-E' edit-command-line
+bindkey -M viins "$keys[Ctrl]E" edit-command-line
+bindkey -M vicmd "$keys[Ctrl]E" edit-command-line
+
+# Emacs movement in Vi Insert mode
+bindkey -M viins "$keys[Backspace]" backward-delete-char
+bindkey -M viins "$keys[Ctrl]W"     backward-kill-word
+bindkey -M viins "$keys[Ctrl]U"     backward-kill-line
+
+for key in '\e[1;5D' '\e[5D' "${keys[Escape]}${keys[Left]}"
+  bindkey -M viins "$key" emacs-backward-word
+for key in '\e[1;5C' '\e[5C' "${keys[Escape]}${keys[Right]}"
+  bindkey -M viins "$key" emacs-forward-word
 
 # HISTORY
-function {
-  zmodload zsh/terminfo
-  local up="$terminfo[kcuu1]"
-  local down="$terminfo[kcud1]"
+zmodload zsh/terminfo
 
-  bindkey -M vicmd "k"     history-substring-search-up
-  bindkey -M vicmd "j"     history-substring-search-down
-  bindkey -M viins "$up"   history-substring-search-up
-  bindkey -M viins '^[[A'  history-substring-search-up
-  bindkey -M viins "$down" history-substring-search-down
-  bindkey -M viins '^[[B'  history-substring-search-down
-  bindkey -M viins '\C-P'  history-substring-search-up
-  bindkey -M viins '\C-N'  history-substring-search-down
-}
+bindkey -M vicmd "k" history-substring-search-up
+bindkey -M vicmd "j" history-substring-search-down
+for key in "$keys[Up]" '^[[A' "$keys[Ctrl]P"
+  bindkey -M viins "$key" history-substring-search-up
+for key in "$keys[Down]" '^[[B' "$keys[Ctrl]N"
+  bindkey -M viins "$key" history-substring-search-down
 
 setopt bang_hist
 setopt extended_history
@@ -109,6 +125,9 @@ zstyle ':completion:*'              verbose yes
 zstyle ':completion:*'              list-colors "${(s.:.)LS_COLORS}"
 
 bindkey '^[[Z' reverse-menu-complete # Shift-tab goes back in completion menu
+
+# AUTOSUGGEST
+bindkey -M viins "$keys[Ctrl]K" autosuggest-accept
 
 # Imports
 source $DOTFILES/zsh/imports.zsh

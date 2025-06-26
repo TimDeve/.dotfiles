@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -CEeuo pipefail
+
+basic() {
+  printf "#!/usr/bin/env bash\nset -CEeuo pipefail\n" > "$1" && chmod +x "$1"
+}
+
+with-flags() {
+  cp "$DOTFILES/template/with-flags.sh" "$1" && chmod +x "$1"
+}
+
+with-colors() {
+  cp "$DOTFILES/template/with-colors.sh" "$1" && chmod +x "$1"
+}
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --basic)
+      shift
+      basic "$1" && exit 0
+      ;;
+    --flags)
+      shift
+      with-flags "$1" && exit 0
+      ;;
+    --colors)
+      shift
+      with-colors "$1" && exit 0
+      ;;
+    --*)
+      echo "Unkwown arg '$1'"
+      exit 1
+      ;;
+    *)
+      basic "$1" && exit 0
+      ;;
+  esac
+  shift
+done

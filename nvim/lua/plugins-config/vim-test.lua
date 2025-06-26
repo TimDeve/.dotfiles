@@ -17,7 +17,7 @@ function M.setup()
 
         local filepath = vim.api.nvim_buf_get_name(0)
         local pquery = require('please.query')
-        local plz_root = pquery.reporoot(filepath)
+        local plz_root = require("lspconfig/util").root_pattern(".git")(filepath)
         local test_targets = pquery.whatinputs(plz_root, filepath)
         local targets_len = #test_targets
         local test_target
@@ -71,4 +71,3 @@ function M.setup()
 end
 
 return M
-

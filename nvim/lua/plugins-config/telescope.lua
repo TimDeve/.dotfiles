@@ -1,5 +1,12 @@
 local M = {}
 
+local function underscores_or_spaces(prompt_bufnr)
+  local action_state = require("telescope.actions.state")
+  local picker = action_state.get_current_picker(prompt_bufnr)
+  local prompt = picker:_get_prompt()
+  picker:set_prompt(prompt:gsub("_", "[_ ]"))
+end
+
 function M.setup()
   local palette = require("gruvbox").palette
   local groups = {
@@ -26,8 +33,9 @@ function M.setup()
     vim.api.nvim_set_hl(0, group, config)
   end
 
+  local actions = require('telescope.actions')
   local lga_actions = require("telescope-live-grep-args.actions")
-  local open_with_trouble = function(arg) require("trouble.providers.telescope").open_with_trouble(arg) end
+  local open_with_trouble = function(arg) require("trouble.sources.telescope").open(arg) end
 
   require('telescope').setup{
     defaults = {
@@ -41,15 +49,13 @@ function M.setup()
       path_display = { truncate = true, shorten = 4 },
       mappings = {
         i = {
-          ["<C-j>"] = lga_actions.quote_prompt(),
-          ["<C-k>"] = lga_actions.quote_prompt({ postfix = " --iglob *." }),
-          ["<C-f>"] = lga_actions.quote_prompt({ postfix = " -F" }),
-          ["<C-h>"] = lga_actions.quote_prompt({ postfix = " --no-ignore" }),
-          ["<C-t>"] = open_with_trouble,
+          ["<C-q>"] = open_with_trouble,
         },
         n = {
-          ["k"] = require('telescope.actions').cycle_history_prev,
-          ["j"] = require('telescope.actions').cycle_history_next,
+          ["k"] = actions.cycle_history_prev,
+          ["j"] = actions.cycle_history_next,
+          ["<C-p>"] = actions.move_selection_previous,
+          ["<C-n>"] = actions.move_selection_next,
         }
       },
     },
@@ -68,6 +74,25 @@ function M.setup()
         override_generic_sorter = true,  -- override the generic sorter
         override_file_sorter = true,     -- override the file sorter
         case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+      },
+      live_grep_args = {
+        auto_quoting = true, -- enable/disable auto-quoting
+        mappings = {
+          i = {
+            ["<C-d>"] = function(arg)
+              print(">"..vim.fn.expand('%').."<")
+              print(arg)
+              lga_actions.quote_prompt({ postfix = " " .. vim.fn.expand('%:h')  .. "/"})(arg)
+            end,
+            ["<C-f>"] = lga_actions.quote_prompt({ postfix = " -F" }),
+            ["<C-g>"] = actions.to_fuzzy_refine,
+            ["<C-h>"] = lga_actions.quote_prompt({ postfix = " --no-ignore" }),
+            ["<C-j>"] = lga_actions.quote_prompt(),
+            ["<C-k>"] = lga_actions.quote_prompt({ postfix = " --iglob *." }),
+            ["<C-t>"] = lga_actions.quote_prompt({ postfix = " --iglob !*_test.go" }),
+            ["<C-u>"] = underscores_or_spaces,
+          },
+        },
       }
     }
   }
@@ -77,4 +102,3 @@ function M.setup()
 end
 
 return M
-

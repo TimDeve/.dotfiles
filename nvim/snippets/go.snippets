@@ -1,5 +1,29 @@
 snippet dbg "Debug using Printf"
-	fmt.Printf("DBGDBG-${1}: %+v\n", ${1:var}) // TODO(timdeve): remove before commit
+	fmt.Printf("DBGDBG-${1}: %+v\n", ${1:var}) // TODO(timdeve): DBGDBG - remove before commit
+
+snippet dbgs "Debug using Println"
+	fmt.Println("DBGDBG: ${1:here!}") // TODO(timdeve): DBGDBG - remove before commit
+
+snippet dbgj "Debug using Printf, json output"
+	{                                                // TODO(timdeve): DBGDBG - remove before commit
+		j, _ := json.MarshalIndent(${1:var}, "", "  ") // TODO(timdeve): DBGDBG - remove before commit
+		fmt.Printf("DBGDBG-${1}: %s\n", j)             // TODO(timdeve): DBGDBG - remove before commit
+	}                                                // TODO(timdeve): DBGDBG - remove before commit
+
+snippet dbgjp "Debug using Printf, json proto output"
+	{                                                                     // TODO(timdeve): DBGDBG - remove before commit
+		j, _ := protojson.MarshalOptions{Multiline: true}.Marshal(${1:var}) // TODO(timdeve): DBGDBG - remove before commit
+		fmt.Printf("DBGDBG-${1}: %s\n", j)                                  // TODO(timdeve): DBGDBG - remove before commit
+	}                                                                     // TODO(timdeve): DBGDBG - remove before commit
+
+snippet dbgjpi "Debug using Printf, json proto inline output"
+	{                                     // TODO(timdeve): DBGDBG - remove before commit
+		j, _ := protojson.Marshal(${1:var}) // TODO(timdeve): DBGDBG - remove before commit
+		fmt.Printf("DBGDBG-${1}: %s\n", j)  // TODO(timdeve): DBGDBG - remove before commit
+	}                                     // TODO(timdeve): DBGDBG - remove before commit
+
+snippet dbgspew "Debug using spew"
+	fmt.Printf("DBGDBG-${1:var}:\n%+s\n", spew.Sdump($1)) // TODO(timdeve): DBGDBG - remove before commit
 
 snippet pf "fmt.Printf()"
 	fmt.Printf("%${1:s}\n", ${2:var})

@@ -19,6 +19,9 @@ function M.setup()
   -- vim-move (Disable default bindings)
   vim.g.move_map_keys = 0
 
+  -- vim-table-mode
+  vim.g.table_mode_map_prefix = '<Leader>m'
+
   -- vim-todo
   vim.g.VimTodoListsMoveItems = 0
 
@@ -38,6 +41,10 @@ function M.setup()
   vim.g["VM_set_statusline"] = 0 -- Disable status line, use lualine instead
   vim.g["VM_silent_exit"] = 1
   vim.g["VM_show_warnings"] = 0
+
+
+  -- Postgres bindings
+  vim.g["sql_type_default"] = 'pgsql'
 end
 
 return M

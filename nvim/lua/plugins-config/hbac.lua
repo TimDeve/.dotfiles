@@ -29,20 +29,14 @@ function M.setup()
   })
 
   -- Pin open buffer
-  hbac.pin_all()
+  -- hbac.pin_all()
 
-  require("which-key").register({
-    ["<leader>"] = {
-      b = {
-        name = "Buffers",
-        t = { hbac.telescope,      "Open buffer list" },
-        o = { hbac.close_unpinned, "Close unedited buffers" },
-        p = { hbac.toggle_pin,     "Toggle Pin" },
-      },
-      f = {
-        b = { hbac.telescope,      "Open buffer list" },
-      },
-    },
+  require("which-key").add({
+    { "<leader>b", group = "Buffers" },
+    { "<leader>bo", hbac.close_unpinned, desc = "Close unedited buffers" },
+    { "<leader>bp", hbac.toggle_pin, desc = "Toggle Pin" },
+    { "<leader>bt", hbac.telescope, desc = "Open buffer list" },
+    { "<leader>fb", hbac.telescope, desc = "Open buffer list" },
   })
 end
 

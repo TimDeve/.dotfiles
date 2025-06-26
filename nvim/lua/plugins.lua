@@ -1,15 +1,10 @@
 local M = {}
 
 local utils = require("utils")
-local autocmd = utils.autocmd
-local cmd_cb = utils.cmd_cb
 local cfg = utils.config_setup
 local cmd = utils.config_cmd
 local opts = utils.config_opts
-
-function gitlab(name)
-  return 'https://gitlab.com/' .. name .. '.git'
-end
+local keys = utils.config_keys
 
 local pkgs =  {
   -- UI
@@ -29,7 +24,7 @@ local pkgs =  {
   },
 
   -- Color themes
-  { 'ellisonleao/gruvbox.nvim', version = "2.0.0", priority = 999, config = cfg("gruvbox"), lazy = false },
+  { 'ellisonleao/gruvbox.nvim', priority = 999, config = cfg("gruvbox"), lazy = false },
   { 'Lokaltog/vim-monotone' },
 
   -- Completion
@@ -42,7 +37,7 @@ local pkgs =  {
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
       'petertriho/cmp-git',
-      { 'L3MON4D3/LuaSnip', config = cfg("lua-snip") },
+      { 'L3MON4D3/LuaSnip', config = cfg("lua-snip"), build = "make install_jsregexp" },
       'saadparwaiz1/cmp_luasnip',
     },
   },
@@ -50,23 +45,16 @@ local pkgs =  {
   -- Neorg
   {
     "nvim-neorg/neorg",
-    build = ":Neorg sync-parsers",
     ft = { "norg" },
     cmd = { "Neorg" },
-    tag = "v5.0.0",
+    tag = "v9.1.1",
     config = cfg("norg"),
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-treesitter/nvim-treesitter",
-      'hrsh7th/nvim-cmp',
-      'nvim-telescope/telescope.nvim',
-    },
   },
 
   -- Extra
-  { 'folke/which-key.nvim', lazy = false, config = cfg("which-key") },
-  { 'ggandor/leap.nvim', event = "VeryLazy", config = cfg("leap") },
-  { 'matze/vim-move', event = "VeryLazy" },
+  { 'folke/which-key.nvim', event = "VeryLazy", config = cfg("which-key") },
+  { 'ggandor/leap.nvim', keys = keys("leap"), config = cfg("leap") },
+  { 'matze/vim-move', keys = keys("vim-move") },
   { 'nvim-lua/plenary.nvim' },
   { 'nvim-telescope/telescope.nvim', cmd = "Telescope", config = cfg("telescope") },
   { 'nvim-telescope/telescope-live-grep-args.nvim' },
@@ -81,18 +69,17 @@ local pkgs =  {
   { 'luochen1990/rainbow', ft = {"clojure", 'carp'}, config = cfg("rainbow") },
   { 'axkirillov/hbac.nvim', config = cfg("hbac") },
   { 'direnv/direnv.vim', ft = "direnv", config = cfg("direnv") },
+  { 'sindrets/diffview.nvim', config = cfg("diffview"), cmd = cmd("diffview") },
+  { 'nvim-pack/nvim-spectre', dependencies = { 'nvim-lua/plenary.nvim' }, opts = {} },
+  { 'dhruvasagar/vim-table-mode', keys = keys("vim-table-mode"), cmd = cmd("vim-table-mode") },
+  { "hat0uma/csvview.nvim", opts = opts("csvview"), cmd = cmd("csvview") },
 
   -- LSP
-  { 'neovim/nvim-lspconfig',
-    lazy = false,
-    config = cfg("lsp"),
-    dependencies = {
-      'folke/lsp-colors.nvim',
-    }
-  },
+  { 'neovim/nvim-lspconfig', lazy = false, config = cfg("lsp") },
   { 'simrat39/rust-tools.nvim', ft = "rust", config = require("plugins-config.lsp").setup_rust_tools },
-  { 'mfussenegger/nvim-lint', ft = {"go", "sh"}, config = cfg("nvim-lint") },
+  { 'mfussenegger/nvim-lint', ft = {"go", "sh", "markdown"}, config = cfg("nvim-lint") },
   { 'stevearc/conform.nvim', config = cfg("conform") },
+  { 'jmbuhr/otter.nvim', dependencies = {'nvim-treesitter/nvim-treesitter'} },
 
   -- Debugging
   { "rcarriga/nvim-dap-ui",
@@ -100,12 +87,12 @@ local pkgs =  {
     dependencies = {
       { 'mfussenegger/nvim-dap', config = cfg("dap") },
       { 'theHamsta/nvim-dap-virtual-text' },
+      { 'nvim-neotest/nvim-nio' },
     },
   },
 
   -- Only at work
   { 'marcuscaisey/please.nvim', ft = "please", enabled = utils.IS_WORK_MACHINE },
-  { dir = '~/dev/other/vim-go', config = cfg("vim-go"), enabled = utils.IS_WORK_MACHINE },
   { 'folke/todo-comments.nvim', event = "VeryLazy", config = cfg("todo-comments"), enabled = utils.IS_WORK_MACHINE },
 
   -- Not at work
@@ -113,7 +100,7 @@ local pkgs =  {
   { 'neovimhaskell/haskell-vim', enabled = not utils.IS_WORK_MACHINE, ft = 'haskell' },
 
   -- Lazy
-  { 'lewis6991/gitsigns.nvim', event = "VeryLazy", tag = "release", config = cfg("gitsigns") },
+  { 'lewis6991/gitsigns.nvim', cmd = "GitSigns", event = "VeryLazy", tag = "release", config = cfg("gitsigns") },
   { 'stevearc/dressing.nvim', event = "VeryLazy", config = true },
   { 'tpope/vim-fugitive', event = "VeryLazy" },
 
@@ -122,22 +109,28 @@ local pkgs =  {
   { 'simnalamburt/vim-mundo', cmd = "MundoToggle" },
   { 'preservim/vimux', cmd = cmd("vimux") },
 
-  { 'TimDeve/vim-todo-lists', ft = "todo", config = cfg("vim-todo-lists") },
-  { 'cespare/vim-toml', ft = 'toml' },
   { 'preservim/vim-markdown', ft = 'markdown' },
-  { 'stephpy/vim-yaml', ft = 'yaml' },
-
-  { 'gsuuon/llm.nvim', config = cfg("llm"), cmd = cmd("llm"), enabled = utils.enabled_if_env("LLAMACPP_DIR") },
 
   { 'mg979/vim-visual-multi', keys = {{"<C-N>", mode = {"n", "v"}}}},
   { 'scrooloose/nerdcommenter', keys = {{"<space>cc", mode = {"n", "v"}}}},
+
+  -- LLMs
+  { 'gsuuon/llm.nvim', config = cfg("llm"), cmd = cmd("llm"), enabled = utils.enabled_if_env("LLAMACPP_DIR") },
+  {
+    "nomnivore/ollama.nvim",
+    dependencies = {"nvim-lua/plenary.nvim"},
+    cmd = cmd("ollama"),
+    keys = keys("ollama"),
+    opts = opts("ollama"),
+    enabled = utils.enabled_if_exe("ollama")
+  }
 }
 
-function M.setup(opts)
+function M.setup(options)
   require("lazy").setup(pkgs, {
     defaults = { lazy = true },
     performance = {
-      rtp = { paths = {opts.runtimepath} }
+      rtp = { paths = {options.runtimepath} }
     },
     ui = {
       icons = {

@@ -8,22 +8,25 @@ function M.setup()
   local linters = {
     sh = {'shellcheck'},
     go = {},
+    markdown = {},
   }
 
   -- Allows shellcheck to follow source
-  table.insert(
-    require('lint').linters.shellcheck.args,
-    "-x"
-  )
-
-  if utils.has_exe("errcheck") then
-    M.errcheck()
-    table.insert(linters.go, "errcheck")
+  local shellcheck_args = {"-x", "-P", function() return vim.fn.expand("%:h") end}
+  for _, arg in ipairs(shellcheck_args) do
+    table.insert(require('lint').linters.shellcheck.args, arg)
   end
+
+
+  -- if utils.has_exe("errcheck") then
+  --   M.errcheck()
+  --   table.insert(linters.go, "errcheck")
+  -- end
 
   if utils.has_exe("arc") then
     M.arc_lint()
     table.insert(linters.go, "arc_lint")
+    table.insert(linters.markdown, "arc_lint")
   end
 
   require('lint').linters_by_ft = linters
@@ -32,7 +35,7 @@ function M.setup()
    augroup("shellcheck-lint-on-change", {"TextChanged", "InsertLeave"}, "<buffer>", function() require("lint").try_lint() end)
  end)
 
- autocmd({"BufEnter", "BufWritePost"}, "*", function() require("lint").try_lint() end)
+ autocmd({"BufRead", "BufWritePost"}, "*", function() require("lint").try_lint() end)
 end
 
 function M.arc_lint()
@@ -45,10 +48,20 @@ function M.arc_lint()
   }
 
   require('lint').linters.arc_lint = {
-    cmd = 'arc',
+    cmd = '/usr/bin/env',
     stdin = false,
     append_fname = true,
-    args = {"lint", "--never-apply-patches", "--output", "json"},
+    args = {
+      "sh",
+      "-c",
+      function()
+        local shims    = "PATH=$HOME/.shims:$PATH " -- Shims will skip linters I don't care for
+        local command  = "arc lint --never-apply-patches --output json"
+        local filepath = "'" .. vim.fn.expand("%") .. "'"
+        local job      =  "& pid=$! && wait $pid"
+        return table.concat({shims, command, filepath, job}, " ")
+      end
+    },
     stream = "stdout",
     ignore_exitcode = true,
     parser = function(output, bufNo)

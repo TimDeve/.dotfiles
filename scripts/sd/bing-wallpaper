@@ -15,7 +15,12 @@ wallpaper_metadata=$(curl -L "$BING_URL_ROOT/HPImageArchive.aspx?format=js&idx=0
 url=$(<<< "$wallpaper_metadata" jq '.images[0].url' -r)
 title=$(<<< "$wallpaper_metadata" jq '.images[0].copyright' -r)
 
-cd ~/Downloads
+WP_DIR="$HOME/Downloads/bing-wallpapers"
+
+mkdir -p "$WP_DIR"
+cd "$WP_DIR"
+
+echo "Url:"
+echo "$BING_URL_ROOT$url"
 
 curl -L -o "$(escape-filename "$title")" "$BING_URL_ROOT$url"
-

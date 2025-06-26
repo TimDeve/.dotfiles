@@ -36,4 +36,12 @@ function M.highlight(name, val)
   vim.api.nvim_set_hl(0, name, val)
 end
 
+function M.sign_define(name, opts)
+  local signs = {}
+  for k, v in pairs(opts) do
+    signs[k] = { [name] = v }
+  end
+  vim.diagnostic.config({signs = signs})
+end
+
 return M
