@@ -16,7 +16,7 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tpm'
 
 set -g @resurrect-strategy-nvim 'session'
-set -g @resurrect-processes 'btop "~nvim->v +SessionLoad"'
+set -g @resurrect-processes 'btop "~nvim->v +SessionLoad" journalctl'
 set -g @continuum-restore 'on'
 set -g @continuum-save-interval '10'
 
