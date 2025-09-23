@@ -1,6 +1,6 @@
 # panes
-set -g pane-border-style fg=colour235
-set -g pane-active-border-style fg=colour238
+set -g pane-border-style "#{?#{SSH_TTY},fg=colour238,fg=colour235}"
+set -g pane-active-border-style "#{?#{SSH_TTY},fg=colour3,fg=colour238}"
 
 # toggle statusbar
 bind-key b set-option status
@@ -27,6 +27,6 @@ set -g status-position bottom
 set -g status-justify centre
 set -g status-left-length 30
 set -g status-right-length 30
-set -g status-left "#{?#{SSH_TTY},#[fg=colour3] ──── #(hostname -s),#[fg=colour242] ──── Tmux}  "
-set -g status-right "  #[fg=colour242]#S ──── "
+set -g status-left "#{?#{SSH_TTY},#[fg=colour3] ──── #(hostname -s),#[fg=colour242] ──── Tmux} "
+set -g status-right "#{?#{SSH_TTY},#[fg=colour3],#[fg=colour242]} #S ──── "
 
