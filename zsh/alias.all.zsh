@@ -254,3 +254,5 @@ alias down="cd ~/Downloads"
 
 alias whs="wormhole-rs send"
 alias whr="wormhole-rs receive"
+
+alias rs="rsync --archive --update --recursive --verbose --progress --info=progress2 --human-readable"

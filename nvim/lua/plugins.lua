@@ -76,7 +76,8 @@ local pkgs =  {
 
   -- LSP
   { 'neovim/nvim-lspconfig', lazy = false, config = cfg("lsp") },
-  { 'simrat39/rust-tools.nvim', ft = "rust", config = require("plugins-config.lsp").setup_rust_tools },
+  -- Deprecated: Switch to https://github.com/mrcjkb/rustaceanvim
+  -- { 'simrat39/rust-tools.nvim', ft = "rust", config = require("plugins-config.lsp").setup_rust_tools },
   { 'mfussenegger/nvim-lint', ft = {"go", "sh", "markdown"}, config = cfg("nvim-lint") },
   { 'stevearc/conform.nvim', config = cfg("conform") },
   { 'jmbuhr/otter.nvim', dependencies = {'nvim-treesitter/nvim-treesitter'} },

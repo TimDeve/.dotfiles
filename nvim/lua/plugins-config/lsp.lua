@@ -5,26 +5,22 @@ local highlight = utils_vim.highlight
 
 local M = {}
 
-local function server_cmd(server_name)
-  local success, config = pcall(require, 'lspconfig.configs.' .. server_name)
-  if success then
-    return config.default_config.cmd
+local function server_exe(server)
+  local config = vim.lsp.config[server]
+  if config then
+    return config.cmd[1]
   else
-    error("Could not find configuration for server: " .. server_name)
+    error("Could not find configuration for server: " .. server)
   end
 end
 
 local function setup_servers(shared, lsps)
-  local lsp_config = require("lspconfig")
   for server, options in pairs(lsps) do
-    local cmd = options.cmd
-    if cmd == nil then
-      cmd = server_cmd(server)
-    end
+    local new_options = utils.merge(shared, options)
+    vim.lsp.config(server, new_options)
 
-    if utils.has_exe(cmd[1]) then
-      local new_options = utils.merge(shared, options)
-      lsp_config[server].setup(new_options)
+    if utils.has_exe(server_exe(server)) then
+      vim.lsp.enable(server)
     end
   end
 end

@@ -450,3 +450,14 @@ k9() {
 date-utc() {
   date --iso-8601=seconds --utc $@ | sed 's/\+[[:digit:]][[:digit:]]\:[[:digit:]][[:digit:]]/Z/g'
 }
+
+promptout() {
+  local readtmpvar=""
+  printf "%s\n" "$1" >&2
+  read -s readtmpvar
+  printf "%s" "$readtmpvar"
+}
+
+vhich() {
+  "$EDITOR" "$(which $1)"
+}
