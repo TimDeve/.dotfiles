@@ -1,0 +1,1 @@
+nixpkgs: with nixpkgs.unstable; []

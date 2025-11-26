@@ -1,21 +1,17 @@
-# Install with `nix profile add ~/.dotfiles/nix/work`
+# Install with `nix profile add ~/.dotfiles/nix/nzxt`
 {
-  description = "Work Flake";
+  description = "NZXT Flake";
   inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    nixpkgs-25-05.url    = "github:nixos/nixpkgs?ref=nixos-25.05";
 
-    doom.url        = "path:../doom";
-    nvim.url        = "path:../nvim";
-    nix-scripts.url = "path:../nix-scripts";
+    doom.url        = "path:../shared/doom";
+    nix-scripts.url = "path:../shared/nix-scripts";
   };
   outputs =
     {
       self,
       nixpkgs-unstable,
-      nixpkgs-25-05,
       doom,
-      nvim,
       nix-scripts,
     }:
     let
@@ -27,25 +23,22 @@
         };
       pkgs = {
         unstable = pkgs-defaults nixpkgs-unstable;
-        "25-05" = pkgs-defaults nixpkgs-25-05;
       };
       paths-maker-args = {
-        profile-name = "nix/work";
+        profile-name = "nix/nzxt";
         pkgs = pkgs;
         nixpkgs-inputs = {
           unstable = nixpkgs-unstable;
-          "25-05" = nixpkgs-25-05;
         };
       };
     in
     {
       defaultPackage."${system}" = pkgs.unstable.buildEnv {
-        name = "work";
+        name = "home";
         paths =
           import ./pkgs.nix pkgs
-          ++ doom.paths-maker paths-maker-args
-          ++ nvim.paths-maker paths-maker-args
           ++ nix-scripts.paths-maker paths-maker-args
+          ++ doom.paths-maker paths-maker-args
         ;
       };
     };

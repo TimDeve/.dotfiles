@@ -1,4 +1,4 @@
-nixpkgs: with nixpkgs; [
+nixpkgs: with nixpkgs.unstable; [
   aria2
   avro-tools
   babashka
@@ -10,7 +10,6 @@ nixpkgs: with nixpkgs; [
   chafa
   cheat
   clang
-  comby
   csvkit
   dasht
   delta
@@ -22,10 +21,10 @@ nixpkgs: with nixpkgs; [
   fastmod
   fd
   figlet
-  frawk
   fx
   fzf
   gawk
+  git-fame
   gitui
   glow
   goawk
@@ -36,7 +35,6 @@ nixpkgs: with nixpkgs; [
   hyperfine
   jinja2-cli
   jo
-  k9s
   kcat
   lazygit
   lldb
@@ -51,6 +49,7 @@ nixpkgs: with nixpkgs; [
   ncdu
   nix-doc
   nixfmt-rfc-style
+  nixpkgs."25-05".frawk
   nnn
   pfetch
   pgcli
@@ -61,12 +60,16 @@ nixpkgs: with nixpkgs; [
   rr
   ruplacer
   semgrep
+  stern
+  taskwarrior3
+  taskwarrior-tui
   tidy-viewer
   tig
   tldr
   tokei
   trashy
   urlencode
+  vscode-extensions.ms-vscode.cpptools
   w3m
   xh
   yq-go

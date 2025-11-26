@@ -5,11 +5,11 @@
         "nix-doom-emacs-unstraightened": "nix-doom-emacs-unstraightened"
       },
       "locked": {
-        "path": "../doom",
+        "path": "../shared/doom",
         "type": "path"
       },
       "original": {
-        "path": "../doom",
+        "path": "../shared/doom",
         "type": "path"
       },
       "parent": []
@@ -78,11 +78,11 @@
     },
     "nix-scripts": {
       "locked": {
-        "path": "../nix-scripts",
+        "path": "../shared/nix-scripts",
         "type": "path"
       },
       "original": {
-        "path": "../nix-scripts",
+        "path": "../shared/nix-scripts",
         "type": "path"
       },
       "parent": []
@@ -101,22 +101,6 @@
         "type": "indirect"
       }
     },
-    "nixpkgs-25-05": {
-      "locked": {
-        "lastModified": 1763948260,
-        "narHash": "sha256-dY9qLD0H0zOUgU3vWacPY6Qc421BeQAfm8kBuBtPVE0=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "1c8ba8d3f7634acac4a2094eef7c32ad9106532c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-25.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1763966396,
@@ -133,24 +117,11 @@
         "type": "github"
       }
     },
-    "nvim": {
-      "locked": {
-        "path": "../nvim",
-        "type": "path"
-      },
-      "original": {
-        "path": "../nvim",
-        "type": "path"
-      },
-      "parent": []
-    },
     "root": {
       "inputs": {
         "doom": "doom",
         "nix-scripts": "nix-scripts",
-        "nixpkgs-25-05": "nixpkgs-25-05",
-        "nixpkgs-unstable": "nixpkgs-unstable",
-        "nvim": "nvim"
+        "nixpkgs-unstable": "nixpkgs-unstable"
       }
     },
     "systems": {
