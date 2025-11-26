@@ -1,33 +1,5 @@
 ; extends
 
-; SQL
-((raw_string_literal) @sql (#lua-match? @sql "^`%s*SELECT") (#offset! @sql 0 1 0 -1))
-((raw_string_literal) @sql (#lua-match? @sql "^`%s*INSERT") (#offset! @sql 0 1 0 -1))
-((raw_string_literal) @sql (#lua-match? @sql "^`%s*UPDATE") (#offset! @sql 0 1 0 -1))
-((raw_string_literal) @sql (#lua-match? @sql "^`%s*WITH") (#offset! @sql 0 1 0 -1))
-
-((interpreted_string_literal) @sql (#lua-match? @sql "^\"%s*SELECT") (#offset! @sql 0 1 0 -1))
-((interpreted_string_literal) @sql (#lua-match? @sql "^\"%s*INSERT") (#offset! @sql 0 1 0 -1))
-((interpreted_string_literal) @sql (#lua-match? @sql "^\"%s*UPDATE") (#offset! @sql 0 1 0 -1))
-((interpreted_string_literal) @sql (#lua-match? @sql "^\"%s*WITH") (#offset! @sql 0 1 0 -1))
-
-(
-  (raw_string_literal) @python
-  (#match? @python "api\\s*\\=\\s*(\"\\d\\.\\d\\.\\d\"|'\\d\\.\\d\\.\\d')\n")
-  (#offset! @python 0 1 0 -1)
-)
-
-; JSON
-((const_spec
-  name: (identifier) @_const
-  value: (expression_list (raw_string_literal) @json))
- (#lua-match? @_const ".*[J|j]son.*"))
-
-
-((short_var_declaration
-    left: (expression_list
-            (identifier) @_var)
-    right: (expression_list
-             (raw_string_literal) @json))
-  (#lua-match? @_var ".*[J|j]son.*")
-  (#offset! @json 0 1 0 -1))
+((raw_string_literal) @injection.content
+  (#match? @injection.content "(WITH|with|SELECT|select|INSERT|insert|UPDATE|update|DELETE|delete).+(FROM|from|INTO|into|VALUES|values|SET|set).*(WHERE|where|GROUP BY|group by|RETURNING|returning|TABLESAMPLE|tablesample|ORDER BY|order by|LIMIT|limit|OFFSET|offset|ON CONFLICT|on conflict|FROM|from|INTO|into|VALUES|values|SET|set)")
+  (#set! injection.language "sql"))

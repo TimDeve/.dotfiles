@@ -23,7 +23,7 @@ PATH="$HOME/.local/bin:$PATH"
 
 # Golang paths
 if [[ -z "$GOPATH" ]]; then
-  export GOPATH="$HOME/dev/go"
+  export GOPATH="$HOME/.local/share/gopath"
 fi
 
 for gpath in "${(@s/:/)GOPATH}"; do

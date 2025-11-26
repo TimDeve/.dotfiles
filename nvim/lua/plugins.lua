@@ -42,6 +42,12 @@ local pkgs =  {
     },
   },
 
+  {
+    "hexdigest/go-enhanced-treesitter.nvim",
+    build = ":TSInstall go sql",
+    ft = "go",
+  },
+
   -- Neorg
   {
     "nvim-neorg/neorg",
@@ -64,7 +70,7 @@ local pkgs =  {
   { 'tpope/vim-surround', event = "VeryLazy" },
   { 'vitalk/vim-shebang', lazy = false },
   { 'numtostr/FTerm.nvim', config = cfg("fterm") },
-  { 'folke/persistence.nvim', event = "BufReadPre", opts = opts("persistence") },
+  { 'folke/persistence.nvim', event = "BufReadPre", config = cfg("persistence") },
   { 'eraserhd/parinfer-rust', ft = utils.lisp_ft, build = 'cargo build --release' },
   { 'luochen1990/rainbow', ft = {"clojure", 'carp'}, config = cfg("rainbow") },
   { 'axkirillov/hbac.nvim', config = cfg("hbac") },

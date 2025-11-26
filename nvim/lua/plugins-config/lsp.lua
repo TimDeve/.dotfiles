@@ -184,21 +184,17 @@ function M.setup()
     }
 
     servers_options.gopls.root_dir = function(fname)
-      local go_mod = vim.fs.find('go.mod', { upward = true, path = vim.fs.dirname(fname) })[1]
-      if go_mod then
-        return vim.fs.dirname(go_mod)
-      end
       local plzconfig = vim.fs.find('.plzconfig', { upward = true, path = vim.fs.dirname(fname) })[1]
       local src = vim.fs.find('src', { upward = true, path = plzconfig })[1]
       if plzconfig and src then
-        local plz_out = vim.fs.dirname(plzconfig) .. "/plz-out"
-        vim.env.GOPATH = string.format('%s:%s/go:%s/gen/third_party/go:%s/gen', vim.fs.dirname(src), plz_out, plz_out, plz_out)
-        vim.env.GO111MODULE = 'off'
-
         -- If at repo root use PLZ_DEFAULT_ROOT folder as lsp root instead
         if src == vim.fn.getcwd() and os.getenv("PLZ_DEFAULT_ROOT") then
           return src .. "/" .. os.getenv("PLZ_DEFAULT_ROOT")
         end
+      end
+      local go_mod = vim.fs.find('go.mod', { upward = true, path = vim.fs.dirname(fname) })[1]
+      if go_mod then
+        return vim.fs.dirname(go_mod)
       end
       return vim.fn.getcwd()
     end

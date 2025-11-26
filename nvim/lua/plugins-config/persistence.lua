@@ -1,10 +1,12 @@
+local autocmd = require("utils.vim").autocmd
+
 local M = {}
 
-M.opts = {
- pre_save = function()
-   -- Close Neotree to avoid empty buffer on restore
-   vim.cmd [[ Neotree close ]]
- end
-}
+function M.setup()
+  require("persistence").setup()
+
+  -- Close Neotree as it would be broken on restore
+  autocmd({"User"}, "PersistenceSavePre", function() vim.cmd [[ Neotree close ]] end)
+end
 
 return M

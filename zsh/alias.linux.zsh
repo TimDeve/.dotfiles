@@ -16,6 +16,7 @@ alias nix-install-home-flake="nix profile install $NIX_HOME_FLAKE"
 if hash paru 1>&2 2>/dev/null; then
   alias pmi="paru --mode=r -S"
   alias pmr="paru -Rs"
+  alias pmu="paru -Syu"
 
   pms() { erropts
     local state_file; state_file="$(mktemp PMSTMP.XXXXXXXXXX -p /tmp)"
@@ -34,9 +35,9 @@ if hash paru 1>&2 2>/dev/null; then
         )" \
      --bind "ctrl-r:reload(
           if [[ \"\$(cat $state_file)\" == aur ]]; then
-            paru --aur -Sl
+            paru --aur -Sly
           else
-            paru --repo -Sl
+            paru --repo -Sly
           fi
         )" \
       )
