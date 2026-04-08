@@ -35,7 +35,7 @@ function M.setup()
     },
     lsp = {
       progress = {
-        -- enabled = false,
+        view = "notify"
       },
       override = {
         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
@@ -45,6 +45,10 @@ function M.setup()
     },
     views = {
       mini = {
+        timeout = 5000,
+      },
+      notify = {
+        replace = true,
         timeout = 5000,
       },
       cmdline_popup = {
@@ -66,6 +70,19 @@ function M.setup()
       inc_rename = false, -- disable custom dialog for inc_rename
       lsp_doc_border = false, -- add a border to hover docs and signature help
     },
+    routes = {
+      {
+        filter = { event = "lsp", kind = "progress", find = "go mod tidy" },
+        skip = true,
+      },
+    },
+  })
+
+  require("notify").setup({
+    render = "minimal",
+    timeout = 4000,
+    top_down = false,
+    -- stages = "static",
   })
 end
 

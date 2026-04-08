@@ -32,24 +32,34 @@
           # Nix Garbage Collect
           (writeScriptBin "nxgc" ''
             #!${stdenv.shell}
-            nix-collect-garbage --delete-older-than 31d
+            nix-collect-garbage --delete-older-than 31d 2>&1 |
+              awk '
+                BEGIN { split("... . ..", frames, " ") }
+                /^deleting ..nix.*$/ {
+                  if (is_spinning) { printf "\033[A\033[K" }
+                  i = (NR % 3) + 1
+                  printf "deleting%s\n", frames[i]
+                  is_spinning = 1
+                  next
+                }
+                { print $0 }
+              '
           '')
 
           # Nix Install
           (writeShellApplication {
             name = "nxi";
-            runtimeInputs = [ nixfmt-rfc-style ];
+            runtimeInputs = [ nixfmt ];
             text = ''
               pkg_location="$HOME/.dotfiles/nix/work/pkgs.nix"
               new_pkg="$1"
-              tail +2 "$pkg_location" |
+              new_content=$(tail +5 "$pkg_location" |
                 head -n -1 |
-                awk '{print $1}' |
                 cat - <(echo "$new_pkg") |
                 sort |
-                cat <(echo "nixpkgs: with nixpkgs.unstable; [") - <(echo "]") |
-                nixfmt |
-                sponge "$pkg_location"
+                cat <(echo "nixpkgs: with nixpkgs; with unstable; [") - <(echo "]") |
+                nixfmt)
+              <<< "$new_content" cat >| "$pkg_location"
               if ! nix profile upgrade nix/work; then
                 sed -i "/\\s*$new_pkg$/d" "$pkg_location"
                 return 1
@@ -79,6 +89,20 @@
               else
                 echo -e "$packages" | head -n -1
               fi
+            '';
+          })
+
+          # Nix Shell
+          (writeShellApplication {
+            name = "nxsh";
+            text = ''
+              pkg="$1"
+              shift
+              if ! [[ "$pkg" == *"#"* ]]; then
+                pkg="nixpkgs#$pkg"
+              fi
+              export IN_NIX_SHELL="$pkg"
+              nix shell "$pkg" "$@"
             '';
           })
         ];

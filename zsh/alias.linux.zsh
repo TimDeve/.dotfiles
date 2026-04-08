@@ -13,7 +13,7 @@ alias xbu="sudo xbps-install -Su"
 # Nix
 alias nix-install-home-flake="nix profile install $NIX_HOME_FLAKE"
 
-if hash paru 1>&2 2>/dev/null; then
+if (($+commands[paru])); then
   alias pmi="paru --mode=r -S"
   alias pmr="paru -Rs"
   alias pmu="paru -Syu"

@@ -20,19 +20,19 @@ usage() {
 
 if [[ $# == 0 ]]; then
   previewer="cat"
-  if hash glow > /dev/null 2>&1; then
-    previewer="glow -l --style=auto"
-    if hash stty > /dev/null 2>&1; then
-      read -r _ columns < <(stty size)
-      previewer="$previewer -w '$((columns / 2))'"
-    fi
-  elif hash bat > /dev/null 2>&1; then
-    previewer="bat --color=always --plain"
+  # if hash glow > /dev/null 2>&1; then
+  #   previewer="glow -l --style=auto"
+  #   if hash stty > /dev/null 2>&1; then
+  #     read -r _ columns < <(stty size)
+  #     previewer="$previewer -w '$((columns / 2))'"
+  #   fi
+  if hash bat > /dev/null 2>&1; then
+    previewer="bat --color=always --plain --paging never"
   fi
 
   cd "$HOME/notes"
 
-  noteToOpen="$(find . -name '.git' -prune -o -type f -print \
+  noteToOpen="$(find . -name '.git' -prune -o -name '.archive' -prune -o -type f -print \
                 | cut -c 3- \
                 | sort -r \
                 | fzf --height 30% --reverse --preview "$previewer {}")"
@@ -40,8 +40,8 @@ if [[ $# == 0 ]]; then
   exit
 fi
 
-DATE=$(date +%Y-%m-%d)
-TIME=$(date +%H:%M:%S)
+NOT_DATE=${NOT_DATE-$(date +%Y-%m-%d)}
+NOT_TIME=${NOT_TIME-$(date +%H:%M:%S)}
 
 filename=''
 title=''
@@ -65,7 +65,7 @@ while getopts "hsl:t:q:" opt; do
        title=$OPTARG
        ;;
      s)
-       title="Scratch at ${TIME}"
+       title="Scratch ${NOT_TIME}"
        ;;
      *)
        usage
@@ -74,16 +74,14 @@ while getopts "hsl:t:q:" opt; do
 done
 
 if [[ -n $labels ]]; then
-  formattedLabels=" [${labels// /, }]"
+  formattedLabels=":${labels// /,}"
 fi
 
-filename="$HOME/notes/[${DATE}] ${title}${formattedLabels}.norg"
+filename="$HOME/notes/${NOT_DATE}:${title// /_}${formattedLabels}.org"
 
 if [[ -z $content ]]; then
   if ! [[ -f "$filename" ]]; then
-    escaped_filename=${filename//\[/[}
-    escaped_filename=${escaped_filename//\]/]}
-    cmd=":e $escaped_filename | exec appendbufline(0, 0, \"* $title\")"
+    cmd=":e $filename | exec appendbufline(0, 0, \"#+title: $title\") | exec appendbufline(0, 1, \"#+date: <$NOT_DATE>\")"
     v +"$cmd"
   else
     v "$filename"

@@ -30,7 +30,7 @@ local function parse_gci_args()
     return args
   end
 
-  local out = utils.capture_shell("yq '.linters-settings.gci' -o json " .. config_file)
+  local out = utils.capture_shell("yq '.formatters.settings.gci' -o json " .. config_file)
   local gci_config = vim.json.decode(out)
 
   for _, section in ipairs(gci_config.sections) do

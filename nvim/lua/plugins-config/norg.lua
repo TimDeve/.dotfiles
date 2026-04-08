@@ -46,20 +46,35 @@ function M.setup()
       ["core.dirman"] = {
         config = {
           workspaces = {
+            org = os.getenv("HOME") .. "/norg",
             notes = os.getenv("HOME") .. "/notes",
           },
-          default_workspace = "notes",
+          default_workspace = "org",
         },
       },
       ['core.keybinds'] = {
         config = {
-          default_keybinds = false,
+          default_keybinds = true,
         },
       },
       ['core.esupports.indent'] = {
         config = {
           -- dedent_excess = false
         },
+      },
+      ["external.conceal-wrap"] = {},
+      -- MANDATORY
+      ["external.many-mans"] = {
+          config = {
+              metadata_fold = true, -- If want @data property ... @end to fold
+              code_fold = true, -- If want @code ... @end to fold
+          }
+      },
+      -- OPTIONAL
+      ["external.agenda"] = {
+          config = {
+              workspace = "org", -- or set to "tasks_workspace" to limit agenda search to just that workspace
+          }
       },
     },
   })
@@ -81,19 +96,20 @@ function M.keybinds()
     { "gd", "<Plug>(neorg.esupports.hop.hop-link)", desc = "Hop to link" },
 
     { "<leader>n", group = "Neorg" },
-    { "<leader>nn", "<Plug>(neorg.dirman.new.note)", desc = "New note" },
+    { "<leader>nn", "<Plug>(neorg.dirman.new-note)", desc = "New note" },
+    { "<leader>no", "<Cmd>Neorg toc split<CR>", desc = "TOC split" },
+    { "<leader>nd", "<Plug>(neorg.tempus.insert-date)", desc = "Insert date" },
+
     { "<leader>nli", "<Plug>(neorg.pivot.invert-list-type)", desc = "List type invert" },
     { "<leader>nlt", "<Plug>(neorg.pivot.toggle-list-type)", desc = "List type toggle" },
-    { "<leader>nt", "<Cmd>Neorg toc split<CR>", desc = "TOC split" },
-    { "<leader>nid", "<Plug>(neorg.tempus.insert-date)", desc = "Insert date" },
 
-    { "<leader>nc", "<Plug>(neorg.qol.todo-items.todo.task-cancelled)", desc = "Task cancelled" },
-    { "<leader>nd", "<Plug>(neorg.qol.todo-items.todo.task-done)", desc = "Task done" },
-    { "<leader>nh", "<Plug>(neorg.qol.todo-items.todo.task-on-hold)", desc = "Task on-hold" },
-    { "<leader>ni", "<Plug>(neorg.qol.todo-items.todo.task-important)", desc = "Task important" },
-    { "<leader>np", "<Plug>(neorg.qol.todo-items.todo.task-pending)", desc = "Task pending" },
-    { "<leader>nr", "<Plug>(neorg.qol.todo-items.todo.task-recurring)", desc = "Task recurring" },
-    { "<leader>nu", "<Plug>(neorg.qol.todo-items.todo.task-undone)", desc = "Task undone" },
+    { "<leader>ntc", "<Plug>(neorg.qol.todo-items.todo.task-cancelled)", desc = "Task cancelled" },
+    { "<leader>ntd", "<Plug>(neorg.qol.todo-items.todo.task-done)", desc = "Task done" },
+    { "<leader>nth", "<Plug>(neorg.qol.todo-items.todo.task-on-hold)", desc = "Task on-hold" },
+    { "<leader>nti", "<Plug>(neorg.qol.todo-items.todo.task-important)", desc = "Task important" },
+    { "<leader>ntp", "<Plug>(neorg.qol.todo-items.todo.task-pending)", desc = "Task pending" },
+    { "<leader>ntr", "<Plug>(neorg.qol.todo-items.todo.task-recurring)", desc = "Task recurring" },
+    { "<leader>ntu", "<Plug>(neorg.qol.todo-items.todo.task-undone)", desc = "Task undone" },
     {
       mode = { "v" },
       { "<", "<Plug>(neorg.promo.demote.range)", desc = "Unnest" },

@@ -32,15 +32,15 @@ end
 local function on_lsp_attach(client, bufno)
   local capabilities = client.server_capabilities
 
-  local function fname_width(fn) return function(opts) fn(utils.merge(opts, {fname_width = 60})) end end
+  local function fname_width(fn) return function(opts) fn(utils.merge(opts, { fname_width = 60 })) end end
   local keybinds = {
     -- Set these foud up again so it's not overrriden
-    { "J", "<Plug>MoveLineDown", desc = "Move line down"},
-    { "K", "<Plug>MoveLineUp",   desc = "Move line up"},
-    { "J", "<Plug>MoveBlockDown", desc = "Move block down", mode = { "v" }},
-    { "K", "<Plug>MoveBlockUp", desc = "Move block up", mode = { "v" }},
+    { "J",          "<Plug>MoveLineDown",                                                    desc = "Move line down" },
+    { "K",          "<Plug>MoveLineUp",                                                      desc = "Move line up" },
+    { "J",          "<Plug>MoveBlockDown",                                                   desc = "Move block down",      mode = { "v" } },
+    { "K",          "<Plug>MoveBlockUp",                                                     desc = "Move block up",        mode = { "v" } },
 
-    { "<leader>l", desc = "LSP" },
+    { "<leader>l",  desc = "LSP" },
     { "<leader>lR", "<Cmd>LspRestart<CR>",                                                   desc = "Restart LSP" },
     { "<leader>la", vim.lsp.buf.code_action,                                                 desc = "Code Actions" },
     { "<leader>lb", fname_width(require("telescope.builtin").lsp_references),                desc = "Find references" },
@@ -58,7 +58,7 @@ local function on_lsp_attach(client, bufno)
   }
 
   if client.server_capabilities.inlayHintProvider then
-    table.insert(keybinds, {"<leader>lH", toggle_hints, desc = "Toggle hints" })
+    table.insert(keybinds, { "<leader>lH", toggle_hints, desc = "Toggle hints" })
 
     vim.lsp.inlay_hint.enable(true)
   end
@@ -67,46 +67,50 @@ local function on_lsp_attach(client, bufno)
   vim.cmd [[ nnoremap <silent> <buffer> <RightMouse>  <LeftMouse>:lua vim.lsp.buf.definition()<CR> ]]
 
   if client.name == "gopls" then
-    table.insert(keybinds, {"<leader>lo", function() utils.trigger_code_action("source.organizeImports") end, desc = "Organize imports" })
+    table.insert(keybinds,
+      { "<leader>lo", function() utils.trigger_code_action("source.organizeImports") end, desc = "Organize imports" })
 
     if not utils.IS_WORK_MACHINE then
       local function format_and_organize()
-          vim.lsp.buf.format()
-          utils.trigger_code_action("source.organizeImports")
+        vim.lsp.buf.format()
+        utils.trigger_code_action("source.organizeImports")
       end
-      table.insert(keybinds, {"<leader>lf", format_and_organize, desc = "Format and Organize" })
-      augroup("lsp-go-fmt", "BufWritePre", {"*.go"}, format_and_organize)
+      table.insert(keybinds, { "<leader>lf", format_and_organize, desc = "Format and Organize" })
+      augroup("lsp-go-fmt", "BufWritePre", { "*.go" }, format_and_organize)
     end
   end
 
-  require("which-key").add(utils.merge({ mode = {"n", "v"}, buffer = bufno }, keybinds))
+  require("which-key").add(utils.merge({ mode = { "n", "v" }, buffer = bufno }, keybinds))
 
   highlight("LspCodeLens", { fg = "grey" })
   highlight("LspCodeLensSeparator", { fg = "grey" })
 
   if capabilities.documentHighlightProvider ~= nil then
-    augroup("lsp-highlight", {"CursorHold", "CursorHoldI"}, "<buffer>", function() vim.lsp.buf.document_highlight() end)
-    augroup("lsp-references", {"CursorMoved", "CursorMovedI"}, "<buffer>", function() vim.lsp.buf.clear_references() end)
+    augroup("lsp-highlight", { "CursorHold", "CursorHoldI" }, "<buffer>", function() vim.lsp.buf.document_highlight() end)
+    augroup("lsp-references", { "CursorMoved", "CursorMovedI" }, "<buffer>",
+      function() vim.lsp.buf.clear_references() end)
   end
 
   if capabilities.codeLensProvider ~= nil then
-    augroup("lsp-codelens", {"BufEnter","CursorHold","InsertLeave"}, "<buffer>", function() vim.lsp.codelens.refresh({ bufnr = 0 }) end)
+    augroup("lsp-codelens", { "BufEnter", "TextChanged", "InsertLeave" }, "<buffer>",
+      function() vim.lsp.codelens.refresh({ bufnr = 0 }) end)
   end
 end
 
 local function ts_root_dir(runtime)
-  return function(fname)
+  return function(bufno, on_dir)
+    local fname = vim.api.nvim_buf_get_name(bufno)
     local file_content = vim.api.nvim_buf_get_lines(0, 0, vim.api.nvim_buf_line_count(0), false)
     if runtime == "deno" and #file_content > 0 and file_content[1]:match("deno") ~= nil then
-      return vim.fs.dirname(fname)
+      on_dir(vim.fs.dirname(fname))
     end
 
     if runtime == "deno" then
-      return require("lspconfig/util").root_pattern("deno.json")(fname)
+      on_dir(require("lspconfig/util").root_pattern("deno.json")(fname))
     elseif runtime == "ts" then
-      return require("lspconfig/util").root_pattern("package.json")(fname)
+      on_dir(require("lspconfig/util").root_pattern("package.json")(fname))
     else
-      return nil
+      on_dir(nil)
     end
   end
 end
@@ -122,7 +126,7 @@ function M.setup()
     lua_ls = {
       settings = {
         Lua = {
-          ["diagnostics.disable"] = {"different-requires"},
+          ["diagnostics.disable"] = { "different-requires" },
           runtime = {
             version = 'LuaJIT',
             path = { 'lua/?.lua', 'lua/?/init.lua', 'init.lua' },
@@ -130,12 +134,16 @@ function M.setup()
           workspace = {
             checkThirdParty = false,
             library = { vim.env.VIMRUNTIME }
-          }
+          },
+          hint = {
+            arrayIndex = "Disable",
+          },
         }
       },
       filetypes = { "lua" },
       root_markers = { "init.lua", ".luarc.json", ".luarc.jsonc", ".luacheckrc", ".stylua.toml", "stylua.toml", "selene.toml", "selene.yml", ".git" },
     },
+    jdtls = { cmd = {"jdtls"} },
     gopls = {
       settings = {
         gopls = {
@@ -173,9 +181,9 @@ function M.setup()
       cmd = { "postgrestools", "lsp-proxy", vim.fn.expand("--config-path=$HOME/.config/postgrestools/global.jsonc") }
     }
 
-    servers_options.please = {
-      filetypes = {"please"}
-    }
+    -- servers_options.please = {
+    --   filetypes = { "please" }
+    -- }
 
     servers_options.gopls.settings.gopls["directoryFilters"] = {
       "-" .. vim.fn.getcwd() .. "/node_modules",
@@ -183,20 +191,21 @@ function M.setup()
       "+" .. vim.fn.getcwd() .. "/plz-out/go",
     }
 
-    servers_options.gopls.root_dir = function(fname)
+    servers_options.gopls.root_dir = function(bufno, on_dir)
+      local fname = vim.api.nvim_buf_get_name(bufno)
       local plzconfig = vim.fs.find('.plzconfig', { upward = true, path = vim.fs.dirname(fname) })[1]
       local src = vim.fs.find('src', { upward = true, path = plzconfig })[1]
       if plzconfig and src then
         -- If at repo root use PLZ_DEFAULT_ROOT folder as lsp root instead
         if src == vim.fn.getcwd() and os.getenv("PLZ_DEFAULT_ROOT") then
-          return src .. "/" .. os.getenv("PLZ_DEFAULT_ROOT")
+          on_dir(src .. "/" .. os.getenv("PLZ_DEFAULT_ROOT"))
         end
       end
       local go_mod = vim.fs.find('go.mod', { upward = true, path = vim.fs.dirname(fname) })[1]
       if go_mod then
-        return vim.fs.dirname(go_mod)
+        on_dir(vim.fs.dirname(go_mod))
       end
-      return vim.fn.getcwd()
+      on_dir(vim.fn.getcwd())
     end
   else
     servers_options.hls = {}

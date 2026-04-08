@@ -1,1 +1,5 @@
-nixpkgs: with nixpkgs.unstable; []
+nixpkgs:
+with nixpkgs;
+with unstable;
+[
+]

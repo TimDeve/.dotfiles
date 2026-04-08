@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -CEeuo pipefail
+
+echo wow
+
+if [[ -v LD_LIBRARY_PATH ]]; then
+  LD_LIBRARY_PATH=$(<<< "${LD_LIBRARY_PATH}" tr ':' '\n' | (grep -v "^/nix/store" || true) | head -c -1 | tr '\n' ':')
+  export LD_LIBRARY_PATH
+fi
+
+if [[ -v TMUX ]]; then
+  if tmux show-environment | grep -E "^DISPLAY" >/dev/null 2>&1; then
+    true
+    # /usr/bin/xdg-open "$1"
+  else
+    <<< "$*" tmux load-buffer -w -
+    tmux display-message "Copied to clipboard: '$*'"
+  fi
+else
+    true
+  # /usr/bin/xdg-open "$@"
+fi
+# echo $0

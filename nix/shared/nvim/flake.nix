@@ -37,7 +37,7 @@
             # Utils
             fd
             fzf
-            pkgs."25-05".gci
+            pkgs.stable.gci
             ripgrep
             yq-go
           ];

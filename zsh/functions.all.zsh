@@ -39,7 +39,12 @@ countstr() {
 
 gfechm() { erropts
   local default_branch; default_branch=$(basename $(git symbolic-ref --short refs/remotes/origin/HEAD))
-  git fetch origin "$default_branch:$default_branch"
+  local current_branch; current_branch=$(git rev-parse --abbrev-ref HEAD)
+  if [[ "$current_branch" == "$default_branch" ]]; then
+    git pull origin "$default_branch" --ff-only
+  else
+    git fetch origin "$default_branch:$default_branch"
+  fi
 }
 
 grebam() { erropts
@@ -75,7 +80,7 @@ gdelbi() {
 }
 
 gdifs() {
-  if hash delta 1>&2 2>/dev/null; then
+  if (($+commands[delta])); then
     git --no-pager diff | delta --paging=never --keep-plus-minus-markers
   else
     git --no-pager diff --color
@@ -460,4 +465,34 @@ promptout() {
 
 vhich() {
   "$EDITOR" "$(which $1)"
+}
+
+dedup-path() {
+  printf "%s" "$PATH" | awk -v RS=':' '!seen[$0]++ { printf "%s%s", (c++ ? ":" : ""), $0 }'
+}
+
+tcopy() {
+    if [ -n "$TMUX" ]; then
+        tmux load-buffer -w -
+    elif [ -n "$WAYLAND_DISPLAY" ] && command -v wl-copy >/dev/null 2>&1; then
+        wl-copy
+    elif [ -n "$DISPLAY" ] && command -v xclip >/dev/null 2>&1; then
+        xclip -selection clipboard
+    else
+        echo " error: no valid clipboard bridge (tmux, wl-copy, or xclip) found." >&2
+        return 1
+    fi
+}
+
+tpaste() {
+    if [ -n "$TMUX" ]; then
+        tmux save-buffer -
+    elif [ -n "$WAYLAND_DISPLAY" ] && command -v wl-paste >/dev/null 2>&1; then
+        wl-paste
+    elif [ -n "$DISPLAY" ] && command -v xclip >/dev/null 2>&1; then
+        xclip -selection clipboard -o
+    else
+        echo " error: no valid clipboard bridge (tmux, wl-paste, or xclip) found." >&2
+        return 1
+    fi
 }

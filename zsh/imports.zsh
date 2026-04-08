@@ -57,3 +57,7 @@ source $DOTFILES/zsh/localpost.zsh
 
 # Cleanup uname variable
 unset -v uname
+
+# Deduplicate PATH
+export PATH=$(dedup-path)
+

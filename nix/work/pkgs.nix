@@ -1,6 +1,8 @@
-nixpkgs: with nixpkgs.unstable; [
+nixpkgs:
+with nixpkgs;
+with unstable;
+[
   aria2
-  avro-tools
   babashka
   bat
   broot
@@ -16,10 +18,12 @@ nixpkgs: with nixpkgs.unstable; [
   delve
   deno
   direnv
+  dos2unix
   duckdb
   eza
   fastmod
   fd
+  ffmpeg
   figlet
   fx
   fzf
@@ -27,15 +31,18 @@ nixpkgs: with nixpkgs.unstable; [
   git-fame
   gitui
   glow
+  go
   goawk
   gobang
+  golangci-lint
+  gopls
   gotestsum
   gron
   guile
   hyperfine
+  jdt-language-server
   jinja2-cli
   jo
-  kcat
   lazygit
   lldb
   lolcat
@@ -48,28 +55,35 @@ nixpkgs: with nixpkgs.unstable; [
   mustache-go
   ncdu
   nix-doc
-  nixfmt-rfc-style
-  nixpkgs."25-05".frawk
+  nixfmt
   nnn
+  nodejs
+  pandoc
+  patchutils
   pfetch
-  pgcli
+  pnpm
+  qrrs
   racket
   redli
+  revive
   ripgrep
   rlwrap
   rr
   ruplacer
   semgrep
+  speedtest-cli
+  stable.kcat
   stern
   taskwarrior3
   taskwarrior-tui
   tidy-viewer
   tig
+  timr-tui
   tldr
   tokei
   trashy
   urlencode
-  vscode-extensions.ms-vscode.cpptools
+  uv
   w3m
   xh
   yq-go

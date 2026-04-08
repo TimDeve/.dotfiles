@@ -1,26 +1,50 @@
 {
   description = "Doom Emacs";
   inputs = {
-    nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened";
+    nixpkgs.url = "https://flakehub.com/f/NixOS/nixpkgs/=0.2511.907408";
+    nix-doom-emacs-unstraightened.url = "github:marienz/nix-doom-emacs-unstraightened?rev=fa2ccf9e35b7f5c99f28a50938c8db951531f544";
   };
   outputs =
-    { self, nix-doom-emacs-unstraightened }:
     {
+      self,
+      nixpkgs,
+      nix-doom-emacs-unstraightened,
+    }:
+    {
+      lib.packages = self.paths-maker;
       paths-maker =
-        {nixpkgs-inputs, ...}:
+        {
+          system,
+          profile-name ? "nix/default",
+          ...
+        }:
+        with import nixpkgs {
+          system = system;
+          overlays = [ nix-doom-emacs-unstraightened.overlays.default ];
+        };
         let
-          pkgs = import nixpkgs-inputs.unstable {
-            system = "x86_64-linux";
-            overlays = [ nix-doom-emacs-unstraightened.overlays.default ];
-            config.allowUnfree = true;
+          doom = emacsWithDoom {
+            emacs = emacs-nox;
+            doomDir = lib.cleanSource ./doom.d;
+            doomLocalDir = "~/.local/share/nix-doom";
           };
         in
         [
-          (pkgs.emacsWithDoom {
-            doomDir = pkgs.lib.cleanSource ./doom.d;
-            emacs = pkgs.emacs-nox;
-            doomLocalDir = "~/.local/share/nix-doom";
-          })
+          (
+            if profile-name == "nix/work" then
+              (writeShellApplication {
+                name = "emacs";
+                inheritPath = true;
+                runtimeEnv = {
+                  # Adds sssd for home to work
+                  LD_LIBRARY_PATH = lib.makeLibraryPath [ sssd ];
+                };
+                runtimeInputs = [ doom ];
+                text = ''emacs "$@"'';
+              })
+            else
+              doom
+          )
         ];
     };
 }

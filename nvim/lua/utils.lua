@@ -35,6 +35,17 @@ function M.config_keys(module)
   return require("plugins-config." .. module).keys
 end
 
+function M.concat(t1, t2)
+  local new_table = {}
+  if t1 ~= nil then
+    for _,v in ipairs(t1) do table.insert(new_table, v) end
+  end
+  if t2 ~= nil then
+    for _,v in pairs(t2) do table.insert(new_table, v) end
+  end
+  return new_table
+end
+
 function M.merge(t1, t2)
   local new_table = {}
   if t1 ~= nil then

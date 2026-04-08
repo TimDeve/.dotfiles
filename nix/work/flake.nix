@@ -2,51 +2,56 @@
 {
   description = "Work Flake";
   inputs = {
-    nixpkgs-unstable.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-    nixpkgs-25-05.url    = "github:nixos/nixpkgs?ref=nixos-25.05";
+    nixpkgs-unstable.url = "https://flakehub.com/f/NixOS/nixpkgs/0.1";
+    nixpkgs-stable.url = "https://flakehub.com/f/NixOS/nixpkgs/*";
 
-    doom.url        = "path:../doom";
-    nvim.url        = "path:../nvim";
-    nix-scripts.url = "path:../nix-scripts";
+    flake-utils.url = "https://flakehub.com/f/numtide/flake-utils/0.1";
+    fh.url = "https://flakehub.com/f/DeterminateSystems/fh/*";
+
+    nvim.url = "path:../shared/nvim";
+    nix-scripts.url = "path:../shared/nix-scripts";
   };
   outputs =
     {
       self,
       nixpkgs-unstable,
-      nixpkgs-25-05,
-      doom,
+      nixpkgs-stable,
       nvim,
       nix-scripts,
+      flake-utils,
+      fh,
     }:
-    let
-      system = "x86_64-linux";
-      pkgs-defaults = pkgs:
-        import pkgs {
-          system = system;
-          config.allowUnfree = true;
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs-defaults =
+          pkgs:
+          import pkgs {
+            system = system;
+            config.allowUnfree = true;
+          };
+        pkgs = {
+          unstable = pkgs-defaults nixpkgs-unstable;
+          stable = pkgs-defaults nixpkgs-stable;
         };
-      pkgs = {
-        unstable = pkgs-defaults nixpkgs-unstable;
-        "25-05" = pkgs-defaults nixpkgs-25-05;
-      };
-      paths-maker-args = {
-        profile-name = "nix/work";
-        pkgs = pkgs;
-        nixpkgs-inputs = {
-          unstable = nixpkgs-unstable;
-          "25-05" = nixpkgs-25-05;
+        paths-maker-args = {
+          inherit pkgs system;
+          profile-name = "nix/" + self.packages.${system}.default.name;
+          nixpkgs-inputs = {
+            unstable = nixpkgs-unstable;
+          };
         };
-      };
-    in
-    {
-      defaultPackage."${system}" = pkgs.unstable.buildEnv {
-        name = "work";
-        paths =
-          import ./pkgs.nix pkgs
-          ++ doom.paths-maker paths-maker-args
-          ++ nvim.paths-maker paths-maker-args
-          ++ nix-scripts.paths-maker paths-maker-args
-        ;
-      };
-    };
+      in
+      {
+        defaultPackage = self.packages.${system}.default;
+        packages.default = pkgs.unstable.buildEnv {
+          name = "work";
+          paths =
+            import ./pkgs.nix pkgs
+            ++ [fh.packages.${system}.default]
+            ++ nvim.paths-maker paths-maker-args
+            ++ nix-scripts.paths-maker paths-maker-args;
+        };
+      }
+    );
 }

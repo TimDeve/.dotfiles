@@ -17,16 +17,21 @@ function M.setup()
     table.insert(require('lint').linters.shellcheck.args, arg)
   end
 
-
   -- if utils.has_exe("errcheck") then
   --   M.errcheck()
   --   table.insert(linters.go, "errcheck")
   -- end
 
   if utils.has_exe("arc") then
-    M.arc_lint()
-    table.insert(linters.go, "arc_lint")
-    table.insert(linters.markdown, "arc_lint")
+    M.setup_revive_custom()
+    table.insert(linters.go, "revive_custom")
+
+    M.setup_golangci_custom()
+    table.insert(linters.go, "golangcilint_custom")
+
+    -- M.setup_arc_lint()
+    -- table.insert(linters.go, "arc_lint")
+    -- table.insert(linters.markdown, "arc_lint")
   end
 
   require('lint').linters_by_ft = linters
@@ -38,7 +43,62 @@ function M.setup()
  autocmd({"BufRead", "BufWritePost"}, "*", function() require("lint").try_lint() end)
 end
 
-function M.arc_lint()
+function M.setup_golangci_custom()
+  local golangci = require('lint').linters.golangcilint
+
+  local args = utils.concat(golangci.args, {"-D","revive"})
+
+  require('lint').linters.golangcilint_custom = utils.merge(golangci, {args = args})
+end
+
+function M.setup_revive_custom()
+  local fast_lint = true
+  local filename_mod = ""
+
+  if fast_lint ~= true then
+    filename_mod = ":h"
+  end
+
+  local function parse_revive_rules()
+    local config_str = ""
+
+    local config_file = vim.fs.find('.golangci.yml', { upward = true })[1]
+    if not (config_file and utils.has_exe("yq")) then
+      return config_str
+    end
+
+    local revive_rules_json = utils.capture_shell("yq '[.linters.settings.revive.rules[].name]' -o json " .. config_file)
+    local revive_rules = vim.json.decode(revive_rules_json)
+
+    for _, rule in ipairs(revive_rules) do
+      -- Skipping package-comments because it gives false positive when linting
+      -- individual files.
+      if not fast_lint or rule ~= "package-comments" then
+        config_str = config_str .. "[rule." .. rule .. "]\n"
+      end
+    end
+
+    return config_str
+  end
+
+  require('lint').linters.revive_custom = {
+    cmd = "bash",
+    append_fname = false,
+    args = {
+      "-c",
+      'config="$1"; shift; revive -config <(echo -e "$config") -formatter json "$@"',
+      "revive_custom",
+      parse_revive_rules,
+      function()
+        return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), filename_mod)
+      end
+    },
+    stdin = require('lint').linters.revive.stdin,
+    parser = require('lint').linters.revive.parser,
+  }
+end
+
+function M.setup_arc_lint()
   local severities = {
     info = vim.lsp.protocol.DiagnosticSeverity.Info,
     advice = vim.lsp.protocol.DiagnosticSeverity.Info,
@@ -77,7 +137,7 @@ function M.arc_lint()
         for filepath, diag_list in pairs(decoded or {}) do
           if string.find(buf_filepath, filepath) then
             for _, item in ipairs(diag_list or {}) do
-              if item.severity ~= "autofix" then
+              if item.severity ~= "autofix" and item.name ~= "revive" then
                 local char = utils.truthy(item.char) and item.char or 0
                 table.insert(diagnostics, {
                   lnum = item.line - 1,
@@ -105,7 +165,7 @@ function M.arc_lint()
   }
 end
 
-function M.errcheck()
+function M.setup_errcheck()
   require('lint').linters.errcheck = {
     cmd = 'errcheck',
     stdin = false,
@@ -144,5 +204,6 @@ function M.errcheck()
     end
   }
 end
+
 
 return M

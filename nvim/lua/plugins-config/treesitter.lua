@@ -6,7 +6,7 @@ function M.setup()
   local treesitter_langs = {
     "bash", "c", "cpp", "go", "hcl", "javascript", "json", "jq", "lua",
     "proto", "python", "regex", "rust", "scheme", "sql",  "toml", "tsx",
-    "typescript", "vim", "yaml"
+    "typescript", "vim", "yaml", "markdown"
   }
   local treesitter_enabled = { norg = true, norg_meta = true }
   for _, lang in ipairs(treesitter_langs) do

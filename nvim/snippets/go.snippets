@@ -22,6 +22,12 @@ snippet dbgjpi "Debug using Printf, json proto inline output"
 		fmt.Printf("DBGDBG-${1}: %s\n", j)  // TODO(timdeve): DBGDBG - remove before commit
 	}                                     // TODO(timdeve): DBGDBG - remove before commit
 
+snippet dbgline "Debug using Printf with file+line"
+	{ // TODO(timdeve): DBGDBG - remove before commit
+		_, file, line, _ := runtime.Caller(0)                       // TODO(timdeve): DBGDBG - remove before commit
+		fmt.Printf("DBGDBG-%s:%d-${1}: %v\n", file, line, ${1:var}) // TODO(timdeve): DBGDBG - remove before commit
+	} // TODO(timdeve): DBGDBG - remove before commit
+
 snippet dbgspew "Debug using spew"
 	fmt.Printf("DBGDBG-${1:var}:\n%+s\n", spew.Sdump($1)) // TODO(timdeve): DBGDBG - remove before commit
 

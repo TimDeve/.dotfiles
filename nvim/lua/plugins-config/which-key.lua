@@ -85,6 +85,11 @@ function setup()
     { "k", "gk", desc = "Previous Line" },
     { "z=", "<Cmd>Telescope spell_suggest<CR>", desc = "Spelling suggestions" },
 
+    { "yp", '<Cmd>let @+ = expand("%:.")<CR>',   desc = "Yank relative path" },
+    { "yP", '<Cmd>let @+ = expand("%:p")<CR>',   desc = "Yank absolute path" },
+    { "yd", '<Cmd>let @+ = expand("%:.:h")<CR>', desc = "Yank relative dir path" },
+    { "yD", '<Cmd>let @+ = expand("%:p:h")<CR>', desc = "Yank absolute dir path" },
+
     { "<leader>-", "<Cmd>sp<CR>", desc = "Horizontal split" },
     { "<leader>/", '<Cmd>let @/ = ""<CR>', desc = "Clear search" },
     { "<leader>;", "<Cmd>lua require'FTerm'.toggle()<CR>", desc = "Open floating term" },

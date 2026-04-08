@@ -58,6 +58,14 @@ function M.setup()
     })
   })
 
+  cmp.setup.filetype('org', {
+    preselect = cmp.PreselectMode.None,
+    sources = cmp.config.sources({
+      { name = 'buffer' },
+      { name = 'orgmode' },
+    })
+  })
+
   -- Use buffer source for `/` and `?`
   --cmp.setup.cmdline({ '/', '?' }, {
   --  mapping = cmp.mapping.preset.cmdline(),

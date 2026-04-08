@@ -10,7 +10,7 @@ source-if-exists "$HOME/.cargo/env"
 source-if-exists "$HOME/.nix-profile/etc/profile.d/nix.sh"
 source-if-exists "$HOME/.fzf.zsh"
 
-if hash rg &>/dev/null; then
+if (($+commands[rg])); then
   export FZF_DEFAULT_COMMAND='rg --files --hidden'
 fi
 

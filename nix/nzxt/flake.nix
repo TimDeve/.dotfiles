@@ -38,7 +38,6 @@
         paths =
           import ./pkgs.nix pkgs
           ++ nix-scripts.paths-maker paths-maker-args
-          ++ doom.paths-maker paths-maker-args
         ;
       };
     };

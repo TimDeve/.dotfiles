@@ -131,4 +131,3 @@ bindkey -M viins "$keys[Ctrl]K" autosuggest-accept
 
 # Imports
 source $DOTFILES/zsh/imports.zsh
-

@@ -58,18 +58,18 @@ alias ghclone="gh repo clone \$(gh repo list --limit 9999 | awk '{print \$1}' | 
 
 alias lg="lazygit"
 
-if [[ -f $(which delta) ]]; then
+if (($+commands[delta])); then
   # Git diff
-  alias gdiff="git diff | delta --paging=never --keep-plus-minus-markers"
+  alias gdiff='GIT_PAGER="delta --paging=never --keep-plus-minus-markers --line-numbers" git diff'
 
-  # Git diff HEAD and origin
-  alias gdifff="git diff HEAD...origin | delta --paging=never --keep-plus-minus-markers"
+  # Git diff from branch start
+  alias gdifu='GIT_PAGER="delta --paging=never --keep-plus-minus-markers --line-numbers" git diff @{u}...HEAD'
 else
   # Git diff
   alias gdiff="git diff --color"
 
-  # Git diff HEAD and origin
-  alias gdifff="git diff HEAD...origin"
+  # Git diff from branch start
+  alias gdifu="git diff @{u}...HEAD"
 fi
 
 # Git Pretty Tree
@@ -221,11 +221,6 @@ alias sigquit="kill -3"
 alias sigkill="kill -9"
 alias sigterm="kill -15"
 
-# Frawk
-alias fk="frawk"
-alias fks="frawk -i csv -o csv"
-alias fkt="frawk -i tsv -o tsv"
-
 alias rt="read-that"
 
 alias xhc="xh --session /tmp/xh-cookie-jar"
@@ -238,17 +233,13 @@ alias teer="tee >(cat 1>&2)"
 
 alias trim-ws=$'awk \'{$1=$1; print}\''
 
-alias c2j="mlr --c2j cat"
-alias c2l="mlr --c2l cat"
-alias l2c="mlr --l2c cat"
-alias j2c="mlr --j2c cat"
-
-alias tmcopy="tmux load-buffer -w -"
+alias csv2json="mlr --c2j cat"
+alias csv2jsonl="mlr --c2l cat"
+alias jsonl2csv="mlr --l2c cat"
+alias json2csv="mlr --j2c cat"
 
 alias ntd='ntfy publish $NTFY_DEFAULT'
 alias ntping="ntd 'Ping!'"
-
-alias tcopy="tmux load-buffer -w -"
 
 alias down="cd ~/Downloads"
 
@@ -256,3 +247,10 @@ alias whs="wormhole-rs send"
 alias whr="wormhole-rs receive"
 
 alias rs="rsync --archive --update --recursive --verbose --progress --info=progress2 --human-readable"
+
+alias agenda="(cd ~/notes && v '+OrgSuperAgenda')"
+alias week='(cd ~/notes && NOT_DATE="$(date -d "next monday - 7 days" +%Y-%m-%d)" nt Week Plan)'
+
+alias pomo="timr-tui --mode pomodoro --notification on"
+
+alias dedent="python3 -c \"import sys, textwrap; print(textwrap.dedent(sys.stdin.read()), end='')\""

@@ -20,7 +20,7 @@ local pkgs =  {
     "folke/noice.nvim",
     event = "VeryLazy",
     config = cfg("noice"),
-    dependencies = { "MunifTanjim/nui.nvim" }
+    dependencies = { "MunifTanjim/nui.nvim", "rcarriga/nvim-notify" }
   },
 
   -- Color themes
@@ -48,13 +48,46 @@ local pkgs =  {
     ft = "go",
   },
 
+  {
+    "gutsavgupta/nvim-gemini-companion",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = cfg("gemini"),
+    enabled = utils.enabled_if_exe("gemini"),
+    keys = keys("gemini"),
+  },
+
+  { 'mfussenegger/nvim-jdtls', ft = { "java" } },
+
   -- Neorg
   {
     "nvim-neorg/neorg",
     ft = { "norg" },
     cmd = { "Neorg" },
-    tag = "v9.1.1",
+    tag = "v9.3.0",
     config = cfg("norg"),
+    dependencies = {
+      "benlubas/neorg-conceal-wrap",
+    },
+  },
+
+  -- Org
+  {
+    'nvim-orgmode/orgmode',
+    ft = { 'org', 'orgagenda' },
+    cmd = { "Org" },
+    config = cfg("orgmode"),
+    dependencies = {
+      {
+        "hamidi-dev/org-super-agenda.nvim",
+        cmd = {"OrgSuperAgenda"},
+        config = cfg("org-super-agenda"),
+      },
+      {
+        'nvim-orgmode/telescope-orgmode.nvim',
+        config = cfg("telescope-orgmode"),
+      },
+      { 'tpope/vim-repeat' },
+    },
   },
 
   -- Extra
