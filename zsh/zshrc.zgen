@@ -1,5 +1,4 @@
-ZSHRC="$(readlink ${ZDOTDIR-$HOME}/.zshrc)"
-export DOTFILES="${ZSHRC/.dotfiles*/.dotfiles}"
+export DOTFILES="${DOTFILES-$HOME/.dotfiles}"
 
 source $DOTFILES/zsh/localpre.zsh
 

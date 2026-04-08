@@ -14,6 +14,10 @@ if (($+commands[rg])); then
   export FZF_DEFAULT_COMMAND='rg --files --hidden'
 fi
 
+add-to-path-if-exists() { [[ -d "$1" ]] && PATH="$PATH:$1"; }
+
+add-to-path-if-exists "$HOME/.local/share/pnpm"
+
 # Add script folder to path
 PATH="$HOME/.dotfiles/scripts/general:${PATH}"
 
